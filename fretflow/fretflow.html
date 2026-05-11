@@ -1837,8 +1837,19 @@ function buildMobileSongList() {
   });
 }
 
-// Wire up mobile buttons — call engine functions directly (not hidden desktop buttons)
-document.getElementById('mobPlay').addEventListener('click', () => {
+// Wire up mobile buttons — all wrapped in null-safe init
+function initMobileButtons() {
+  const mobPlay = document.getElementById('mobPlay');
+  const mobReset = document.getElementById('mobReset');
+  const mobBack = document.getElementById('mobBack');
+  const mobSongs = document.getElementById('mobSongs');
+  const mobModalClose = document.getElementById('mobModalClose');
+  const mobSpeed = document.getElementById('mobSpeed');
+  const mobSpeedSlider = document.getElementById('speedSlider');
+
+  if(!mobPlay) { console.warn('Mobile elements not found'); return; }
+
+  mobPlay.addEventListener('click', () => {
   // Init audio on first interaction (required by browsers)
   initAudio();
   if(audioCtx && audioCtx.state === 'suspended') {
@@ -1863,7 +1874,7 @@ function toggleMobilePlay() {
   updateMobilePlayBtn(playing);
 }
 
-document.getElementById('mobReset').addEventListener('click', () => {
+  mobReset.addEventListener('click', () => {
   playing = false;
   if(rafId) cancelAnimationFrame(rafId);
   beatPos = 0; lastTime = null; notesPlayed = 0;
@@ -1878,34 +1889,48 @@ document.getElementById('mobReset').addEventListener('click', () => {
   draw();
 });
 
-document.getElementById('mobBack').addEventListener('click', () => {
+  mobBack.addEventListener('click', () => {
   const prevChord = song.chords ? [...song.chords].reverse().find(c => c.beat < beatPos - 1) : null;
   skipTo(prevChord ? prevChord.beat : 0);
 });
 
-document.getElementById('mobSongs').addEventListener('click', () => {
+  mobSongs.addEventListener('click', () => {
   buildMobileSongList();
   document.getElementById('mobSongModal').classList.add('open');
 });
 
-document.getElementById('mobModalClose').addEventListener('click', () => {
+  mobModalClose.addEventListener('click', () => {
   document.getElementById('mobSongModal').classList.remove('open');
 });
 
 // Mobile speed slider
-document.getElementById('mobSpeed').addEventListener('input', e => {
+  if(mobSpeed) mobSpeed.addEventListener('input', e => {
   document.getElementById('speedSlider').value = e.target.value;
   document.getElementById('speedSlider').dispatchEvent(new Event('input'));
   document.getElementById('mobSpeedVal').textContent = e.target.value + '%';
   updateMobileUI();
 });
 
-// Keep mobile speed slider in sync with desktop
-document.getElementById('speedSlider').addEventListener('input', () => {
-  const v = document.getElementById('speedSlider').value;
-  document.getElementById('mobSpeed').value = v;
-  document.getElementById('mobSpeedVal').textContent = v + '%';
-});
+  // Keep mobile speed slider in sync with desktop
+  if(mobSpeedSlider) {
+    mobSpeedSlider.addEventListener('input', () => {
+      const v = mobSpeedSlider.value;
+      if(mobSpeed) mobSpeed.value = v;
+      const val = document.getElementById('mobSpeedVal');
+      if(val) val.textContent = v + '%';
+    });
+  }
+
+  // Mirror touchend for all buttons
+  [mobPlay, mobReset, mobBack, mobSongs, mobModalClose].forEach(el => {
+    if(!el) return;
+    el.addEventListener('touchend', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      el.click();
+    }, { passive: false });
+  });
+} // end initMobileButtons
 
 // Hook into draw() to update mobile UI
 const _origDraw = draw;
@@ -1946,16 +1971,7 @@ document.addEventListener('touchmove', e => {
   if(e.touches.length > 1) e.preventDefault();
 }, { passive: false });
 
-// Mirror touchend → click for all mobile buttons (Safari iOS fix)
-['mobPlay','mobReset','mobBack','mobSongs','mobModalClose'].forEach(id => {
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('touchend', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    el.click();
-  }, { passive: false });
-});
+// touchend handled inside initMobileButtons()
 
 // Handle orientation change
 window.addEventListener('orientationchange', () => {
@@ -1971,7 +1987,16 @@ function applyMobileClass() {
     document.body.classList.remove('is-mobile');
   }
 }
-applyMobileClass();
+// Init mobile buttons safely after DOM is fully ready
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initMobileButtons();
+    applyMobileClass();
+  });
+} else {
+  initMobileButtons();
+  applyMobileClass();
+}
 window.addEventListener('resize', applyMobileClass);
 
 </script>
