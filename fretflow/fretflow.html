@@ -439,6 +439,12 @@ body:not(.is-mobile) .mob-song-modal { display: none !important; }
   <div class="status-item">BEAT <span id="beatDisp">1</span></div>
   <div class="status-item">NOTES PLAYED <span id="notesDisp">0</span></div>
   <div class="status-item">SCROLL <span id="scrollDisp">→</span></div>
+  <div class="status-item" style="margin-left:auto">
+    <span id="timeDisp" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amber)">0:00</span>
+    <span style="color:var(--t3);margin:0 4px">/</span>
+    <span id="timeTotalDisp" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2)">0:00</span>
+    <span style="color:var(--t3);margin-left:6px;font-size:10px" id="timeRemDisp"></span>
+  </div>
 </div>
 
 <script>
@@ -1749,6 +1755,42 @@ function draw() {
   const beat    = Math.floor(beatPos % 8) + 1;
   document.getElementById('measureDisp').textContent = measure;
   document.getElementById('beatDisp').textContent    = beat;
+
+  // Time display
+  if(song && song.notes && song.notes.length > 0) {
+    const bps      = ((song.bpm || 120) / 60) * speedPct;
+    const totalBeats = song.notes.reduce((m, n) => Math.max(m, n.b + n.dur), 0);
+    const totalSecs  = totalBeats / bps;
+    const elapsed    = Math.min(beatPos / bps, totalSecs);
+    const remaining  = Math.max(0, totalSecs - elapsed);
+
+    const fmt = s => {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2,'0');
+    };
+
+    const elEl  = document.getElementById('timeDisp');
+    const totEl = document.getElementById('timeTotalDisp');
+    const remEl = document.getElementById('timeRemDisp');
+    if(elEl)  elEl.textContent  = fmt(elapsed);
+    if(totEl) totEl.textContent = fmt(totalSecs);
+    if(remEl) {
+      if(remaining > 0) {
+        remEl.textContent = '-' + fmt(remaining);
+        // Colour shifts amber→red as song nears end
+        const pct = elapsed / totalSecs;
+        remEl.style.color = pct > 0.85
+          ? 'rgba(220,80,60,0.8)'
+          : pct > 0.7
+          ? 'rgba(232,160,32,0.7)'
+          : 'var(--t3)';
+      } else {
+        remEl.textContent = 'END';
+        remEl.style.color = 'rgba(220,80,60,0.8)';
+      }
+    }
+  }
 
   // Strum pattern
   updateStrumPattern(beatPos);
