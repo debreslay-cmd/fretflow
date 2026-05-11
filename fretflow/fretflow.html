@@ -8,7 +8,6 @@
 <meta name="theme-color" content="#0d0d0d"/>
 <title>Fretflow · Guitar Learning</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<script src="https://unpkg.com/soundfont-player/dist/soundfont-player.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -338,6 +337,29 @@ body.is-mobile .mobile-ui { display: flex !important; }
   letter-spacing: .08em;
 }
 
+
+<script>
+// Detect mobile before first paint to prevent layout flash
+(function(){
+  var hasTouch = navigator.maxTouchPoints > 1;
+  var isNarrow = window.innerWidth <= 768;
+  if(isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900)){
+    document.documentElement.classList.add('is-mobile-early');
+  }
+})();
+</script>
+<style>
+/* Hide desktop elements immediately on mobile before JS runs */
+html.is-mobile-early .header,
+html.is-mobile-early .chord-bar,
+html.is-mobile-early .lyrics-panel,
+html.is-mobile-early .tab-strip,
+html.is-mobile-early .controls,
+html.is-mobile-early .status-bar { display: none !important; }
+html.is-mobile-early .fretboard-wrap {
+  position: fixed !important; inset: 0 !important; flex: none !important;
+}
+</style>
 </style>
 </head>
 <body>
@@ -408,12 +430,7 @@ body.is-mobile .mobile-ui { display: flex !important; }
     <input type="range" id="zoomSlider" min="60" max="140" value="100" step="1"/>
     <span class="val-display" id="zoomVal">100%</span>
   </div>
-  <div class="sep"></div>
-  <div class="slider-wrap">
-    <button class="ctrl-btn" id="btnMute" title="Mute/Unmute">♪ ON</button>
-    <span class="slider-label">Vol</span>
-    <input type="range" id="volSlider" min="0" max="100" value="70" step="1" style="width:80px"/>
-  </div>
+
   <div class="sep"></div>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#e8a020;border-radius:2px;width:6px;height:16px"></div>Chord bar</div>
@@ -876,170 +893,6 @@ function drawLyrics() {
 
 // ── Lyrics panel: fixed compact height, no resize needed ──────────────────────
 
-// ─── AUDIO ENGINE — Soundfont Sampler ───────────────────────────────────────
-// Uses soundfont-player library with real acoustic guitar samples
-// Samples loaded from gleitz.github.io CDN (open source, MIT licensed)
-
-let audioCtx      = null;
-let masterGain    = null;
-let audioMuted    = false;
-let audioVol      = 0.70;
-let sfInstrument  = null;       // soundfont instrument instance
-let sfLoading     = false;
-let sfReady       = false;
-let scheduledNotes = new Set();
-
-// Active nodes per string for note stopping (string idx 0=high e .. 5=low E)
-const activeNodes = [null,null,null,null,null,null];
-
-// Guitar string open note names (for soundfont lookup)
-// String 0=high e=E4, 1=B3, 2=G3, 3=D3, 4=A2, 5=E2
-const OPEN_NOTES  = ['E4','B3','G3','D3','A2','E2'];
-const NOTE_NAMES  = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-
-function midiFromStringFret(stringIdx, fret) {
-  // MIDI note numbers for open strings
-  const OPEN_MIDI = [64, 59, 55, 50, 45, 40]; // E4,B3,G3,D3,A2,E2
-  return OPEN_MIDI[stringIdx] + fret;
-}
-
-function initAudio() {
-  if(audioCtx) return;
-  try {
-    audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.value = audioVol;
-    masterGain.connect(audioCtx.destination);
-    loadSoundFont();
-  } catch(e) {
-    console.warn('Audio init failed:', e);
-  }
-}
-
-function loadSoundFont() {
-  if(sfLoading || sfReady || !audioCtx) return;
-  sfLoading = true;
-
-  // Try acoustic guitar first, fall back to nylon if steel fails
-  if(typeof Soundfont === 'undefined') {
-    // Library not loaded yet
-    showToast('⚠ Audio library loading...');
-    setTimeout(loadSoundFont, 1000);
-    return;
-  }
-
-  showToast('♪ Loading guitar sounds...');
-  Soundfont.instrument(audioCtx, 'acoustic_guitar_steel', {
-    soundfont: 'FluidR3_GM',
-    format: 'mp3',
-    nameToUrl: (name, sf, format) =>
-      `https://gleitz.github.io/midi-js-soundfonts/${sf}/${name}-${format}/${encodeURIComponent('A4')}.${format}`
-  }).then(inst => {
-    // Actually load full instrument (default nameToUrl)
-    return Soundfont.instrument(audioCtx, 'acoustic_guitar_steel', {
-      soundfont: 'FluidR3_GM',
-      format: 'mp3'
-    });
-  }).then(inst => {
-    sfInstrument = inst;
-    sfReady      = true;
-    sfLoading    = false;
-    showToast('✓ Guitar sounds ready');
-  }).catch(err => {
-    console.warn('Soundfont steel failed, trying nylon:', err);
-    return Soundfont.instrument(audioCtx, 'acoustic_guitar_nylon', {
-      soundfont: 'FluidR3_GM',
-      format: 'mp3'
-    }).then(inst => {
-      sfInstrument = inst;
-      sfReady      = true;
-      sfLoading    = false;
-      showToast('✓ Guitar sounds ready');
-    }).catch(e2 => {
-      sfLoading = false;
-      showToast('⚠ No sound — internet required for guitar audio', false);
-      sfReady = false;
-    });
-  });
-}
-
-function stopString(stringIdx) {
-  const node = activeNodes[stringIdx];
-  if(node) {
-    try { node.stop(); } catch(e) {}
-    activeNodes[stringIdx] = null;
-  }
-}
-
-function playNote(stringIdx, fret, when, duration, isChord) {
-  if(!audioCtx || audioMuted) return;
-  if(audioCtx.state === 'suspended') audioCtx.resume();
-
-  const t   = Math.max(audioCtx.currentTime, when);
-  const dur = Math.max(0.15, duration);
-
-  // Stop previous note on this string
-  stopString(stringIdx);
-
-  if(sfReady && sfInstrument) {
-    // Use soundfont — real acoustic guitar samples
-    const midi = midiFromStringFret(stringIdx, fret);
-    const gain = isChord ? audioVol * 0.8 : audioVol * 0.95;
-    const node = sfInstrument.play(midi, t, {
-      duration: dur,
-      gain: gain,
-      destination: masterGain
-    });
-    if(node) activeNodes[stringIdx] = node;
-  }
-  // No fallback — silent if soundfont not loaded
-}
-
-// No fallback synth — audio requires internet for soundfont samples
-
-function resetScheduledNotes() {
-  scheduledNotes = new Set();
-  if(audioCtx) {
-    for(let i = 0; i < 6; i++) stopString(i);
-  }
-}
-
-function scheduleNotesInWindow() {
-  if(!audioCtx || audioMuted || !song || !song.notes) return;
-  if(audioCtx.state === 'suspended') audioCtx.resume();
-
-  const beatsPerSec = ((song.bpm || 120) / 60) * speedPct;
-  const now         = audioCtx.currentTime;
-  const windowEnd   = beatPos + 0.25 * beatsPerSec;
-  const chordGroups = {};
-
-  for(const n of song.notes) {
-    if(n.b < beatPos - 0.01 || n.b >= windowEnd) continue;
-    const key = `${n.b.toFixed(3)}-${n.s}-${n.f}`;
-    if(scheduledNotes.has(key)) continue;
-    scheduledNotes.add(key);
-
-    const noteTime = now + Math.max(0, (n.b - beatPos) / beatsPerSec);
-    const noteDur  = n.dur / beatsPerSec;
-
-    if(n.type === 'chord') {
-      const bk = n.b.toFixed(3);
-      if(!chordGroups[bk]) chordGroups[bk] = [];
-      chordGroups[bk].push({ n, noteTime, noteDur });
-    } else {
-      playNote(n.s, n.f, noteTime, noteDur, false);
-    }
-  }
-
-  // Strum chord groups low E → high e, 18ms apart
-  for(const bk in chordGroups) {
-    const group = chordGroups[bk];
-    group.sort((a, b) => b.n.s - a.n.s);
-    group.forEach(({ n, noteTime, noteDur }, i) => {
-      playNote(n.s, n.f, noteTime + i * 0.018, noteDur, true);
-    });
-  }
-}
 
 // ─── ENGINE ──────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('fretboard');
@@ -1473,7 +1326,6 @@ function tick(ts) {
 
   // ── Normal song playback ──
   beatPos += dt * beatsPerSec;
-  scheduleNotesInWindow();
 
   // Count notes played
   let np = 0;
@@ -1533,9 +1385,7 @@ document.getElementById('btnPlay').addEventListener('click', () => {
     btn.textContent = '⏸ PAUSE';
     btn.classList.add('active');
     lastTime = null;
-    initAudio();
-    resetScheduledNotes();
-    // Only count-in when starting from the very beginning
+      // Only count-in when starting from the very beginning
     if(beatPos < 0.5) {
       startCountIn();
     }
@@ -1552,7 +1402,6 @@ document.getElementById('btnPlay').addEventListener('click', () => {
 function skipTo(target) {
   beatPos  = Math.max(0, target);
   lastTime = null;
-  resetScheduledNotes();
   clearLyricsDisplay();
   updateMetronome(beatPos);
   draw();
@@ -1562,7 +1411,6 @@ document.getElementById('btnSkipBack').addEventListener('click', () => {
   playing = false;
   if(rafId) cancelAnimationFrame(rafId);
   beatPos = 0; lastTime = null; notesPlayed = 0;
-  resetScheduledNotes();
   clearLyricsDisplay();
   countIn = false; countInPos = 0; countInTime = 0;
   stopCountIn();
@@ -1720,22 +1568,6 @@ document.addEventListener('drop', e => {
 });
 
 // Init: load user songs from localStorage, populate select, load first song
-// ─── AUDIO CONTROLS ──────────────────────────────────────────────────────────
-document.getElementById('btnMute').addEventListener('click', () => {
-  initAudio();
-  audioMuted = !audioMuted;
-  const btn = document.getElementById('btnMute');
-  btn.textContent = audioMuted ? '♪ OFF' : '♪ ON';
-  btn.style.color = audioMuted ? 'var(--t3)' : '';
-  btn.style.borderColor = audioMuted ? 'var(--t3)' : '';
-  if(masterGain) masterGain.gain.value = audioMuted ? 0 : audioVol;
-});
-
-document.getElementById('volSlider').addEventListener('input', e => {
-  audioVol = parseInt(e.target.value) / 100;
-  initAudio();
-  if(masterGain && !audioMuted) masterGain.gain.value = audioVol;
-});
 
 // Keyboard shortcuts
 document.addEventListener('keydown', e => {
@@ -1936,8 +1768,7 @@ function toggleMobilePlay() {
   if(!window.playing === undefined) return;
   window.playing = !window.playing;
   if(window.playing) {
-    if(window.resetScheduledNotes) resetScheduledNotes();
-    if(window.rafId) cancelAnimationFrame(window.rafId);
+        if(window.rafId) cancelAnimationFrame(window.rafId);
     window.lastTime = null;
     if((window.beatPos||0) < 0.5 && window.startCountIn) startCountIn();
     window.rafId = requestAnimationFrame(window.tick);
@@ -1954,13 +1785,8 @@ function initMobileButtons() {
   const mobPlay = document.getElementById('mobPlay');
   if(mobPlay) {
     mobPlay.addEventListener('click', () => {
-      if(window.initAudio) initAudio();
-      const ctx = window.audioCtx;
-      if(ctx && ctx.state === 'suspended') {
-        ctx.resume().then(toggleMobilePlay);
-      } else {
-        toggleMobilePlay();
-      }
+        const ctx = window.audioCtx;
+      toggleMobilePlay();
     });
   }
 
@@ -1971,8 +1797,7 @@ function initMobileButtons() {
       window.playing = false;
       if(window.rafId) cancelAnimationFrame(window.rafId);
       window.beatPos = 0; window.lastTime = null;
-      if(window.resetScheduledNotes) resetScheduledNotes();
-      if(window.clearLyricsDisplay) clearLyricsDisplay();
+            if(window.clearLyricsDisplay) clearLyricsDisplay();
       window.countIn = false; window.countInPos = 0; window.countInTime = 0;
       if(window.stopCountIn) stopCountIn();
       if(window.updateMetronome) updateMetronome(0);
