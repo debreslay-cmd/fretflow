@@ -1,0 +1,9082 @@
+{
+  "id": "amerique-pleure",
+  "title": "L'Amérique Pleure",
+  "artist": "Les Cowboys Fringants",
+  "key": "D",
+  "time": "4/4",
+  "bpm": 95,
+  "strumPattern": [
+    "D",
+    "D",
+    "U",
+    "U",
+    "D",
+    "U"
+  ],
+  "chords": [
+    {
+      "beat": 0,
+      "name": "D"
+    },
+    {
+      "beat": 8,
+      "name": "A"
+    },
+    {
+      "beat": 16,
+      "name": "Bm"
+    },
+    {
+      "beat": 24,
+      "name": "G"
+    },
+    {
+      "beat": 32,
+      "name": "D"
+    },
+    {
+      "beat": 40,
+      "name": "A"
+    },
+    {
+      "beat": 48,
+      "name": "Bm"
+    },
+    {
+      "beat": 56,
+      "name": "G"
+    },
+    {
+      "beat": 64,
+      "name": "D"
+    },
+    {
+      "beat": 72,
+      "name": "A"
+    },
+    {
+      "beat": 80,
+      "name": "Bm"
+    },
+    {
+      "beat": 88,
+      "name": "G"
+    },
+    {
+      "beat": 96,
+      "name": "D"
+    },
+    {
+      "beat": 104,
+      "name": "A"
+    },
+    {
+      "beat": 112,
+      "name": "Bm"
+    },
+    {
+      "beat": 120,
+      "name": "G"
+    },
+    {
+      "beat": 128,
+      "name": "D"
+    },
+    {
+      "beat": 136,
+      "name": "A"
+    },
+    {
+      "beat": 144,
+      "name": "Bm"
+    },
+    {
+      "beat": 152,
+      "name": "G"
+    },
+    {
+      "beat": 160,
+      "name": "D"
+    },
+    {
+      "beat": 168,
+      "name": "A"
+    },
+    {
+      "beat": 176,
+      "name": "Bm"
+    },
+    {
+      "beat": 184,
+      "name": "G"
+    },
+    {
+      "beat": 192,
+      "name": "D"
+    },
+    {
+      "beat": 200,
+      "name": "A"
+    },
+    {
+      "beat": 208,
+      "name": "Bm"
+    },
+    {
+      "beat": 216,
+      "name": "G"
+    },
+    {
+      "beat": 224,
+      "name": "D"
+    },
+    {
+      "beat": 232,
+      "name": "A"
+    },
+    {
+      "beat": 240,
+      "name": "Bm"
+    },
+    {
+      "beat": 248,
+      "name": "G"
+    },
+    {
+      "beat": 256,
+      "name": "D"
+    },
+    {
+      "beat": 264,
+      "name": "A"
+    },
+    {
+      "beat": 272,
+      "name": "Bm"
+    },
+    {
+      "beat": 280,
+      "name": "G"
+    },
+    {
+      "beat": 288,
+      "name": "D"
+    },
+    {
+      "beat": 296,
+      "name": "A"
+    },
+    {
+      "beat": 304,
+      "name": "Bm"
+    },
+    {
+      "beat": 312,
+      "name": "G"
+    },
+    {
+      "beat": 320,
+      "name": "D"
+    },
+    {
+      "beat": 328,
+      "name": "A"
+    },
+    {
+      "beat": 336,
+      "name": "Bm"
+    },
+    {
+      "beat": 344,
+      "name": "G"
+    },
+    {
+      "beat": 352,
+      "name": "D"
+    },
+    {
+      "beat": 360,
+      "name": "A"
+    },
+    {
+      "beat": 368,
+      "name": "Bm"
+    },
+    {
+      "beat": 376,
+      "name": "G"
+    },
+    {
+      "beat": 384,
+      "name": "D"
+    }
+  ],
+  "lyrics": [
+    {
+      "beat": 0,
+      "text": "Encore un jour à se lever"
+    },
+    {
+      "beat": 4,
+      "text": "En même temps que le soleil"
+    },
+    {
+      "beat": 8,
+      "text": "La face encore un peu poquée"
+    },
+    {
+      "beat": 12,
+      "text": "Mon quatre heures de sommeil, yeah!"
+    },
+    {
+      "beat": 16,
+      "text": "J'tire une couple de puffs de clope"
+    },
+    {
+      "beat": 20,
+      "text": "Job done pour les vitamines"
+    },
+    {
+      "beat": 24,
+      "text": "Pis un bon café à l'eau de moppe"
+    },
+    {
+      "beat": 28,
+      "text": "Histoire de s'donner meilleur mine, yeah!"
+    },
+    {
+      "beat": 32,
+      "text": "J'prend le Florida Turnpike"
+    },
+    {
+      "beat": 36,
+      "text": "Demain soir j't'a Montmagny"
+    },
+    {
+      "beat": 40,
+      "text": "Non trucker c'pas vraiment le Klondike"
+    },
+    {
+      "beat": 44,
+      "text": "Mais tu vois du pays, yeah!"
+    },
+    {
+      "beat": 48,
+      "text": "Surtout qu'ça t'fait réaliser"
+    },
+    {
+      "beat": 52,
+      "text": "Que derrière les beaux paysages"
+    },
+    {
+      "beat": 56,
+      "text": "Y'a tellement d'inégalités"
+    },
+    {
+      "beat": 60,
+      "text": "Et de souffrance sur les visages"
+    },
+    {
+      "beat": 64,
+      "text": "La question qu'je me pose tout le temps,"
+    },
+    {
+      "beat": 68,
+      "text": "Mais comment font tous ces gens"
+    },
+    {
+      "beat": 72,
+      "text": "Pour croire encore en la vie"
+    },
+    {
+      "beat": 76,
+      "text": "Dans cette hypocrisie"
+    },
+    {
+      "beat": 80,
+      "text": "C'est si triste que des fois"
+    },
+    {
+      "beat": 84,
+      "text": "Quand je rentre à la maison"
+    },
+    {
+      "beat": 88,
+      "text": "Pis que j'park mon vieux camion"
+    },
+    {
+      "beat": 92,
+      "text": "J'vois tout' l'Amérique qui pleure"
+    },
+    {
+      "beat": 96,
+      "text": "Dans mon rétroviseur"
+    },
+    {
+      "beat": 104,
+      "text": "Moi je traîne dans ma remorque"
+    },
+    {
+      "beat": 108,
+      "text": "Tous les excès de mon époque"
+    },
+    {
+      "beat": 112,
+      "text": "La surabondance surgelée"
+    },
+    {
+      "beat": 116,
+      "text": "Shootée, sur-emballée, yeah!"
+    },
+    {
+      "beat": 120,
+      "text": "Pendant qu'les voeux pieux passent dans l'beurre"
+    },
+    {
+      "beat": 124,
+      "text": "Notre insouciance est repue"
+    },
+    {
+      "beat": 128,
+      "text": "C'est dans le fond des containers"
+    },
+    {
+      "beat": 132,
+      "text": "Que pourront pourrir les surplus"
+    },
+    {
+      "beat": 136,
+      "text": "La question qu'je me pose tout le temps,"
+    },
+    {
+      "beat": 140,
+      "text": "Mais que feront nos enfants"
+    },
+    {
+      "beat": 144,
+      "text": "Quand il ne restera rien"
+    },
+    {
+      "beat": 148,
+      "text": "Que des ruines et la faim"
+    },
+    {
+      "beat": 152,
+      "text": "C'est si triste que des fois"
+    },
+    {
+      "beat": 156,
+      "text": "Quand je rentre à la maison"
+    },
+    {
+      "beat": 160,
+      "text": "Pis que j'park mon vieux camion"
+    },
+    {
+      "beat": 164,
+      "text": "J'vois tout' l'Amérique qui pleure"
+    },
+    {
+      "beat": 168,
+      "text": "Dans mon rétroviseur"
+    },
+    {
+      "beat": 176,
+      "text": "Sur l'Interstate '95"
+    },
+    {
+      "beat": 180,
+      "text": "Partent en fumée tous les rêves"
+    },
+    {
+      "beat": 184,
+      "text": "Un char en feu dans une bretelle"
+    },
+    {
+      "beat": 188,
+      "text": "Un accident mortel, yeah!"
+    },
+    {
+      "beat": 192,
+      "text": "Et au milieu de ce bouchon"
+    },
+    {
+      "beat": 196,
+      "text": "Pas de respect pour la mort"
+    },
+    {
+      "beat": 200,
+      "text": "Chacun son tour joue du klaxon"
+    },
+    {
+      "beat": 204,
+      "text": "Tellement pressé d'aller nulle part"
+    },
+    {
+      "beat": 208,
+      "text": "La question qu'je me pose tout le temps,"
+    },
+    {
+      "beat": 212,
+      "text": "Mais où s'en vont tout ces gens"
+    },
+    {
+      "beat": 216,
+      "text": "Y'a tellement de chars partout"
+    },
+    {
+      "beat": 220,
+      "text": "Le monde est rendu fou"
+    },
+    {
+      "beat": 224,
+      "text": "C'est si triste que des fois"
+    },
+    {
+      "beat": 228,
+      "text": "Quand je rentre à la maison"
+    },
+    {
+      "beat": 232,
+      "text": "Pis que j'park mon vieux camion"
+    },
+    {
+      "beat": 236,
+      "text": "J'vois tout' l'Amérique qui pleure"
+    },
+    {
+      "beat": 240,
+      "text": "Dans mon rétroviseur"
+    },
+    {
+      "beat": 248,
+      "text": "Un autre truck stop d'autoroute"
+    },
+    {
+      "beat": 252,
+      "text": "Pogné pour manger d'la schnout"
+    },
+    {
+      "beat": 256,
+      "text": "C'est vrai que dans la soupe du jour"
+    },
+    {
+      "beat": 260,
+      "text": "Y'a pu tellement d'amour, yeah!"
+    },
+    {
+      "beat": 264,
+      "text": "On a tué la chaleur humaine"
+    },
+    {
+      "beat": 268,
+      "text": "Avec le service à la chaîne"
+    },
+    {
+      "beat": 272,
+      "text": "À télé un autre malade"
+    },
+    {
+      "beat": 276,
+      "text": "Vient d'déclencher une fusillade"
+    },
+    {
+      "beat": 280,
+      "text": "La question qu'je me pose tout le temps,"
+    },
+    {
+      "beat": 284,
+      "text": "Mais comment font ces pauvres gens"
+    },
+    {
+      "beat": 288,
+      "text": "Pour traverser tout le cours"
+    },
+    {
+      "beat": 292,
+      "text": "D'une vie sans amour"
+    },
+    {
+      "beat": 296,
+      "text": "C'est si triste que des fois"
+    },
+    {
+      "beat": 300,
+      "text": "Quand je rentre à la maison"
+    },
+    {
+      "beat": 304,
+      "text": "Pis que j'park mon vieux camion"
+    },
+    {
+      "beat": 308,
+      "text": "J'vois tout' l'Amérique qui pleure"
+    },
+    {
+      "beat": 312,
+      "text": "Dans mon rétroviseur"
+    },
+    {
+      "beat": 320,
+      "text": "Mais n'empêche que moi aussi"
+    },
+    {
+      "beat": 324,
+      "text": "Quand j'roule tout seul dans la nuit"
+    },
+    {
+      "beat": 328,
+      "text": "J'me d'mande des fois c'que j'fous ici"
+    },
+    {
+      "beat": 332,
+      "text": "Pris dans l'arrière-pays, yeah!"
+    },
+    {
+      "beat": 336,
+      "text": "J'pense à tout ce que j'ai manqué"
+    },
+    {
+      "beat": 340,
+      "text": "Avec Mimi pis les deux filles"
+    },
+    {
+      "beat": 344,
+      "text": "Et j'ai ce sentiment fucké"
+    },
+    {
+      "beat": 348,
+      "text": "D'être étranger dans ma famille"
+    },
+    {
+      "beat": 352,
+      "text": "La question qu'j'me pose tout le temps,"
+    },
+    {
+      "beat": 356,
+      "text": "Pourquoi travailler autant"
+    },
+    {
+      "beat": 360,
+      "text": "M'éloigner de ceux que j'aime"
+    },
+    {
+      "beat": 364,
+      "text": "Tout ça pour jouer la game"
+    },
+    {
+      "beat": 368,
+      "text": "C'est si triste que des fois"
+    },
+    {
+      "beat": 372,
+      "text": "Quand je suis loin de la maison"
+    },
+    {
+      "beat": 376,
+      "text": "Assis dans mon vieux camion"
+    },
+    {
+      "beat": 380,
+      "text": "J'ai tout' l'Amérique qui pleure"
+    },
+    {
+      "beat": 384,
+      "text": "Que'que part au fond du coeur"
+    }
+  ],
+  "notes": [
+    {
+      "s": 3,
+      "f": 0,
+      "b": 0,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 0,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 0,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 0,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 2,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 2,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 2,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 2,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 4,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 4,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 4,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 4,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 6,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 6,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 6,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 6,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 8,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 8,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 8,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 8,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 8,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 10,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 10,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 10,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 10,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 10,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 12,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 12,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 12,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 12,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 12,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 14,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 14,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 14,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 14,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 14,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 16,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 16,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 16,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 16,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 16,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 18,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 18,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 18,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 18,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 18,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 20,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 20,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 20,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 20,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 20,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 22,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 22,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 22,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 22,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 22,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 24,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 26,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 28,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 30,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 32,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 32,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 32,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 32,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 34,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 34,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 34,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 34,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 36,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 36,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 36,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 36,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 38,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 38,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 38,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 38,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 40,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 40,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 40,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 40,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 40,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 42,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 42,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 42,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 42,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 42,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 44,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 44,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 44,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 44,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 44,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 46,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 46,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 46,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 46,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 46,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 48,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 48,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 48,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 48,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 48,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 50,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 50,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 50,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 50,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 50,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 52,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 52,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 52,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 52,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 52,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 54,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 54,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 54,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 54,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 54,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 56,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 58,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 60,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 62,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 64,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 64,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 64,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 64,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 66,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 66,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 66,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 66,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 68,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 68,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 68,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 68,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 70,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 70,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 70,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 70,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 72,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 72,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 72,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 72,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 72,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 74,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 74,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 74,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 74,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 74,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 76,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 76,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 76,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 76,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 76,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 78,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 78,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 78,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 78,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 78,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 80,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 80,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 80,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 80,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 80,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 82,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 82,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 82,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 82,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 82,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 84,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 84,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 84,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 84,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 84,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 86,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 86,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 86,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 86,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 86,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 88,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 90,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 92,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 94,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 96,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 96,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 96,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 96,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 98,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 98,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 98,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 98,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 100,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 100,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 100,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 100,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 102,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 102,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 102,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 102,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 104,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 104,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 104,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 104,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 104,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 106,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 106,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 106,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 106,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 106,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 108,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 108,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 108,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 108,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 108,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 110,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 110,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 110,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 110,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 110,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 112,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 112,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 112,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 112,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 112,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 114,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 114,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 114,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 114,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 114,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 116,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 116,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 116,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 116,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 116,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 118,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 118,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 118,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 118,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 118,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 120,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 122,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 124,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 126,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 128,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 128,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 128,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 128,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 130,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 130,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 130,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 130,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 132,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 132,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 132,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 132,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 134,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 134,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 134,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 134,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 136,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 136,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 136,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 136,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 136,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 138,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 138,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 138,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 138,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 138,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 140,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 140,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 140,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 140,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 140,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 142,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 142,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 142,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 142,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 142,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 144,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 144,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 144,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 144,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 144,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 146,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 146,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 146,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 146,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 146,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 148,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 148,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 148,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 148,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 148,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 150,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 150,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 150,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 150,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 150,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 152,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 154,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 156,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 158,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 160,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 160,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 160,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 160,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 162,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 162,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 162,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 162,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 164,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 164,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 164,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 164,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 166,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 166,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 166,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 166,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 168,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 168,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 168,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 168,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 168,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 170,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 170,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 170,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 170,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 170,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 172,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 172,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 172,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 172,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 172,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 174,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 174,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 174,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 174,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 174,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 176,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 176,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 176,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 176,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 176,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 178,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 178,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 178,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 178,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 178,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 180,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 180,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 180,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 180,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 180,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 182,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 182,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 182,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 182,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 182,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 184,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 186,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 188,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 190,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 192,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 192,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 192,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 192,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 194,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 194,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 194,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 194,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 196,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 196,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 196,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 196,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 198,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 198,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 198,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 198,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 200,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 200,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 200,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 200,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 200,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 202,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 202,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 202,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 202,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 202,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 204,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 204,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 204,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 204,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 204,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 206,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 206,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 206,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 206,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 206,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 208,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 208,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 208,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 208,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 208,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 210,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 210,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 210,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 210,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 210,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 212,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 212,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 212,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 212,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 212,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 214,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 214,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 214,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 214,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 214,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 216,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 218,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 220,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 222,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 224,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 224,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 224,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 224,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 226,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 226,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 226,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 226,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 228,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 228,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 228,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 228,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 230,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 230,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 230,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 230,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 232,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 232,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 232,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 232,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 232,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 234,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 234,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 234,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 234,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 234,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 236,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 236,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 236,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 236,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 236,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 238,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 238,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 238,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 238,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 238,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 240,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 240,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 240,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 240,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 240,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 242,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 242,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 242,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 242,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 242,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 244,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 244,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 244,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 244,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 244,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 246,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 246,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 246,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 246,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 246,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 248,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 250,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 252,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 254,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 256,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 256,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 256,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 256,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 258,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 258,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 258,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 258,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 260,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 260,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 260,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 260,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 262,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 262,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 262,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 262,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 264,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 264,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 264,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 264,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 264,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 266,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 266,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 266,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 266,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 266,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 268,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 268,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 268,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 268,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 268,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 270,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 270,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 270,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 270,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 270,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 272,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 272,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 272,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 272,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 272,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 274,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 274,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 274,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 274,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 274,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 276,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 276,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 276,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 276,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 276,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 278,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 278,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 278,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 278,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 278,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 280,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 282,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 284,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 286,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 288,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 288,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 288,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 288,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 290,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 290,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 290,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 290,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 292,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 292,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 292,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 292,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 294,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 294,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 294,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 294,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 296,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 296,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 296,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 296,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 296,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 298,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 298,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 298,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 298,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 298,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 300,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 300,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 300,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 300,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 300,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 302,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 302,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 302,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 302,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 302,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 304,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 304,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 304,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 304,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 304,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 306,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 306,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 306,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 306,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 306,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 308,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 308,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 308,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 308,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 308,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 310,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 310,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 310,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 310,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 310,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 312,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 314,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 316,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 318,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 320,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 320,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 320,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 320,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 322,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 322,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 322,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 322,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 324,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 324,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 324,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 324,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 326,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 326,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 326,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 326,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 328,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 328,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 328,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 328,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 328,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 330,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 330,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 330,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 330,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 330,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 332,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 332,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 332,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 332,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 332,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 334,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 334,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 334,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 334,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 334,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 336,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 336,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 336,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 336,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 336,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 338,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 338,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 338,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 338,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 338,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 340,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 340,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 340,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 340,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 340,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 342,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 342,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 342,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 342,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 342,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 344,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 346,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 348,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 350,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 352,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 352,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 352,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 352,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 354,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 354,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 354,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 354,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 356,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 356,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 356,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 356,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 358,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 358,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 358,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 358,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 360,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 360,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 360,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 360,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 360,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 362,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 362,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 362,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 362,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 362,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 364,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 364,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 364,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 364,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 364,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 0,
+      "b": 366,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 3,
+      "f": 2,
+      "b": 366,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 2
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 366,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 3
+    },
+    {
+      "s": 1,
+      "f": 2,
+      "b": 366,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A",
+      "finger": 4
+    },
+    {
+      "s": 0,
+      "f": 0,
+      "b": 366,
+      "dur": 1,
+      "type": "chord",
+      "chord": "A"
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 368,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 368,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 368,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 368,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 368,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 370,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 370,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 370,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 370,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 370,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 372,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 372,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 372,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 372,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 372,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 374,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 4,
+      "b": 374,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 3
+    },
+    {
+      "s": 2,
+      "f": 4,
+      "b": 374,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 4
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 374,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 2
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 374,
+      "dur": 1,
+      "type": "chord",
+      "chord": "Bm",
+      "finger": 1
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 376,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 378,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 380,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 5,
+      "f": 3,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 2
+    },
+    {
+      "s": 4,
+      "f": 2,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 1
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 2,
+      "f": 0,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 1,
+      "f": 0,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G"
+    },
+    {
+      "s": 0,
+      "f": 3,
+      "b": 382,
+      "dur": 1,
+      "type": "chord",
+      "chord": "G",
+      "finger": 4
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 384,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 384,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 384,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 384,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 386,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 386,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 386,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 386,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 388,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 388,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 388,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 388,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    },
+    {
+      "s": 3,
+      "f": 0,
+      "b": 390,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D"
+    },
+    {
+      "s": 2,
+      "f": 2,
+      "b": 390,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 1
+    },
+    {
+      "s": 1,
+      "f": 3,
+      "b": 390,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 3
+    },
+    {
+      "s": 0,
+      "f": 2,
+      "b": 390,
+      "dur": 1,
+      "type": "chord",
+      "chord": "D",
+      "finger": 2
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "_instructions": {
+    "overview": "Copy this file, rename it (e.g. my-song.json), fill in the fields, then drag it onto FretFlow to load it.",
+    "id": "Unique short key, no spaces (e.g. 'my-song'). Must be unique across all songs.",
+    "title": "Full song title as it should appear in the app.",
+    "artist": "Artist or band name.",
+    "key": "Musical key (e.g. G, Am, D, E). Informational only.",
+    "time": "Time signature: '4/4', '3/4', '6/8' etc. Informational only.",
+    "bpm": "Beats per minute at full speed (integer). Try to match the original recording.",
+    "strumPattern": "Array of 'D' (down) and 'U' (up) strums. E.g. ['D','D','U','U','D','U'].",
+    "chords": [
+      "Array of chord changes. Each entry:",
+      "  beat   — beat number from start (0 = very first beat, 8 = start of measure 2 in 4/4)",
+      "  name   — chord name displayed (e.g. 'G', 'Am', 'D7', 'Bm')"
+    ],
+    "lyrics": [
+      "Array of lyric lines. Each entry:",
+      "  beat   — beat number when this line starts singing",
+      "  text   — the words for that phrase"
+    ],
+    "notes": [
+      "Array of individual notes/chord strums on the fretboard. Each entry:",
+      "  s      — string number: 0=high e, 1=B, 2=G, 3=D, 4=A, 5=low E",
+      "  f      — fret number (0 = open string)",
+      "  b      — beat position (float, e.g. 2.5 = halfway through beat 3)",
+      "  dur    — duration in beats (e.g. 1 = one beat, 0.5 = eighth note)",
+      "  type   — 'chord' for strum patterns, 'note' for individual picked notes",
+      "  chord  — chord name this note belongs to (for 'chord' type, matches chord bar)",
+      "  finger — optional: which fretting finger to use (1=index, 2=middle, 3=ring, 4=pinky)"
+    ],
+    "beat_guide": {
+      "4/4 time": "8 beats per measure. Measure 1 = beats 0-7, Measure 2 = beats 8-15, etc.",
+      "typical chord bar": "One chord per measure = chord change every 8 beats.",
+      "strum timing": "4 strums per measure at beats 0, 2, 4, 6. 8 strums at 0,1,2,3,4,5,6,7."
+    }
+  },
+
+  "id": "my-song",
+  "title": "My Song Title",
+  "artist": "Artist Name",
+  "key": "G",
+  "time": "4/4",
+  "bpm": 80,
+  "strumPattern": ["D","D","U","U","D","U"],
+
+  "chords": [
+    {"beat":0,  "name":"G"},
+    {"beat":8,  "name":"Em"},
+    {"beat":16, "name":"C"},
+    {"beat":24, "name":"D"}
+  ],
+
+  "lyrics": [
+    {"beat":0,  "text":"First line of the verse"},
+    {"beat":8,  "text":"Second line of the verse"},
+    {"beat":16, "text":"Third line of the verse"},
+    {"beat":24, "text":"Fourth line of the verse"}
+  ],
+
+  "notes": [
+    {"s":5,"f":3,"b":0,  "dur":1,"type":"chord","chord":"G","finger":2},
+    {"s":4,"f":2,"b":0,  "dur":1,"type":"chord","chord":"G","finger":1},
+    {"s":3,"f":0,"b":0,  "dur":1,"type":"chord","chord":"G"},
+    {"s":2,"f":0,"b":0,  "dur":1,"type":"chord","chord":"G"},
+    {"s":1,"f":0,"b":0,  "dur":1,"type":"chord","chord":"G"},
+    {"s":0,"f":3,"b":0,  "dur":1,"type":"chord","chord":"G","finger":4},
+
+    {"s":5,"f":0,"b":8,  "dur":1,"type":"chord","chord":"Em"},
+    {"s":4,"f":2,"b":8,  "dur":1,"type":"chord","chord":"Em","finger":2},
+    {"s":3,"f":2,"b":8,  "dur":1,"type":"chord","chord":"Em","finger":3},
+    {"s":2,"f":0,"b":8,  "dur":1,"type":"chord","chord":"Em"},
+    {"s":1,"f":0,"b":8,  "dur":1,"type":"chord","chord":"Em"},
+    {"s":0,"f":0,"b":8,  "dur":1,"type":"chord","chord":"Em"},
+
+    {"s":4,"f":3,"b":16, "dur":1,"type":"chord","chord":"C","finger":3},
+    {"s":3,"f":2,"b":16, "dur":1,"type":"chord","chord":"C","finger":2},
+    {"s":2,"f":0,"b":16, "dur":1,"type":"chord","chord":"C"},
+    {"s":1,"f":1,"b":16, "dur":1,"type":"chord","chord":"C","finger":1},
+    {"s":0,"f":0,"b":16, "dur":1,"type":"chord","chord":"C"},
+
+    {"s":3,"f":0,"b":24, "dur":1,"type":"chord","chord":"D"},
+    {"s":2,"f":2,"b":24, "dur":1,"type":"chord","chord":"D","finger":1},
+    {"s":1,"f":3,"b":24, "dur":1,"type":"chord","chord":"D","finger":3},
+    {"s":0,"f":2,"b":24, "dur":1,"type":"chord","chord":"D","finger":2}
+  ]
+}

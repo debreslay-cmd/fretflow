@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#0d0d0d"/>
+<title>Fretflow · Guitar Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<script src="https://unpkg.com/soundfont-player/dist/soundfont-player.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #0d0d0d;
+  --bg2:      #141414;
+  --bg3:      #1c1c1c;
+  --panel:    #111111;
+  --border:   #2a2a2a;
+  --border2:  #3a3a3a;
+  --amber:    #e8a020;
+  --amber2:   #f5c040;
+  --amber3:   #ffd870;
+  --teal:     #20c8a0;
+  --teal2:    #40e0b8;
+  --red:      #e05040;
+  --blue:     #4090e0;
+  --text:     #e8e0d0;
+  --t2:       #907060;
+  --t3:       #504030;
+  --mono:     'JetBrains Mono', monospace;
+  --disp:     'Oswald', sans-serif;
+  --body:     'Lato', sans-serif;
+  --string-e1: #f0e0a0;
+  --string-b:  #d8c890;
+  --string-g:  #c8b878;
+  --string-d:  #b8a868;
+  --string-a:  #a89858;
+  --string-E2: #988848;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--body);display:flex;flex-direction:column}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;
+  background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0}
+.logo{font-family:var(--disp);font-size:26px;font-weight:700;letter-spacing:.08em;color:var(--amber);text-transform:uppercase}
+.logo span{color:var(--t2)}
+.song-info{text-align:center}
+.song-title{font-family:var(--disp);font-size:18px;font-weight:500;color:var(--text);letter-spacing:.05em}
+.song-meta{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.1em;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:10px}
+.bpm-display{font-family:var(--mono);font-size:13px;color:var(--amber);background:var(--bg3);
+  padding:4px 10px;border-radius:4px;border:1px solid var(--border2)}
+.beat-dot{width:22px;height:22px;border-radius:50%;background:var(--border2);
+  border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:11px;font-weight:600;color:var(--t3);
+  transition:background .06s,border-color .06s,color .06s,transform .06s}
+.beat-dot.beat1{background:var(--amber);border-color:var(--amber3);color:#000;transform:scale(1.25)}
+.beat-dot.beat-on{background:var(--border2);border-color:var(--t3);color:var(--t2);transform:scale(1.1)}
+
+/* CHORD DISPLAY */
+.chord-bar{height:72px;background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:stretch;flex-shrink:0;overflow:hidden;position:relative}
+canvas#chordScroll{flex:1;display:block}
+.chord-bar-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;
+  padding:0 12px;gap:5px;flex-shrink:0;width:160px;max-width:160px;border-left:1px solid var(--border);overflow:hidden}
+.chord-mode-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.strum-strip{display:flex;gap:2px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:148px}
+.strum-arrow{font-family:var(--mono);font-size:14px;font-weight:600;padding:1px 2px;
+  border-radius:2px;transition:transform .08s, text-shadow .08s;flex-shrink:0}
+.strum-arrow.down{color:var(--amber2)}
+.strum-arrow.up{color:var(--teal)}
+.strum-arrow.active{transform:scale(1.4);text-shadow:0 0 8px currentColor}
+
+/* LYRICS PANEL */
+.lyrics-panel{background:#0c0c0c;border-bottom:1px solid var(--border);
+  flex-shrink:0;display:none;flex-direction:column;overflow:hidden}
+.lyrics-panel.has-lyrics{display:flex}
+.lyrics-resize-handle{display:none}
+/* Active line — pinned at top, large and readable at distance */
+.lyrics-active-row{flex-shrink:0;display:flex;align-items:center;gap:12px;
+  padding:10px 20px 10px;border-bottom:1px solid #2a2000;
+  font-family:var(--disp);font-size:28px;font-weight:600;letter-spacing:.02em;
+  color:#ffffff;background:#151200;line-height:1.2}
+/* Instrumental cue — active row becomes amber italic smaller */
+.lyrics-active-row.instrumental{background:#110d00;border-bottom-color:#1e1800}
+.lyrics-active-row.instrumental .lyric-active-text{
+  color:var(--amber);font-size:18px;font-weight:400;font-style:italic;opacity:.8}
+.lyric-queue-line.instrumental-cue{color:var(--amber) !important;font-style:italic;opacity:.35 !important}
+/* Vocals-incoming hint */
+.lyrics-active-row.vocals-coming{background:#0a1008;border-bottom-color:#1a2a14}
+.vocals-coming-text{color:#40c870;font-size:15px;font-weight:400;font-style:italic;
+  letter-spacing:.04em;opacity:.85}
+.vocals-coming-text .bar-count{font-family:var(--mono);font-size:18px;font-weight:700;
+  color:#60e890;margin:0 4px}
+/* Queue of 3 upcoming lines */
+.lyrics-queue{flex-shrink:0;padding:6px 24px 8px;
+  display:flex;flex-direction:column;gap:1px}
+.lyric-queue-line{font-family:var(--body);font-size:14px;line-height:1.65;
+  color:var(--t2);cursor:pointer;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;opacity:.6;
+  transition:opacity .2s}
+.lyric-queue-line:first-child{opacity:.85;color:#c8b888;font-size:15px}
+.lyric-queue-line.dim{opacity:.3;color:var(--t3)}
+/* Chord tags — kept for tab strip, not used in lyrics */
+.chord-tag{font-family:var(--mono);font-weight:700;
+  background:var(--amber);color:#000;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;letter-spacing:.04em}
+.lyrics-empty{padding:16px 24px;font-family:var(--mono);font-size:11px;
+  color:var(--t3);letter-spacing:.08em;display:none}
+.lyrics-empty.show{display:block}
+
+/* TAB STRIP */
+.tab-strip{height:34px;background:#0a0a0a;border-bottom:1px solid var(--border);
+  flex-shrink:0;position:relative;overflow:hidden}
+canvas#tabStrip{display:block;width:100%;height:100%}
+
+/* FRETBOARD AREA */
+.fretboard-wrap{flex:1;position:relative;overflow:hidden;background:var(--bg)}
+canvas#fretboard{display:block;width:100%;height:100%}
+
+/* PLAY LINE */
+.play-line{position:absolute;left:180px;top:0;bottom:0;width:2px;background:var(--amber);
+  opacity:.7;pointer-events:none;z-index:10}
+.play-line::before{content:'';position:absolute;top:0;bottom:0;left:-6px;width:14px;
+  background:linear-gradient(90deg,transparent,rgba(232,160,32,.15),transparent)}
+
+/* CONTROLS */
+.controls{background:var(--panel);border-top:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0;flex-wrap:wrap}
+.ctrl-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px 20px;border-radius:4px;font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.06em;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text);transition:all .15s;text-transform:uppercase}
+.ctrl-btn:hover{border-color:var(--amber);color:var(--amber)}
+.ctrl-btn.active{background:var(--amber);color:#000;border-color:var(--amber);font-weight:700}
+.ctrl-btn.danger{border-color:var(--red);color:var(--red)}
+.ctrl-btn.danger:hover{background:var(--red);color:#fff}
+.sep{width:1px;height:32px;background:var(--border2)}
+.slider-wrap{display:flex;align-items:center;gap:8px}
+.slider-label{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;background:var(--border2);
+  border-radius:2px;outline:none;cursor:pointer;width:120px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
+  border-radius:50%;background:var(--amber);border:none;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+  background:var(--amber);border:none;cursor:pointer}
+.val-display{font-family:var(--mono);font-size:11px;color:var(--amber);min-width:32px}
+.song-select{background:var(--bg3);border:1px solid var(--border2);color:var(--text);
+  font-family:var(--mono);font-size:11px;padding:6px 10px;border-radius:4px;cursor:pointer;
+  outline:none;text-transform:uppercase;letter-spacing:.04em}
+.song-select:focus{border-color:var(--amber)}
+.song-select option{background:var(--bg3)}
+
+/* LEGEND */
+.legend{display:flex;align-items:center;gap:12px;margin-left:auto}
+.legend-item{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--t2)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+
+/* STATUS */
+.status-bar{background:var(--bg2);border-top:1px solid var(--border);
+  padding:4px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.status-item{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.08em}
+.status-item span{color:var(--amber)}
+
+/* ─── MOBILE LAYOUT ──────────────────────────────────────
+   Shown when screen width < 900px (phone landscape/portrait)
+   Full-screen fretboard, minimal chrome, touch-friendly
+──────────────────────────────────────────────────────── */
+.mobile-ui { display: none; }
+
+@media (max-width: 768px) {
+  /* Hide all desktop UI */
+  .header, .chord-bar, .lyrics-panel, .tab-strip,
+  .controls, .status-bar, .play-line { display: none !important; }
+
+  /* Fretboard fills everything */
+  body { overflow: hidden; background: var(--bg); }
+  .fretboard-wrap {
+    position: fixed !important;
+    inset: 0 !important;
+    flex: none !important;
+  }
+
+  /* Mobile UI overlay */
+  .mobile-ui { display: flex; }
+}
+
+/* ── Mobile top bar: song name + chord ── */
+.mob-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px;
+  background: linear-gradient(to bottom, rgba(0,0,0,.92), transparent);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 14px; pointer-events: none;
+}
+.mob-song-name {
+  font-family: var(--disp); font-size: 15px; font-weight: 600;
+  color: var(--text); letter-spacing: .04em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 55vw;
+}
+.mob-chord {
+  font-family: var(--disp); font-size: 36px; font-weight: 700;
+  color: var(--amber2); line-height: 1;
+  text-shadow: 0 0 20px rgba(232,160,32,.5);
+}
+.mob-next-chord {
+  font-family: var(--disp); font-size: 18px; font-weight: 400;
+  color: var(--t2); margin-left: 6px; align-self: flex-end;
+  margin-bottom: 6px;
+}
+
+/* ── Mobile metronome dots ── */
+.mob-metro {
+  position: fixed; top: 56px; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: center; gap: 10px;
+  pointer-events: none;
+}
+.mob-beat-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--border2); border: 2px solid var(--border2);
+  font-family: var(--disp); font-size: 10px; font-weight: 600;
+  color: var(--t3); display: flex; align-items: center; justify-content: center;
+  transition: background .06s, border-color .06s, transform .06s;
+}
+.mob-beat-dot.beat1  { background: var(--amber); border-color: var(--amber3); color:#000; transform:scale(1.3); }
+.mob-beat-dot.beat-on{ background: var(--border2); border-color: var(--t3); color:var(--t2); transform:scale(1.15); }
+
+/* ── Mobile BPM display ── */
+.mob-bpm {
+  position: fixed; top: 56px; right: 14px; z-index: 100;
+  font-family: var(--mono); font-size: 11px; color: var(--amber);
+  background: rgba(0,0,0,.6); padding: 3px 8px; border-radius: 4px;
+  border: 1px solid var(--border2); pointer-events: none;
+}
+
+/* ── Mobile bottom controls ── */
+.mob-controls {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  height: 80px;
+  background: linear-gradient(to top, rgba(0,0,0,.95) 60%, transparent);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px 18px;
+  gap: 10px;
+}
+
+/* Touch buttons */
+.mob-btn {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 2px;
+  min-width: 52px; height: 52px; border-radius: 10px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+  border: 1px solid var(--border2); background: rgba(20,20,20,.8);
+  color: var(--t2); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background .1s, color .1s, border-color .1s;
+  padding: 0 10px;
+}
+.mob-btn:active { background: var(--border2); }
+.mob-btn .mob-icon { font-size: 20px; line-height: 1; }
+.mob-btn.play-btn {
+  min-width: 64px; height: 64px; border-radius: 32px;
+  background: var(--amber); border-color: var(--amber2); color: #000;
+  font-size: 11px; font-weight: 700;
+}
+.mob-btn.play-btn:active { background: var(--amber2); }
+.mob-btn.play-btn .mob-icon { font-size: 26px; }
+.mob-btn.active-btn { border-color: var(--amber); color: var(--amber); }
+
+/* Speed control in mobile */
+.mob-speed {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  flex: 1; max-width: 100px;
+}
+.mob-speed-label {
+  font-family: var(--mono); font-size: 9px; color: var(--t2);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.mob-speed input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  height: 3px; background: var(--border2); border-radius: 2px;
+  outline: none; cursor: pointer; width: 100%;
+}
+.mob-speed input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: 50%; background: var(--amber); border: none;
+}
+.mob-speed-val {
+  font-family: var(--mono); font-size: 10px; color: var(--amber);
+}
+
+/* ── Song picker modal (mobile) ── */
+.mob-song-modal {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.92);
+  display: none; flex-direction: column;
+  padding: 20px;
+}
+.mob-song-modal.open { display: flex; }
+.mob-modal-title {
+  font-family: var(--disp); font-size: 22px; font-weight: 600;
+  color: var(--amber); margin-bottom: 16px; letter-spacing: .06em;
+}
+.mob-song-list {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+}
+.mob-song-item {
+  padding: 14px 16px; border-radius: 8px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.mob-song-item:active { background: var(--border); }
+.mob-song-item-title {
+  font-family: var(--disp); font-size: 16px; color: var(--text);
+  font-weight: 500;
+}
+.mob-song-item-artist {
+  font-family: var(--mono); font-size: 10px; color: var(--t2);
+  margin-top: 2px; letter-spacing: .06em;
+}
+.mob-modal-close {
+  margin-top: 16px; padding: 14px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 8px; font-family: var(--mono); font-size: 12px;
+  color: var(--t2); cursor: pointer; text-align: center;
+  letter-spacing: .08em;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Fret<span>flow</span></div>
+  <div class="song-info">
+    <div class="song-title" id="songTitle">Knockin' on Heaven's Door</div>
+    <div class="song-meta" id="songMeta">BOB DYLAN &nbsp;·&nbsp; KEY OF G &nbsp;·&nbsp; 4/4</div>
+  </div>
+  <div class="header-right" style="display:flex;align-items:center;gap:10px">
+    <div id="metronome" style="display:flex;align-items:center;gap:6px">
+      <div class="beat-dot" id="bd1"></div>
+      <div class="beat-dot" id="bd2"></div>
+      <div class="beat-dot" id="bd3"></div>
+      <div class="beat-dot" id="bd4"></div>
+    </div>
+    <div class="bpm-display" id="bpmDisp">♩ 72 BPM</div>
+  </div>
+</div>
+
+<!-- CHORD BAR -->
+<div class="chord-bar">
+  <canvas id="chordScroll"></canvas>
+  <div class="chord-bar-right">
+    <div class="chord-mode-tag" id="chordModeTag" style="color:var(--amber);border-color:var(--amber);background:rgba(232,160,32,0.08)">STRUM</div>
+    <div class="strum-strip" id="strumStrip"></div>
+  </div>
+</div>
+
+<!-- LYRICS PANEL -->
+<div class="lyrics-panel" id="lyricsPanel">
+  <div class="lyrics-active-row" id="lyricsActiveRow"><span style="color:var(--t3);font-size:13px;font-weight:400">—</span></div>
+  <div class="lyrics-queue" id="lyricsQueue"></div>
+  <div class="lyrics-empty" id="lyricsEmpty">NO LYRICS AVAILABLE FOR THIS SONG</div>
+</div>
+
+<!-- TAB STRIP -->
+<div class="tab-strip">
+  <canvas id="tabStrip"></canvas>
+</div>
+
+<!-- FRETBOARD -->
+<div class="fretboard-wrap">
+  <canvas id="fretboard"></canvas>
+  <div class="play-line" id="playLine"></div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <select class="song-select" id="songSelect"></select>
+  <button class="ctrl-btn" id="btnLoadSong" title="Load a .json song file">+ LOAD SONG</button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" multiple/>
+  <div class="sep"></div>
+  <button class="ctrl-btn" id="btnSkipBack">↺ RESET</button>
+  <button class="ctrl-btn" id="btnBack">◀◀ BACK</button>
+  <button class="ctrl-btn active" id="btnPlay">▶ PLAY</button>
+  <button class="ctrl-btn" id="btnFwd">FWD ▶▶</button>
+  <div class="sep"></div>
+  <div class="slider-wrap">
+    <span class="slider-label">Speed</span>
+    <input type="range" id="speedSlider" min="20" max="100" value="60" step="1"/>
+    <span class="val-display" id="speedVal">60%</span>
+  </div>
+  <div class="slider-wrap">
+    <span class="slider-label">Zoom</span>
+    <input type="range" id="zoomSlider" min="60" max="140" value="100" step="1"/>
+    <span class="val-display" id="zoomVal">100%</span>
+  </div>
+  <div class="sep"></div>
+  <div class="slider-wrap">
+    <button class="ctrl-btn" id="btnMute" title="Mute/Unmute">♪ ON</button>
+    <span class="slider-label">Vol</span>
+    <input type="range" id="volSlider" min="0" max="100" value="70" step="1" style="width:80px"/>
+  </div>
+  <div class="sep"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#e8a020;border-radius:2px;width:6px;height:16px"></div>Chord bar</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4090e0"></div>Note / Melody</div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="status-bar">
+  <div class="status-item">MEASURE <span id="measureDisp">1</span></div>
+  <div class="status-item">BEAT <span id="beatDisp">1</span></div>
+  <div class="status-item">NOTES PLAYED <span id="notesDisp">0</span></div>
+  <div class="status-item">SCROLL <span id="scrollDisp">→</span></div>
+</div>
+
+<script>
+// ─── SONG DATA ───────────────────────────────────────────────────────────────
+// Each note: { string: 0-5 (high e to low E), fret: 0-n, beat: float, duration: float, type: 'chord'|'note', chord?: 'G', finger?: 1-4 }
+// beat is in quarter-note beats from start. duration in beats.
+// string: 0=high e, 1=B, 2=G, 3=D, 4=A, 5=low E
+
+// ─── BUILT-IN SONGS (always available, no file needed) ─────────────────────
+// Additional songs: drag a .json file onto the app or use the Load Song button.
+// Create your own songs using songs/_template.json as a guide.
+
+// ─── BUILT-IN SONGS ──────────────────────────────────────────────────────────
+// One song built-in so the app works immediately on open.
+// All other songs: drag & drop .json files or use + LOAD SONG.
+// Song files are in the songs/ folder included in this ZIP.
+
+const BUILTIN_SONGS = {
+  wishYouWereHere: {
+    id:'wishYouWereHere',
+    title:"Wish You Were Here (Intro)", artist:"Pink Floyd",
+    key:"G", time:"4/4", bpm:66,
+    strumPattern:['D','U','D','U'],
+    chords:[
+      {beat:0,name:'Em'},{beat:8,name:'G'},{beat:16,name:'Em'},{beat:24,name:'G'},
+      {beat:32,name:'Em'},{beat:40,name:'A'},{beat:48,name:'Em'},{beat:56,name:'A'}
+    ],
+    lyrics:[
+      {beat:0,  text:'~ Intro fingerpicking ~'},
+      {beat:32, text:'Load a song file to get started'},
+      {beat:48, text:'Drag a .json file onto the app'},
+    ],
+    notes:[
+      {s:5,f:0,b:0,  dur:.5,type:'note'},{s:2,f:2,b:.5, dur:.5,type:'note',finger:2},
+      {s:1,f:0,b:1,  dur:.5,type:'note'},{s:0,f:0,b:1.5,dur:.5,type:'note'},
+      {s:5,f:0,b:2,  dur:.5,type:'note'},{s:3,f:2,b:2.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:3,  dur:.5,type:'note',finger:2},{s:1,f:0,b:3.5,dur:.5,type:'note'},
+      {s:5,f:3,b:8,  dur:.5,type:'note',finger:2},{s:2,f:0,b:8.5,dur:.5,type:'note'},
+      {s:1,f:0,b:9,  dur:.5,type:'note'},{s:0,f:3,b:9.5,dur:.5,type:'note',finger:4},
+      {s:5,f:3,b:10, dur:.5,type:'note',finger:2},{s:3,f:0,b:10.5,dur:.5,type:'note'},
+      {s:2,f:0,b:11, dur:.5,type:'note'},{s:1,f:0,b:11.5,dur:.5,type:'note'},
+      {s:5,f:0,b:16, dur:.5,type:'note'},{s:2,f:2,b:16.5,dur:.5,type:'note',finger:2},
+      {s:1,f:0,b:17, dur:.5,type:'note'},{s:0,f:0,b:17.5,dur:.5,type:'note'},
+      {s:5,f:0,b:18, dur:.5,type:'note'},{s:3,f:2,b:18.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:19, dur:.5,type:'note',finger:2},{s:1,f:0,b:19.5,dur:.5,type:'note'},
+      {s:5,f:3,b:24, dur:.5,type:'note',finger:2},{s:2,f:0,b:24.5,dur:.5,type:'note'},
+      {s:1,f:0,b:25, dur:.5,type:'note'},{s:0,f:3,b:25.5,dur:.5,type:'note',finger:4},
+      {s:5,f:3,b:26, dur:.5,type:'note',finger:2},{s:3,f:0,b:26.5,dur:.5,type:'note'},
+      {s:2,f:0,b:27, dur:.5,type:'note'},{s:1,f:0,b:27.5,dur:.5,type:'note'},
+      {s:5,f:0,b:32, dur:.5,type:'note'},{s:2,f:2,b:32.5,dur:.5,type:'note',finger:2},
+      {s:1,f:0,b:33, dur:.5,type:'note'},{s:0,f:0,b:33.5,dur:.5,type:'note'},
+      {s:5,f:0,b:34, dur:.5,type:'note'},{s:3,f:2,b:34.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:35, dur:.5,type:'note',finger:2},{s:1,f:0,b:35.5,dur:.5,type:'note'},
+      {s:5,f:0,b:40, dur:.5,type:'note'},{s:3,f:2,b:40.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:41, dur:.5,type:'note',finger:2},{s:1,f:0,b:41.5,dur:.5,type:'note'},
+      {s:5,f:0,b:42, dur:.5,type:'note'},{s:3,f:0,b:42.5,dur:.5,type:'note'},
+      {s:2,f:0,b:43, dur:.5,type:'note'},{s:1,f:0,b:43.5,dur:.5,type:'note'},
+      {s:5,f:0,b:48, dur:.5,type:'note'},{s:2,f:2,b:48.5,dur:.5,type:'note',finger:2},
+      {s:1,f:0,b:49, dur:.5,type:'note'},{s:0,f:0,b:49.5,dur:.5,type:'note'},
+      {s:5,f:0,b:50, dur:.5,type:'note'},{s:3,f:2,b:50.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:51, dur:.5,type:'note',finger:2},{s:1,f:0,b:51.5,dur:.5,type:'note'},
+      {s:5,f:0,b:56, dur:.5,type:'note'},{s:3,f:2,b:56.5,dur:.5,type:'note',finger:2},
+      {s:2,f:2,b:57, dur:.5,type:'note',finger:2},{s:1,f:0,b:57.5,dur:.5,type:'note'},
+      {s:5,f:0,b:58, dur:.5,type:'note'},{s:3,f:0,b:58.5,dur:.5,type:'note'},
+      {s:2,f:0,b:59, dur:.5,type:'note'},{s:1,f:0,b:59.5,dur:.5,type:'note'}
+    ]
+  }
+};
+
+// ─── SONG REGISTRY — active songs (built-ins + user loaded) ─────────────────
+let SONGS = Object.assign({}, BUILTIN_SONGS);
+
+
+// ─── CHORD SCROLL BAR ────────────────────────────────────────────────────────
+const chordCanvas = document.getElementById('chordScroll');
+const chordCtx    = chordCanvas.getContext('2d');
+
+function resizeChordCanvas() {
+  chordCanvas.width  = chordCanvas.offsetWidth;
+  chordCanvas.height = chordCanvas.offsetHeight;
+}
+
+function drawChordScroll() {
+  const cW = chordCanvas.width, cH = chordCanvas.height;
+  if(!cW || !cH) return;
+  chordCtx.clearRect(0, 0, cW, cH);
+
+  // Background
+  chordCtx.fillStyle = '#141414';
+  chordCtx.fillRect(0, 0, cW, cH);
+
+  const chords = song.chords;
+  if(!chords || chords.length === 0) return;
+
+  // Find current chord index
+  let ci = -1;
+  for(let i = 0; i < chords.length; i++) {
+    if(chords[i].beat <= beatPos + 0.5) ci = i;
+  }
+
+  // Centre line (where current chord sits) - aligned with fretboard play line
+  const centerX = PLAY_LINE_X;
+
+  // Pixels per beat in chord bar matches fretboard
+  const L = getL();
+  const PPB = L.FRET_WIDTH;
+
+  // Draw chords:
+  // CURRENT chord is always pinned at centerX (doesn't scroll with beat)
+  // FUTURE chords scroll in from the right
+  // PAST chord (-1) fades out to the left at a fixed small distance
+
+  for(let i = 0; i < chords.length; i++) {
+    const ch = chords[i];
+    const isCurrent = (i === ci);
+    const isPast    = (i < ci);
+    const offset    = i - ci;
+
+    let x, fontSize, alpha, weight, color;
+
+    if(isCurrent) {
+      // Always pinned at centre
+      x = centerX;
+      fontSize = 46; alpha = 1.0; weight = 700; color = '#f5c040';
+    } else if(isPast) {
+      // Only show the immediately previous chord, fading to the left
+      if(offset < -1) continue; // don't draw further past chords
+      x = centerX - 120; // fixed position to the left
+      fontSize = 22; alpha = 0.25; weight = 400; color = '#504030';
+    } else {
+      // Future chords: scroll in from right based on beat distance
+      const rawX = centerX + (ch.beat - beatPos) * PPB;
+      if(!isFinite(rawX) || rawX < -100 || rawX > cW + 100) continue;
+      x = rawX;
+      if(offset === 1) {
+        fontSize = 32; alpha = 0.70; weight = 500; color = '#e8a020';
+      } else if(offset === 2) {
+        fontSize = 22; alpha = 0.45; weight = 400; color = '#e8a020';
+      } else if(offset === 3) {
+        fontSize = 16; alpha = 0.25; weight = 300; color = '#e8a020';
+      } else {
+        fontSize = 13; alpha = 0.12; weight = 300; color = '#e8a020';
+      }
+    }
+
+    chordCtx.globalAlpha = alpha;
+    chordCtx.fillStyle   = color;
+    chordCtx.font        = `${weight} ${fontSize}px 'Oswald', sans-serif`;
+    chordCtx.textAlign   = 'center';
+    chordCtx.textBaseline = 'middle';
+    chordCtx.fillText(ch.name, x, cH / 2);
+    chordCtx.globalAlpha = 1;
+  }
+
+  // Draw centre marker line (play position indicator)
+  chordCtx.strokeStyle = 'rgba(232,160,32,0.4)';
+  chordCtx.lineWidth   = 2;
+  chordCtx.beginPath();
+  chordCtx.moveTo(centerX, 4);
+  chordCtx.lineTo(centerX, cH - 4);
+  chordCtx.stroke();
+
+  // Small triangle pointer at top
+  chordCtx.fillStyle = 'rgba(232,160,32,0.6)';
+  chordCtx.beginPath();
+  chordCtx.moveTo(centerX - 5, 0);
+  chordCtx.lineTo(centerX + 5, 0);
+  chordCtx.lineTo(centerX, 7);
+  chordCtx.closePath();
+  chordCtx.fill();
+}
+
+// ─── TAB STRIP ───────────────────────────────────────────────────────────────
+const tabCanvas = document.getElementById('tabStrip');
+const tabCtx    = tabCanvas.getContext('2d');
+
+function resizeTabCanvas() {
+  tabCanvas.width  = tabCanvas.offsetWidth;
+  tabCanvas.height = tabCanvas.offsetHeight;
+}
+
+function drawTabStrip() {
+  const tW = tabCanvas.width, tH = tabCanvas.height;
+  if(!tW || !tH) return;
+  tabCtx.clearRect(0, 0, tW, tH);
+
+  // Background
+  tabCtx.fillStyle = '#0a0a0a';
+  tabCtx.fillRect(0, 0, tW, tH);
+
+  const L   = getL();
+  const PPB = L.FRET_WIDTH;
+  const cx  = PLAY_LINE_X;
+  const midY = tH / 2;
+
+  // String names for display (1=high e .. 6=low E)
+  const STRING_DISPLAY = ['1','2','3','4','5','6'];
+
+  // Collect notes visible in window, deduplicate chords to one pill per beat
+  // For chord type: show one pill per beat grouping (root string only — lowest s value)
+  // For note type: show every note
+  const seen = new Set();
+  const pills = [];
+
+  for(const n of song.notes) {
+    const x = cx + (n.b - beatPos) * PPB;
+    if(x < -60 || x > tW + 60) continue;
+
+    if(n.type === 'chord') {
+      // One pill per chord beat — pick highest string (numerically lowest s = thinnest)
+      // Actually show ONE per beat total — use the note with lowest s (thinnest string)
+      const key = n.b.toFixed(2);
+      if(!seen.has(key)) {
+        // Find all notes at this beat and pick lowest s (thinnest = most prominent)
+        seen.add(key);
+        pills.push({ x, b: n.b, s: n.s, f: n.f, type: 'chord', chord: n.chord });
+      }
+    } else {
+      // Individual picked note — show all
+      pills.push({ x, b: n.b, s: n.s, f: n.f, type: 'note' });
+    }
+  }
+
+  // Draw play line marker on strip
+  tabCtx.strokeStyle = 'rgba(232,160,32,0.35)';
+  tabCtx.lineWidth = 1.5;
+  tabCtx.beginPath();
+  tabCtx.moveTo(cx, 2);
+  tabCtx.lineTo(cx, tH - 2);
+  tabCtx.stroke();
+
+  // Draw pills
+  const PILL_W = 44;
+  const PILL_H = 22;
+  const PILL_R = 4;
+
+  for(const p of pills) {
+    const isPast     = p.b + 0.5 < beatPos;
+    const isAt       = Math.abs(p.x - cx) < PPB * 0.6;
+    const approachDist = p.x - cx;
+    const alpha      = isPast ? 0.15
+                     : isAt  ? 1.0
+                     : Math.min(0.85, Math.max(0.25, 1 - (approachDist - 80) / 400));
+
+    tabCtx.globalAlpha = alpha;
+
+    // Pill background
+    const bgColor = isPast ? '#1a1a1a'
+                  : isAt   ? '#1e1600'
+                  : '#111111';
+    tabCtx.fillStyle = bgColor;
+    tabCtx.beginPath();
+    tabCtx.roundRect(p.x - PILL_W/2, midY - PILL_H/2, PILL_W, PILL_H, PILL_R);
+    tabCtx.fill();
+
+    // Pill border
+    tabCtx.strokeStyle = isAt ? 'rgba(232,160,32,0.7)'
+                       : isPast ? 'rgba(255,255,255,0.06)'
+                       : 'rgba(255,255,255,0.12)';
+    tabCtx.lineWidth = isAt ? 1.5 : 0.75;
+    tabCtx.beginPath();
+    tabCtx.roundRect(p.x - PILL_W/2, midY - PILL_H/2, PILL_W, PILL_H, PILL_R);
+    tabCtx.stroke();
+
+    // String label — left half of pill — teal
+    const strNum = STRING_DISPLAY[p.s]; // 0=e→'1', 5=E→'6'
+    tabCtx.fillStyle = isAt ? '#40e0b8' : '#20c8a0';
+    tabCtx.font = `600 10px 'JetBrains Mono', monospace`;
+    tabCtx.textAlign = 'center';
+    tabCtx.textBaseline = 'middle';
+    tabCtx.fillText('S' + strNum, p.x - 11, midY - 1);
+
+    // Divider
+    tabCtx.strokeStyle = isAt ? 'rgba(232,160,32,0.3)' : 'rgba(255,255,255,0.08)';
+    tabCtx.lineWidth = 0.75;
+    tabCtx.beginPath();
+    tabCtx.moveTo(p.x, midY - PILL_H/2 + 4);
+    tabCtx.lineTo(p.x, midY + PILL_H/2 - 4);
+    tabCtx.stroke();
+
+    // Fret label — right half — amber
+    const fretStr = p.f === 0 ? 'O' : 'F' + p.f;
+    tabCtx.fillStyle = isAt ? '#f5c040' : '#e8a020';
+    tabCtx.font = `700 10px 'JetBrains Mono', monospace`;
+    tabCtx.fillText(fretStr, p.x + 11, midY - 1);
+
+    tabCtx.globalAlpha = 1;
+  }
+}
+
+// ─── LYRICS TELEPROMPTER ─────────────────────────────────────────────────────
+let lyricsBuilt    = false;  // true once DOM lines are rendered for current song
+let lastActiveLine = '';     // track last active line state to avoid DOM thrash
+
+function clearLyricsDisplay() {
+  // Immediately blank the display before new song data is loaded
+  const activeRow = document.getElementById('lyricsActiveRow');
+  if(activeRow) {
+    activeRow.className = 'lyrics-active-row';
+    activeRow.innerHTML = '<span style="color:var(--t3);font-size:13px;font-weight:400">—</span>';
+  }
+  for(let i = 0; i < 3; i++) {
+    const el = document.getElementById('lqueue-' + i);
+    if(el) { el.innerHTML = ''; el.style.display = 'none'; }
+  }
+  lastActiveLine = '';
+}
+
+function buildLyricsDOM() {
+  const panel  = document.getElementById('lyricsPanel');
+  const empty  = document.getElementById('lyricsEmpty');
+  const lyrics = song.lyrics;
+  clearLyricsDisplay();
+
+  if(!lyrics || lyrics.length === 0) {
+    panel.classList.remove('has-lyrics');
+    empty.classList.add('show');
+    lyricsBuilt = true;
+    return;
+  }
+  panel.classList.add('has-lyrics');
+  empty.classList.remove('show');
+
+  // Build chord lookup
+  const chordAtBeat = {};
+  if(song.chords) song.chords.forEach(c => { chordAtBeat[c.beat] = c.name; });
+  // Store for use in drawLyrics
+  panel._chordAtBeat = chordAtBeat;
+
+  // Pre-build 3 queue line divs
+  const queue = document.getElementById('lyricsQueue');
+  queue.innerHTML = '';
+  for(let i = 0; i < 3; i++) {
+    const div = document.createElement('div');
+    div.className = 'lyric-queue-line' + (i === 2 ? ' dim' : '');
+    div.id = 'lqueue-' + i;
+    div.addEventListener('click', () => {
+      const beat = parseInt(div.dataset.beat || '0');
+      if(!isNaN(beat)) skipTo(beat);
+    });
+    queue.appendChild(div);
+  }
+
+  lyricsBuilt = true;
+  drawLyrics(); // draw immediately
+}
+
+function drawLyrics() {
+  if(!lyricsBuilt) { buildLyricsDOM(); return; }
+  const lyrics = song.lyrics;
+  if(!lyrics || lyrics.length === 0) return;
+
+  // Find active line
+  let activeIdx = -1;
+  for(let i = 0; i < lyrics.length; i++) {
+    const nextBeat = (i + 1 < lyrics.length) ? lyrics[i+1].beat : 999999;
+    if(lyrics[i].beat <= beatPos + 0.3 && nextBeat > beatPos) { activeIdx = i; break; }
+  }
+
+  // Find next lyric that hasn't started yet (for pre-lyric countdown)
+  let nextLyricIdx = -1;
+  for(let i = 0; i < lyrics.length; i++) {
+    if(lyrics[i].beat > beatPos + 0.3) { nextLyricIdx = i; break; }
+  }
+
+  const panel       = document.getElementById('lyricsPanel');
+  const activeRow   = document.getElementById('lyricsActiveRow');
+  const chordAtBeat = panel._chordAtBeat || {};
+
+  function isInstrumental(text) {
+    return text && text.trim().startsWith('~');
+  }
+
+  function lineHTML(idx) {
+    if(idx < 0 || idx >= lyrics.length) return '';
+    const ly = lyrics[idx];
+    const instr = isInstrumental(ly.text);
+    // No chord tags — chord scroll bar handles that
+    return `<span class="lyric-active-text">${ly.text}</span>`;
+  }
+
+  // ── Pre-lyric countdown: show "vocals in X bars" when no active line ──
+  // but a lyric line is approaching within ~16 beats (2 bars)
+  const beatsToNext = nextLyricIdx >= 0 ? lyrics[nextLyricIdx].beat - beatPos : 999;
+  const barsToNext  = Math.ceil(beatsToNext / 4);
+  const showCountdown = (activeIdx < 0) && nextLyricIdx >= 0
+                     && beatsToNext <= 16
+                     && !isInstrumental(lyrics[nextLyricIdx].text);
+
+  // ── Determine if active line has expired ──
+  // A line expires when the next lyric starts, OR when it's the last lyric
+  // and more than 8 beats (1 bar) have passed since it started
+  let activeExpired = false;
+  if(activeIdx >= 0 && activeIdx === lyrics.length - 1) {
+    // Last lyric — expire after 8 beats grace
+    activeExpired = beatPos > lyrics[activeIdx].beat + 8;
+  }
+  const displayIdx = activeExpired ? -1 : activeIdx;
+
+  // ── Determine active row state ──
+  const activeLy      = displayIdx >= 0 ? lyrics[displayIdx] : null;
+  const activeIsInstr = activeLy && isInstrumental(activeLy.text);
+
+  // Only update DOM when something actually changes
+  const newState = showCountdown ? 'countdown:' + barsToNext
+                 : activeIsInstr ? 'instr:' + displayIdx
+                 : 'lyric:' + displayIdx;
+  if(newState === lastActiveLine) return;
+  lastActiveLine = newState;
+
+  if(showCountdown) {
+    activeRow.className = 'lyrics-active-row vocals-coming';
+    const barWord = barsToNext === 1 ? 'bar' : 'bars';
+    activeRow.innerHTML = `<span class="vocals-coming-text">♪ vocals in <span class="bar-count">${barsToNext}</span> ${barWord}...</span>`;
+  } else if(displayIdx >= 0) {
+    activeRow.className = activeIsInstr ? 'lyrics-active-row instrumental' : 'lyrics-active-row';
+    activeRow.innerHTML = lineHTML(displayIdx);
+  } else {
+    activeRow.className = 'lyrics-active-row';
+    activeRow.innerHTML = '<span style="color:var(--t3);font-size:13px;font-weight:400">—</span>';
+  }
+
+  // ── Queue: show upcoming lines from the next unplayed line ──
+  // When in countdown mode, show from nextLyricIdx
+  // When active, show activeIdx+1 onward
+  const queueStart = showCountdown ? nextLyricIdx : (activeIdx >= 0 ? activeIdx + 1 : 0);
+
+  for(let slot = 0; slot < 3; slot++) {
+    const el = document.getElementById('lqueue-' + slot);
+    if(!el) continue;
+    const lyIdx = queueStart + slot;
+    if(lyIdx < lyrics.length) {
+      el.innerHTML = lineHTML(lyIdx);
+      el.dataset.beat = lyrics[lyIdx].beat;
+      el.style.display = '';
+      if(isInstrumental(lyrics[lyIdx].text)) {
+        el.classList.add('instrumental-cue');
+      } else {
+        el.classList.remove('instrumental-cue');
+      }
+    } else {
+      el.innerHTML = '';
+      el.style.display = 'none';
+    }
+  }
+}
+
+// ── Lyrics panel: fixed compact height, no resize needed ──────────────────────
+
+// ─── AUDIO ENGINE — Soundfont Sampler ───────────────────────────────────────
+// Uses soundfont-player library with real acoustic guitar samples
+// Samples loaded from gleitz.github.io CDN (open source, MIT licensed)
+
+let audioCtx      = null;
+let masterGain    = null;
+let audioMuted    = false;
+let audioVol      = 0.70;
+let sfInstrument  = null;       // soundfont instrument instance
+let sfLoading     = false;
+let sfReady       = false;
+let scheduledNotes = new Set();
+
+// Active nodes per string for note stopping (string idx 0=high e .. 5=low E)
+const activeNodes = [null,null,null,null,null,null];
+
+// Guitar string open note names (for soundfont lookup)
+// String 0=high e=E4, 1=B3, 2=G3, 3=D3, 4=A2, 5=E2
+const OPEN_NOTES  = ['E4','B3','G3','D3','A2','E2'];
+const NOTE_NAMES  = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+
+function midiFromStringFret(stringIdx, fret) {
+  // MIDI note numbers for open strings
+  const OPEN_MIDI = [64, 59, 55, 50, 45, 40]; // E4,B3,G3,D3,A2,E2
+  return OPEN_MIDI[stringIdx] + fret;
+}
+
+function initAudio() {
+  if(audioCtx) return;
+  try {
+    audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = audioVol;
+    masterGain.connect(audioCtx.destination);
+    loadSoundFont();
+  } catch(e) {
+    console.warn('Audio init failed:', e);
+  }
+}
+
+function loadSoundFont() {
+  if(sfLoading || sfReady || !audioCtx) return;
+  sfLoading = true;
+
+  // Try acoustic guitar first, fall back to nylon if steel fails
+  if(typeof Soundfont === 'undefined') {
+    // Library not loaded yet
+    showToast('⚠ Audio library loading...');
+    setTimeout(loadSoundFont, 1000);
+    return;
+  }
+
+  showToast('♪ Loading guitar sounds...');
+  Soundfont.instrument(audioCtx, 'acoustic_guitar_steel', {
+    soundfont: 'FluidR3_GM',
+    format: 'mp3',
+    nameToUrl: (name, sf, format) =>
+      `https://gleitz.github.io/midi-js-soundfonts/${sf}/${name}-${format}/${encodeURIComponent('A4')}.${format}`
+  }).then(inst => {
+    // Actually load full instrument (default nameToUrl)
+    return Soundfont.instrument(audioCtx, 'acoustic_guitar_steel', {
+      soundfont: 'FluidR3_GM',
+      format: 'mp3'
+    });
+  }).then(inst => {
+    sfInstrument = inst;
+    sfReady      = true;
+    sfLoading    = false;
+    showToast('✓ Guitar sounds ready');
+  }).catch(err => {
+    console.warn('Soundfont steel failed, trying nylon:', err);
+    return Soundfont.instrument(audioCtx, 'acoustic_guitar_nylon', {
+      soundfont: 'FluidR3_GM',
+      format: 'mp3'
+    }).then(inst => {
+      sfInstrument = inst;
+      sfReady      = true;
+      sfLoading    = false;
+      showToast('✓ Guitar sounds ready');
+    }).catch(e2 => {
+      sfLoading = false;
+      showToast('⚠ No sound — internet required for guitar audio', false);
+      sfReady = false;
+    });
+  });
+}
+
+function stopString(stringIdx) {
+  const node = activeNodes[stringIdx];
+  if(node) {
+    try { node.stop(); } catch(e) {}
+    activeNodes[stringIdx] = null;
+  }
+}
+
+function playNote(stringIdx, fret, when, duration, isChord) {
+  if(!audioCtx || audioMuted) return;
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+
+  const t   = Math.max(audioCtx.currentTime, when);
+  const dur = Math.max(0.15, duration);
+
+  // Stop previous note on this string
+  stopString(stringIdx);
+
+  if(sfReady && sfInstrument) {
+    // Use soundfont — real acoustic guitar samples
+    const midi = midiFromStringFret(stringIdx, fret);
+    const gain = isChord ? audioVol * 0.8 : audioVol * 0.95;
+    const node = sfInstrument.play(midi, t, {
+      duration: dur,
+      gain: gain,
+      destination: masterGain
+    });
+    if(node) activeNodes[stringIdx] = node;
+  }
+  // No fallback — silent if soundfont not loaded
+}
+
+// No fallback synth — audio requires internet for soundfont samples
+
+function resetScheduledNotes() {
+  scheduledNotes = new Set();
+  if(audioCtx) {
+    for(let i = 0; i < 6; i++) stopString(i);
+  }
+}
+
+function scheduleNotesInWindow() {
+  if(!audioCtx || audioMuted || !song || !song.notes) return;
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+
+  const beatsPerSec = ((song.bpm || 120) / 60) * speedPct;
+  const now         = audioCtx.currentTime;
+  const windowEnd   = beatPos + 0.25 * beatsPerSec;
+  const chordGroups = {};
+
+  for(const n of song.notes) {
+    if(n.b < beatPos - 0.01 || n.b >= windowEnd) continue;
+    const key = `${n.b.toFixed(3)}-${n.s}-${n.f}`;
+    if(scheduledNotes.has(key)) continue;
+    scheduledNotes.add(key);
+
+    const noteTime = now + Math.max(0, (n.b - beatPos) / beatsPerSec);
+    const noteDur  = n.dur / beatsPerSec;
+
+    if(n.type === 'chord') {
+      const bk = n.b.toFixed(3);
+      if(!chordGroups[bk]) chordGroups[bk] = [];
+      chordGroups[bk].push({ n, noteTime, noteDur });
+    } else {
+      playNote(n.s, n.f, noteTime, noteDur, false);
+    }
+  }
+
+  // Strum chord groups low E → high e, 18ms apart
+  for(const bk in chordGroups) {
+    const group = chordGroups[bk];
+    group.sort((a, b) => b.n.s - a.n.s);
+    group.forEach(({ n, noteTime, noteDur }, i) => {
+      playNote(n.s, n.f, noteTime + i * 0.018, noteDur, true);
+    });
+  }
+}
+
+// ─── ENGINE ──────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('fretboard');
+const ctx    = canvas.getContext('2d');
+
+let song        = null; // set by loadSong()
+let playing     = false;
+let beatPos     = 0;       // current beat position
+let lastTime    = null;
+let speedPct    = 0.60;    // 0.2 to 1.0
+let zoomPct     = 1.0;
+let notesPlayed = 0;
+let rafId       = null;
+let lastBeatInt = -1;      // last integer beat (for metronome pulse)
+let countIn     = false;   // true while count-in is running
+let countInPos  = 0;       // 0..7 (2 bars of 4 beats)
+let countInTime = 0;       // elapsed seconds within current count-in beat
+
+const STRING_NAMES = ['e','B','G','D','A','E'];
+const STRING_COLORS = ['#f0e0a0','#d8c890','#c8b878','#b8a868','#a89858','#988848'];
+const PLAY_LINE_X   = 180;   // px from left
+
+// Layout constants (scaled by zoom)
+const BASE = {
+  NUT_X:        60,
+  STRING_TOP:   40,
+  STRING_SPACING: 36,
+  FRET_WIDTH:   80,
+  NOTE_R:       14,
+  FRETS_VIS:    14,
+};
+
+function getL() {
+  const z = zoomPct;
+  return {
+    NUT_X:          BASE.NUT_X,
+    STRING_TOP:     BASE.STRING_TOP * z,
+    STRING_SPACING: BASE.STRING_SPACING * z,
+    FRET_WIDTH:     BASE.FRET_WIDTH * z,
+    NOTE_R:         BASE.NOTE_R * z,
+    FRETS_VIS:      BASE.FRETS_VIS,
+    TOTAL_H:        BASE.STRING_SPACING * z * 5 + BASE.STRING_TOP * z * 2,
+  };
+}
+
+function resizeCanvas() {
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  resizeChordCanvas();
+  resizeTabCanvas();
+  draw();
+}
+
+// Convert beat position to X pixel on canvas (notes travel left)
+// Play line is at PLAY_LINE_X. A note at beat `b` is at:
+//   x = PLAY_LINE_X + (b - beatPos) * PIXELS_PER_BEAT
+function beatToX(b) {
+  const L = getL();
+  const PPB = L.FRET_WIDTH; // pixels per beat
+  return PLAY_LINE_X + (b - beatPos) * PPB;
+}
+
+function draw() {
+  if(!song) return;
+  const W = canvas.width, H = canvas.height;
+  const L = getL();
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#0d0d0d';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle wood grain lines
+  for(let i = 0; i < H; i += 3) {
+    const a = (Math.sin(i * 0.05) * 0.5 + 0.5) * 0.015;
+    ctx.fillStyle = `rgba(180,130,60,${a})`;
+    ctx.fillRect(0, i, W, 1);
+  }
+
+  // String Y positions
+  const strY = [];
+  const midH = H / 2;
+  const totalStrH = L.STRING_SPACING * 5;
+  const topY = midH - totalStrH / 2;
+  for(let i = 0; i < 6; i++) strY.push(topY + i * L.STRING_SPACING);
+
+  // Draw fret markers (vertical lines scrolling with beat)
+  const PPB = L.FRET_WIDTH;
+  // Fret lines every 2 beats (half a measure in 4/4)
+  for(let fretBeat = 0; fretBeat < 200; fretBeat += 2) {
+    const x = beatToX(fretBeat);
+    if(x < -20 || x > W + 20) continue;
+    const isMeasure = (fretBeat % 8 === 0);
+    ctx.strokeStyle = isMeasure ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)';
+    ctx.lineWidth   = isMeasure ? 1.5 : 0.5;
+    ctx.beginPath();
+    ctx.moveTo(x, strY[0] - 20);
+    ctx.lineTo(x, strY[5] + 20);
+    ctx.stroke();
+
+    // Beat numbers
+    if(isMeasure) {
+      const m = Math.floor(fretBeat / 8) + 1;
+      ctx.fillStyle = 'rgba(255,255,255,0.18)';
+      ctx.font = `500 11px 'JetBrains Mono'`;
+      ctx.textAlign = 'center';
+      ctx.fillText('M' + m, x, strY[0] - 28);
+    }
+  }
+
+  // Draw strings
+  for(let i = 0; i < 6; i++) {
+    const y = strY[i];
+    // String shadow/glow
+    const grd = ctx.createLinearGradient(0, y-2, 0, y+2);
+    grd.addColorStop(0,   'transparent');
+    grd.addColorStop(0.5, STRING_COLORS[i]);
+    grd.addColorStop(1,   'transparent');
+    ctx.strokeStyle = grd;
+    ctx.lineWidth   = 1 + (5-i) * 0.4;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+
+    // String label (left side)
+    ctx.fillStyle = STRING_COLORS[i];
+    ctx.font = `600 13px 'JetBrains Mono'`;
+    ctx.textAlign = 'center';
+    ctx.fillText(STRING_NAMES[i], 28, y + 4);
+  }
+
+  // Mode tag (update once per draw)
+  const modeTag = document.getElementById('chordModeTag');
+  const isArpeggio = song.notes.every(n => n.type === 'note');
+  modeTag.textContent = isArpeggio ? 'FINGERPICK' : 'STRUM';
+  if(isArpeggio) {
+    modeTag.style.color = 'var(--teal)'; modeTag.style.borderColor = 'var(--teal)';
+    modeTag.style.background = 'rgba(32,200,160,0.08)';
+  } else {
+    modeTag.style.color = 'var(--amber)'; modeTag.style.borderColor = 'var(--amber)';
+    modeTag.style.background = 'rgba(232,160,32,0.08)';
+  }
+  drawChordScroll();
+  drawTabStrip();
+  drawLyrics();
+
+  // Group notes by beat to find chord beats (all notes at same beat with type='chord')
+  const chordBeats = new Map();
+  for(const n of song.notes) {
+    if(n.type === 'chord') {
+      const key = n.b.toFixed(3);
+      if(!chordBeats.has(key)) chordBeats.set(key, { beat: n.b, chord: n.chord, dur: n.dur });
+    }
+  }
+
+  // Draw chord bars — one solid vertical bar per chord hit
+  for(const [, cb] of chordBeats) {
+    const x      = beatToX(cb.beat);
+    if(x < -40 || x > W + 40) continue;
+    const isPast = (cb.beat + cb.dur < beatPos);
+    const isAt   = (cb.beat <= beatPos + 0.15 && cb.beat + cb.dur > beatPos - 0.1);
+    const approachDist = x - PLAY_LINE_X;
+    const fadeFar = Math.min(1, Math.max(0.25, 1 - (approachDist - 200) / 400));
+
+    ctx.globalAlpha = isPast ? 0.15 : fadeFar;
+    if(isAt) { ctx.globalAlpha = 1; ctx.shadowColor = '#e8a020'; ctx.shadowBlur = 14; }
+
+    const barW  = isAt ? 10 : 6;
+    const top   = strY[0] - 10;
+    const bot   = strY[5] + 10;
+    const barH  = bot - top;
+
+    // Filled bar
+    ctx.fillStyle = isAt ? '#e8a020' : 'rgba(232,160,32,0.55)';
+    ctx.beginPath();
+    ctx.roundRect(x - barW / 2, top, barW, barH, 3);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Chord name above the bar
+    ctx.fillStyle = isPast ? 'rgba(232,160,32,0.25)' : (isAt ? '#ffcc55' : 'rgba(232,160,32,0.75)');
+    ctx.font = `600 ${isAt ? 16 : 13}px 'Oswald'`;
+    ctx.textAlign = 'center';
+    ctx.fillText(cb.chord || '', x, top - 6);
+
+    ctx.globalAlpha = 1;
+  }
+
+  // Draw chord section change markers (thin dashed lines at chord changes, behind notes)
+  for(const ch of song.chords) {
+    const x = beatToX(ch.beat);
+    if(x < -20 || x > W + 20) continue;
+    ctx.strokeStyle = 'rgba(232,160,32,0.12)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([3, 6]);
+    ctx.beginPath();
+    ctx.moveTo(x, strY[0] - 30);
+    ctx.lineTo(x, strY[5] + 30);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Draw melody/individual notes only (type !== 'chord')
+  for(const n of song.notes) {
+    if(n.type === 'chord') continue;
+    const x  = beatToX(n.b);
+    const ex = beatToX(n.b + n.dur);
+    if(ex < -30 || x > W + 30) continue;
+
+    const y  = strY[n.s];
+    const r  = L.NOTE_R;
+    const isPast = (n.b + n.dur < beatPos);
+    const isAt   = (n.b <= beatPos + 0.15 && n.b + n.dur > beatPos - 0.1);
+    const noteColor = '#4090e0';
+
+    if(isPast) {
+      ctx.globalAlpha = 0.2;
+      ctx.fillStyle = noteColor;
+      ctx.beginPath();
+      ctx.arc(x, y, r * 0.7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    } else {
+      const approachDist = x - PLAY_LINE_X;
+      const fadeFar = Math.min(1, Math.max(0.3, 1 - (approachDist - 200) / 400));
+      ctx.globalAlpha = fadeFar;
+
+      if(isAt) { ctx.shadowColor = noteColor; ctx.shadowBlur = 18; ctx.globalAlpha = 1; }
+
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = isAt ? noteColor : 'rgba(20,20,20,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = noteColor;
+      ctx.lineWidth   = isAt ? 2.5 : 1.5;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = isAt ? '#fff' : noteColor;
+      ctx.font      = `600 ${Math.round(r * 0.85)}px 'JetBrains Mono'`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(n.f === 0 ? 'O' : String(n.f), x, y);
+      ctx.textBaseline = 'alphabetic';
+
+      if(n.finger && !isAt) {
+        ctx.fillStyle = 'rgba(100,180,255,0.7)';
+        ctx.font = `500 ${Math.round(r * 0.6)}px 'JetBrains Mono'`;
+        ctx.fillText(String(n.finger), x + r * 0.6, y - r * 0.6);
+      }
+
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Play line (vertical amber line)
+  const plx = PLAY_LINE_X;
+  ctx.strokeStyle = '#e8a020';
+  ctx.lineWidth   = 2;
+  ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(plx, strY[0] - 30);
+  ctx.lineTo(plx, strY[5] + 30);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // Play line arrow head
+  ctx.fillStyle = '#e8a020';
+  ctx.beginPath();
+  ctx.moveTo(plx - 6, strY[0] - 42);
+  ctx.lineTo(plx + 6, strY[0] - 42);
+  ctx.lineTo(plx,     strY[0] - 30);
+  ctx.closePath();
+  ctx.fill();
+
+  // NOW PLAYING label at play line
+  ctx.fillStyle = 'rgba(232,160,32,0.5)';
+  ctx.font = `400 9px 'JetBrains Mono'`;
+  ctx.textAlign = 'center';
+  ctx.fillText('NOW', plx, strY[5] + 40);
+
+  // Status
+  const measure = Math.floor(beatPos / 8) + 1;
+  const beat    = Math.floor(beatPos % 8) + 1;
+  document.getElementById('measureDisp').textContent = measure;
+  document.getElementById('beatDisp').textContent    = beat;
+
+  // Strum pattern
+  updateStrumPattern(beatPos);
+}
+
+function updateStrumPattern(beat) {
+  const isArpeggio = song.notes && song.notes.length > 0 && song.notes.every(n => n.type === 'note');
+  const modeTag    = document.getElementById('chordModeTag');
+  const strip      = document.getElementById('strumStrip');
+
+  // Update mode tag
+  if(isArpeggio) {
+    modeTag.textContent = 'FINGERPICK';
+    modeTag.style.color = 'var(--teal)';
+    modeTag.style.borderColor = 'var(--teal)';
+    modeTag.style.background  = 'rgba(32,200,160,0.08)';
+  } else {
+    modeTag.textContent = 'STRUM';
+    modeTag.style.color = 'var(--amber)';
+    modeTag.style.borderColor = 'var(--amber)';
+    modeTag.style.background  = 'rgba(232,160,32,0.08)';
+  }
+
+  if(isArpeggio) {
+    // Hide strum arrows for fingerpick songs — show static string indicators
+    if(!strip._built || strip._lastSong !== song.title) {
+      strip.innerHTML = '';
+      // Show small string indicators s1–s6 as a static reference
+      ['e','B','G','D','A','E'].forEach((s, i) => {
+        const el = document.createElement('span');
+        el.style.cssText = `font-family:'JetBrains Mono',monospace;font-size:10px;
+          color:var(--teal);opacity:0.6;padding:1px 3px;`;
+        el.textContent = s;
+        strip.appendChild(el);
+      });
+      strip._built = true;
+      strip._lastSong = song.title;
+    }
+    return; // no active beat highlighting for fingerpick
+  }
+
+  // Strum mode — D/U arrows with beat pulse
+  const pat = song.strumPattern;
+  if(!strip._built || strip._lastSong !== song.title) {
+    strip.innerHTML = '';
+    pat.forEach((s, i) => {
+      const el = document.createElement('span');
+      el.className = 'strum-arrow ' + (s === 'D' ? 'down' : 'up');
+      el.textContent = s === 'D' ? '↓' : '↑';
+      el.id = 'strum-' + i;
+      strip.appendChild(el);
+    });
+    strip._built   = true;
+    strip._lastSong = song.title;
+  }
+  const beatInMeas = Math.floor(beat) % pat.length;
+  pat.forEach((_, i) => {
+    const el = document.getElementById('strum-' + i);
+    if(el) el.classList.toggle('active', i === beatInMeas);
+  });
+}
+
+// ─── METRONOME ───────────────────────────────────────────────────────────────
+function updateMetronome(beat) {
+  // beat is floating point beats-from-start
+  // In 4/4: beat 0,1,2,3 = counts 1,2,3,4
+  const beatsPerBar = 4;
+  const beatInBar   = Math.floor(beat) % beatsPerBar; // 0-3
+  const curBeatInt  = Math.floor(beat);
+
+  // Pulse on new integer beat
+  const isNewBeat = (curBeatInt !== lastBeatInt);
+  if(isNewBeat) lastBeatInt = curBeatInt;
+
+  for(let i = 0; i < 4; i++) {
+    const el = document.getElementById('bd' + (i+1));
+    if(!el) continue;
+    el.textContent = i + 1;
+    el.className = 'beat-dot';
+    if(i === beatInBar) {
+      el.classList.add(i === 0 ? 'beat1' : 'beat-on');
+    }
+  }
+}
+
+// ─── COUNT-IN ────────────────────────────────────────────────────────────────
+function startCountIn() {
+  countIn    = true;
+  countInPos = 0;
+  countInTime = 0;
+  const overlay = document.getElementById('countInOverlay');
+  if(overlay) overlay.style.display = 'flex';
+  showCountInBeat(0);
+}
+
+function showCountInBeat(pos) {
+  const beat  = (pos % 4) + 1;          // 1-4
+  const bar   = Math.floor(pos / 4) + 1; // 1 or 2
+  const numEl = document.getElementById('countInNumber');
+  const barEl = document.getElementById('countInBar');
+  numEl.textContent = beat;
+  barEl.textContent = `BAR ${bar} OF 2`;
+  // Flash: briefly show then fade
+  numEl.style.opacity = '1';
+  // Beat 1 of each bar pulses bigger
+  numEl.style.color = beat === 1 ? '#f5c040' : '#e8a020';
+  numEl.style.transform = beat === 1 ? 'scale(1.1)' : 'scale(1)';
+  setTimeout(() => { numEl.style.opacity = '0.3'; numEl.style.transform = 'scale(1)'; }, 150);
+}
+
+function stopCountIn() {
+  countIn = false;
+  const overlay = document.getElementById('countInOverlay');
+  if(overlay) overlay.style.display = 'none';
+}
+
+// ─── ANIMATION LOOP ───────────────────────────────────────────────────────────
+function tick(ts) {
+  if(!playing) return;
+  if(lastTime === null) lastTime = ts;
+  const dt = (ts - lastTime) / 1000;
+  lastTime = ts;
+
+  const beatsPerSec = ((song.bpm || 120) / 60) * speedPct;
+
+  // ── Count-in phase ──
+  if(countIn) {
+    countInTime += dt * beatsPerSec;
+    const newPos = Math.floor(countInTime);
+    if(newPos !== countInPos) {
+      countInPos = newPos;
+      if(countInPos >= 8) {
+        // Count-in complete — start song
+        stopCountIn();
+        countInTime = 0;
+      } else {
+        showCountInBeat(countInPos);
+        updateMetronome(countInPos); // pulse metronome dots during count-in
+      }
+    }
+    rafId = requestAnimationFrame(tick);
+    return;
+  }
+
+  // ── Normal song playback ──
+  beatPos += dt * beatsPerSec;
+  scheduleNotesInWindow();
+
+  // Count notes played
+  let np = 0;
+  for(const n of song.notes) {
+    if(n.b + n.dur <= beatPos) np++;
+  }
+  if(np !== notesPlayed) {
+    notesPlayed = np;
+    document.getElementById('notesDisp').textContent = notesPlayed;
+  }
+
+  // Auto-stop at end
+  const lastBeat = song.notes.reduce((m, n) => Math.max(m, n.b + n.dur), 0);
+  if(beatPos > lastBeat + 4) {
+    beatPos = lastBeat + 4;
+    playing = false;
+    document.getElementById('btnPlay').textContent = '▶ PLAY';
+    document.getElementById('btnPlay').classList.remove('active');
+  }
+
+  document.getElementById('scrollDisp').textContent = '→ ' + beatPos.toFixed(1) + 'b';
+  updateMetronome(beatPos);
+  draw();
+  rafId = requestAnimationFrame(tick);
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+function loadSong(key) {
+  song        = SONGS[key];
+  beatPos     = 0;
+  lastTime    = null;
+  notesPlayed = 0;
+  playing     = false;
+  if(rafId) cancelAnimationFrame(rafId);
+  document.getElementById('btnPlay').textContent = '▶ PLAY';
+  document.getElementById('btnPlay').classList.remove('active');
+  document.getElementById('songTitle').textContent = song.title;
+  document.getElementById('songMeta').textContent  =
+    song.artist + ' · KEY OF ' + song.key + ' · ' + song.time;
+
+  const bpm = Math.round((song.bpm || 120) * speedPct);
+  document.getElementById('bpmDisp').textContent = '♩ ' + bpm + ' BPM';
+  document.getElementById('strumStrip')._built = false;
+  lastBeatInt = -1;
+  countIn = false; countInPos = 0; countInTime = 0;
+  stopCountIn();
+  lyricsBuilt = false;
+  buildLyricsDOM();
+  updateMetronome(0);
+  draw();
+}
+
+document.getElementById('btnPlay').addEventListener('click', () => {
+  playing = !playing;
+  const btn = document.getElementById('btnPlay');
+  if(playing) {
+    btn.textContent = '⏸ PAUSE';
+    btn.classList.add('active');
+    lastTime = null;
+    initAudio();
+    resetScheduledNotes();
+    // Only count-in when starting from the very beginning
+    if(beatPos < 0.5) {
+      startCountIn();
+    }
+    rafId = requestAnimationFrame(tick);
+  } else {
+    btn.textContent = '▶ PLAY';
+    btn.classList.remove('active');
+    if(rafId) cancelAnimationFrame(rafId);
+    // Cancel count-in if paused during it
+    if(countIn) stopCountIn();
+  }
+});
+
+function skipTo(target) {
+  beatPos  = Math.max(0, target);
+  lastTime = null;
+  resetScheduledNotes();
+  clearLyricsDisplay();
+  updateMetronome(beatPos);
+  draw();
+}
+
+document.getElementById('btnSkipBack').addEventListener('click', () => {
+  playing = false;
+  if(rafId) cancelAnimationFrame(rafId);
+  beatPos = 0; lastTime = null; notesPlayed = 0;
+  resetScheduledNotes();
+  clearLyricsDisplay();
+  countIn = false; countInPos = 0; countInTime = 0;
+  stopCountIn();
+  document.getElementById('btnPlay').textContent = '▶ PLAY';
+  document.getElementById('btnPlay').classList.remove('active');
+  document.getElementById('notesDisp').textContent = '0';
+  draw();
+});
+
+document.getElementById('btnBack').addEventListener('click', () => {
+  // Jump back to previous chord change, or 8 beats
+  const prevChord = [...song.chords].reverse().find(c => c.beat < beatPos - 1);
+  skipTo(prevChord ? prevChord.beat : 0);
+});
+
+document.getElementById('btnFwd').addEventListener('click', () => {
+  // Jump forward to next chord change
+  const nextChord = song.chords.find(c => c.beat > beatPos + 1);
+  if(nextChord) skipTo(nextChord.beat);
+});
+
+document.getElementById('speedSlider').addEventListener('input', e => {
+  speedPct = parseInt(e.target.value) / 100;
+  document.getElementById('speedVal').textContent = e.target.value + '%';
+  const bpm = Math.round((song.bpm || 120) * speedPct);
+  document.getElementById('bpmDisp').textContent = '♩ ' + bpm + ' BPM';
+});
+
+document.getElementById('zoomSlider').addEventListener('input', e => {
+  zoomPct = parseInt(e.target.value) / 100;
+  document.getElementById('zoomVal').textContent = e.target.value + '%';
+  draw();
+});
+
+// ─── SONG SELECT + LOADER ────────────────────────────────────────────────────
+const sel = document.getElementById('songSelect');
+
+function rebuildSelect(selectKey) {
+  sel.innerHTML = '';
+  Object.entries(SONGS).forEach(([key, s]) => {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = s.title + (BUILTIN_SONGS[key] ? '' : ' ★');
+    if(key === selectKey) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function addSongToRegistry(songData) {
+  const key = songData.id || ('song_' + Date.now());
+  songData.id = key;
+  SONGS[key] = songData;
+  saveUserSongs();
+  rebuildSelect(key);
+  loadSong(key);
+  showToast('✓ Loaded: ' + songData.title);
+}
+
+function loadSongFromJSON(json) {
+  try {
+    // Strip JSON comment-like keys starting with _
+    const clean = JSON.parse(json);
+    Object.keys(clean).filter(k => k.startsWith('_')).forEach(k => delete clean[k]);
+    // Normalise note keys (json uses quoted keys, JS uses shorthand — both fine)
+    if(clean.notes) {
+      clean.notes = clean.notes.map(n => ({
+        s: n.s, f: n.f, b: n.b, dur: n.dur,
+        type: n.type, chord: n.chord, finger: n.finger
+      }));
+    }
+    addSongToRegistry(clean);
+  } catch(e) {
+    showToast('✗ Invalid song file: ' + e.message, true);
+  }
+}
+
+function saveUserSongs() {
+  const userSongs = {};
+  Object.entries(SONGS).forEach(([k,v]) => {
+    if(!BUILTIN_SONGS[k]) userSongs[k] = v;
+  });
+  try { localStorage.setItem('fretflow_songs', JSON.stringify(userSongs)); } catch(e) {}
+}
+
+function loadUserSongs() {
+  try {
+    const saved = localStorage.getItem('fretflow_songs');
+    if(saved) {
+      const parsed = JSON.parse(saved);
+      Object.assign(SONGS, parsed);
+    }
+  } catch(e) {}
+}
+
+// Toast notification
+function showToast(msg, isError) {
+  let t = document.getElementById('ff-toast');
+  if(!t) {
+    t = document.createElement('div');
+    t.id = 'ff-toast';
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);' +
+      "z-index:9000;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 20px;" +
+      'border-radius:4px;transition:opacity .3s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = isError ? '#4a1010' : '#1a3a10';
+  t.style.color       = isError ? '#f87171' : '#34d399';
+  t.style.border      = '1px solid ' + (isError ? '#e05040' : '#20c880');
+  t.style.opacity     = '1';
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => { t.style.opacity = '0'; }, 2800);
+}
+
+// File input button
+document.getElementById('btnLoadSong').addEventListener('click', () => {
+  document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', e => {
+  Array.from(e.target.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => loadSongFromJSON(ev.target.result);
+    reader.readAsText(file);
+  });
+  e.target.value = '';
+});
+
+// Drag and drop
+const overlay = document.getElementById('dropOverlay');
+let dragCount = 0;
+document.addEventListener('dragenter', e => {
+  e.preventDefault();
+  dragCount++;
+  overlay.style.display = 'flex';
+});
+document.addEventListener('dragleave', () => {
+  dragCount--;
+  if(dragCount <= 0) { dragCount = 0; overlay.style.display = 'none'; }
+});
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  dragCount = 0;
+  overlay.style.display = 'none';
+  Array.from(e.dataTransfer.files).forEach(file => {
+    if(file.name.endsWith('.json')) {
+      const reader = new FileReader();
+      reader.onload = ev => loadSongFromJSON(ev.target.result);
+      reader.readAsText(file);
+    } else {
+      showToast('✗ Please drop a .json song file', true);
+    }
+  });
+});
+
+// Init: load user songs from localStorage, populate select, load first song
+// ─── AUDIO CONTROLS ──────────────────────────────────────────────────────────
+document.getElementById('btnMute').addEventListener('click', () => {
+  initAudio();
+  audioMuted = !audioMuted;
+  const btn = document.getElementById('btnMute');
+  btn.textContent = audioMuted ? '♪ OFF' : '♪ ON';
+  btn.style.color = audioMuted ? 'var(--t3)' : '';
+  btn.style.borderColor = audioMuted ? 'var(--t3)' : '';
+  if(masterGain) masterGain.gain.value = audioMuted ? 0 : audioVol;
+});
+
+document.getElementById('volSlider').addEventListener('input', e => {
+  audioVol = parseInt(e.target.value) / 100;
+  initAudio();
+  if(masterGain && !audioMuted) masterGain.gain.value = audioVol;
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if(e.code === 'Space') {
+    e.preventDefault();
+    document.getElementById('btnPlay').click();
+  }
+  if(e.code === 'KeyR') document.getElementById('btnSkipBack').click();
+  if(e.code === 'ArrowRight') { beatPos += 2; draw(); }
+  if(e.code === 'ArrowLeft')  { beatPos = Math.max(0, beatPos - 2); draw(); }
+  if(e.code === 'ArrowUp') {
+    const sl = document.getElementById('speedSlider');
+    sl.value = Math.min(100, parseInt(sl.value) + 5);
+    sl.dispatchEvent(new Event('input'));
+  }
+  if(e.code === 'ArrowDown') {
+    const sl = document.getElementById('speedSlider');
+    sl.value = Math.max(20, parseInt(sl.value) - 5);
+    sl.dispatchEvent(new Event('input'));
+  }
+});
+
+// Init
+window.addEventListener('resize', resizeCanvas);
+loadUserSongs();
+rebuildSelect('wishYouWereHere');
+sel.addEventListener('change', e => loadSong(e.target.value));
+loadSong('wishYouWereHere');
+resizeCanvas();
+
+// ─── MOBILE LAYER ────────────────────────────────────────────────────────────
+const isMobile = () => window.innerWidth <= 768 || (window.innerWidth <= 1024 && 'ontouchstart' in window);
+
+function updateMobileUI() {
+  if(!isMobile() || !song) return;
+
+  // Song name
+  const nameEl = document.getElementById('mobSongName');
+  if(nameEl) nameEl.textContent = song.title;
+
+  // BPM
+  const bpmEl = document.getElementById('mobBpm');
+  if(bpmEl) bpmEl.textContent = '♩ ' + Math.round((song.bpm||120)*speedPct) + ' BPM';
+
+  // Current + next chord
+  let ci = -1;
+  if(song.chords) {
+    for(let i = 0; i < song.chords.length; i++) {
+      if(song.chords[i].beat <= beatPos + 0.5) ci = i;
+    }
+  }
+  const curChord  = ci >= 0 ? song.chords[ci].name : '—';
+  const nextChord = (ci+1 < (song.chords||[]).length) ? song.chords[ci+1].name : '';
+  const chordEl   = document.getElementById('mobChord');
+  const nextEl    = document.getElementById('mobNextChord');
+  if(chordEl) chordEl.textContent = curChord;
+  if(nextEl)  nextEl.textContent  = nextChord ? ('→ ' + nextChord) : '';
+}
+
+function updateMobileMetronome(beat) {
+  if(!isMobile()) return;
+  const beatInBar = Math.floor(beat) % 4;
+  for(let i = 0; i < 4; i++) {
+    const el = document.getElementById('mbd' + (i+1));
+    if(!el) continue;
+    el.textContent = i + 1;
+    el.className = 'mob-beat-dot';
+    if(i === beatInBar) el.classList.add(i === 0 ? 'beat1' : 'beat-on');
+  }
+}
+
+function updateMobilePlayBtn(isPlaying) {
+  const icon  = document.getElementById('mobPlayIcon');
+  const label = document.getElementById('mobPlayLabel');
+  if(icon)  icon.textContent  = isPlaying ? '⏸' : '▶';
+  if(label) label.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+}
+
+function buildMobileSongList() {
+  const list = document.getElementById('mobSongList');
+  if(!list) return;
+  list.innerHTML = '';
+  Object.entries(SONGS).forEach(([key, s]) => {
+    const item = document.createElement('div');
+    item.className = 'mob-song-item';
+    item.innerHTML = `<div class="mob-song-item-title">${s.title}</div>
+      <div class="mob-song-item-artist">${s.artist || ''}</div>`;
+    item.addEventListener('click', () => {
+      loadSong(key);
+      document.getElementById('mobSongModal').classList.remove('open');
+    });
+    list.appendChild(item);
+  });
+}
+
+// Wire up mobile buttons — call engine functions directly (not hidden desktop buttons)
+document.getElementById('mobPlay').addEventListener('click', () => {
+  // Direct play/pause — mirrors desktop logic but called from mobile touch
+  playing = !playing;
+  if(playing) {
+    initAudio();
+    resetScheduledNotes();
+    if(rafId) cancelAnimationFrame(rafId);
+    lastTime = null;
+    if(beatPos < 0.5) startCountIn();
+    rafId = requestAnimationFrame(tick);
+  } else {
+    if(rafId) cancelAnimationFrame(rafId);
+    if(countIn) stopCountIn();
+  }
+  // Keep desktop button in sync
+  const dBtn = document.getElementById('btnPlay');
+  if(dBtn) {
+    dBtn.textContent = playing ? '⏸ PAUSE' : '▶ PLAY';
+    playing ? dBtn.classList.add('active') : dBtn.classList.remove('active');
+  }
+  updateMobilePlayBtn(playing);
+});
+
+document.getElementById('mobReset').addEventListener('click', () => {
+  playing = false;
+  if(rafId) cancelAnimationFrame(rafId);
+  beatPos = 0; lastTime = null; notesPlayed = 0;
+  resetScheduledNotes();
+  clearLyricsDisplay();
+  countIn = false; countInPos = 0; countInTime = 0;
+  stopCountIn();
+  const dBtn = document.getElementById('btnPlay');
+  if(dBtn) { dBtn.textContent = '▶ PLAY'; dBtn.classList.remove('active'); }
+  updateMobilePlayBtn(false);
+  updateMetronome(0);
+  draw();
+});
+
+document.getElementById('mobBack').addEventListener('click', () => {
+  const prevChord = song.chords ? [...song.chords].reverse().find(c => c.beat < beatPos - 1) : null;
+  skipTo(prevChord ? prevChord.beat : 0);
+});
+
+document.getElementById('mobSongs').addEventListener('click', () => {
+  buildMobileSongList();
+  document.getElementById('mobSongModal').classList.add('open');
+});
+
+document.getElementById('mobModalClose').addEventListener('click', () => {
+  document.getElementById('mobSongModal').classList.remove('open');
+});
+
+// Mobile speed slider
+document.getElementById('mobSpeed').addEventListener('input', e => {
+  document.getElementById('speedSlider').value = e.target.value;
+  document.getElementById('speedSlider').dispatchEvent(new Event('input'));
+  document.getElementById('mobSpeedVal').textContent = e.target.value + '%';
+  updateMobileUI();
+});
+
+// Keep mobile speed slider in sync with desktop
+document.getElementById('speedSlider').addEventListener('input', () => {
+  const v = document.getElementById('speedSlider').value;
+  document.getElementById('mobSpeed').value = v;
+  document.getElementById('mobSpeedVal').textContent = v + '%';
+});
+
+// Hook into draw() to update mobile UI
+const _origDraw = draw;
+draw = function() {
+  _origDraw.call(this);
+  try {
+    if(isMobile()) {
+      updateMobileUI();
+      updateMobilePlayBtn(playing);
+    }
+  } catch(e) {}
+};
+
+// Hook into updateMetronome to also update mobile dots
+const _origMetro = updateMetronome;
+updateMetronome = function(beat) {
+  _origMetro(beat);
+  updateMobileMetronome(beat);
+};
+
+// Hook into loadSong to update mobile song name
+const _origLoadSong = loadSong;
+loadSong = function(key) {
+  _origLoadSong(key);
+  try {
+    if(isMobile()) {
+      const nameEl = document.getElementById('mobSongName');
+      if(nameEl && SONGS[key]) nameEl.textContent = SONGS[key].title;
+      const bpmEl = document.getElementById('mobBpm');
+      if(bpmEl && SONGS[key]) bpmEl.textContent = '♩ ' + Math.round((SONGS[key].bpm||120)*speedPct) + ' BPM';
+      updateMobilePlayBtn(false);
+    }
+  } catch(e) {}
+};
+
+// Prevent pinch zoom on iOS
+document.addEventListener('touchmove', e => {
+  if(e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+
+// Mirror touchend → click for mobile buttons (Safari iOS fix)
+['mobPlay','mobReset','mobBack','mobSongs','mobModalClose'].forEach(id => {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('touchend', e => {
+    e.preventDefault(); // prevent ghost click delay
+    el.click();
+  }, { passive: false });
+});
+
+// Handle orientation change
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => { resizeCanvas(); }, 200);
+});
+
+// Initial mobile UI update
+if(isMobile()) updateMobileUI();
+
+</script>
+
+<!-- COUNT-IN OVERLAY -->
+<div id="countInOverlay" style="display:none;position:fixed;inset:0;z-index:8000;
+  pointer-events:none;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+  <div id="countInNumber" style="font-family:'Oswald',sans-serif;font-size:160px;font-weight:700;
+    color:#e8a020;opacity:0;transition:opacity .06s;text-shadow:0 0 60px rgba(232,160,32,0.6);
+    line-height:1;transition:opacity .06s,transform .06s"></div>
+  <div id="countInBar" style="font-family:'JetBrains Mono',monospace;font-size:13px;
+    color:rgba(232,160,32,0.5);letter-spacing:.2em"></div>
+</div>
+
+<!-- DRAG DROP OVERLAY -->
+<div id="dropOverlay" style="display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.82);align-items:center;justify-content:center;flex-direction:column;gap:16px">
+  <div style="border:3px dashed #e8a020;border-radius:16px;padding:48px 64px;text-align:center">
+    <div style="font-family:'Oswald',sans-serif;font-size:48px;color:#e8a020;font-weight:700">DROP SONG FILE</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#907060;margin-top:8px">
+      Drop a .json song file to load it into FretFlow
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── MOBILE UI ─────────────────────────────────── -->
+<!-- Top bar -->
+<div class="mob-top mobile-ui">
+  <div class="mob-song-name" id="mobSongName">Wish You Were Here</div>
+  <div style="display:flex;align-items:baseline;gap:4px">
+    <div class="mob-chord" id="mobChord">—</div>
+    <div class="mob-next-chord" id="mobNextChord"></div>
+  </div>
+</div>
+
+<!-- Metronome dots -->
+<div class="mob-metro mobile-ui">
+  <div class="mob-beat-dot" id="mbd1">1</div>
+  <div class="mob-beat-dot" id="mbd2">2</div>
+  <div class="mob-beat-dot" id="mbd3">3</div>
+  <div class="mob-beat-dot" id="mbd4">4</div>
+</div>
+
+<!-- BPM display -->
+<div class="mob-bpm mobile-ui" id="mobBpm">♩ 66 BPM</div>
+
+<!-- Bottom controls -->
+<div class="mob-controls mobile-ui">
+  <button class="mob-btn" id="mobSongs">
+    <span class="mob-icon">♫</span>
+    <span>SONGS</span>
+  </button>
+  <button class="mob-btn" id="mobBack">
+    <span class="mob-icon">⏮</span>
+    <span>BACK</span>
+  </button>
+  <button class="mob-btn play-btn" id="mobPlay">
+    <span class="mob-icon" id="mobPlayIcon">▶</span>
+    <span id="mobPlayLabel">PLAY</span>
+  </button>
+  <button class="mob-btn" id="mobReset">
+    <span class="mob-icon">↺</span>
+    <span>RESET</span>
+  </button>
+  <div class="mob-speed mobile-ui">
+    <div class="mob-speed-label">Speed</div>
+    <input type="range" id="mobSpeed" min="20" max="100" value="60"/>
+    <div class="mob-speed-val" id="mobSpeedVal">60%</div>
+  </div>
+</div>
+
+<!-- Song picker modal -->
+<div class="mob-song-modal" id="mobSongModal">
+  <div class="mob-modal-title">SELECT SONG</div>
+  <div class="mob-song-list" id="mobSongList"></div>
+  <div class="mob-modal-close" id="mobModalClose">CANCEL</div>
+</div>
+
+</body>
+</html>
