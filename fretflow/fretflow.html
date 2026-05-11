@@ -1593,6 +1593,138 @@ document.addEventListener('drop', e => {
   });
 });
 
+// ─── GITHUB AUTO-LOADER ──────────────────────────────────────────────────────
+// Detects if running on GitHub Pages, fetches song list from GitHub API,
+// caches result in localStorage for 1 hour to stay under rate limits.
+// Falls back gracefully to cached list or manual loading if anything fails.
+
+const GITHUB_REPO  = 'debreslay-cmd/fretflow';
+const SONGS_PATH   = 'fretflow/songs';  // path inside repo
+const CACHE_KEY    = 'ff_song_index';
+const CACHE_TTL_MS = 60 * 60 * 1000;   // 1 hour
+
+function isGitHubPages() {
+  return window.location.hostname.endsWith('github.io');
+}
+
+function getSongBasePath() {
+  // Works out the base URL for song files relative to current page
+  const parts = window.location.pathname.split('/');
+  parts.pop(); // remove filename
+  return parts.join('/') + '/songs/';
+}
+
+async function fetchSongFile(basePath, filename) {
+  try {
+    const res = await fetch(basePath + filename);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    // Strip _instructions key if present (template file)
+    Object.keys(data).filter(k => k.startsWith('_')).forEach(k => delete data[k]);
+    if(!data.title) throw new Error('Not a valid song file');
+    return data;
+  } catch(e) {
+    console.warn('Could not load song:', filename, e.message);
+    return null;
+  }
+}
+
+async function loadSongsFromGitHub() {
+  // 1. Check localStorage cache first
+  let cachedIndex = null;
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if(cached) {
+      const parsed = JSON.parse(cached);
+      if(Date.now() - parsed.timestamp < CACHE_TTL_MS) {
+        cachedIndex = parsed.files;
+        console.log('Using cached song index (' + cachedIndex.length + ' songs)');
+      }
+    }
+  } catch(e) {}
+
+  let songFiles = cachedIndex;
+
+  // 2. If no valid cache, try GitHub API
+  if(!songFiles) {
+    try {
+      showToast('♪ Loading songs from GitHub...');
+      const apiUrl = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + SONGS_PATH;
+      const res = await fetch(apiUrl, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+
+      if(res.status === 403 || res.status === 429) {
+        // Rate limited — use cache if available, even if stale
+        showToast('⚠ GitHub rate limit — using cached songs', true);
+        try {
+          const cached = localStorage.getItem(CACHE_KEY);
+          if(cached) songFiles = JSON.parse(cached).files;
+        } catch(e) {}
+      } else if(res.ok) {
+        const contents = await res.json();
+        // Filter to .json files only, exclude _template.json
+        songFiles = contents
+          .filter(f => f.type === 'file' && f.name.endsWith('.json') && !f.name.startsWith('_'))
+          .map(f => f.name);
+
+        // Save to cache with timestamp
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            files: songFiles
+          }));
+          console.log('Song index cached: ' + songFiles.length + ' songs');
+        } catch(e) {}
+      } else {
+        throw new Error('API returned ' + res.status);
+      }
+    } catch(e) {
+      console.warn('GitHub API failed:', e.message);
+      // Try stale cache as last resort
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if(cached) {
+          songFiles = JSON.parse(cached).files;
+          showToast('⚠ Using offline song cache', true);
+        }
+      } catch(e2) {}
+    }
+  }
+
+  // 3. If we still have nothing, give up gracefully
+  if(!songFiles || songFiles.length === 0) {
+    showToast('⚠ Could not load songs — use + LOAD SONG', true);
+    return;
+  }
+
+  // 4. Fetch each song file and register it
+  const basePath = getSongBasePath();
+  let loaded = 0;
+  const promises = songFiles.map(async filename => {
+    const data = await fetchSongFile(basePath, filename);
+    if(data) {
+      const key = data.id || filename.replace('.json', '');
+      data.id   = key;
+      SONGS[key] = data;
+      loaded++;
+    }
+  });
+
+  await Promise.all(promises);
+
+  if(loaded > 0) {
+    showToast('✓ ' + loaded + ' songs loaded');
+    // Rebuild select — keep current song selected
+    const currentKey = Object.keys(SONGS).find(k => SONGS[k] === song) || 'wishYouWereHere';
+    rebuildSelect(currentKey);
+    // Build mobile song list if in mobile mode
+    if(document.body.classList.contains('is-mobile')) {
+      if(window._buildMobileSongList) window._buildMobileSongList();
+    }
+  }
+}
+
 // Init: load user songs from localStorage, populate select, load first song
 
 // Keyboard shortcuts
@@ -1623,6 +1755,11 @@ rebuildSelect('wishYouWereHere');
 sel.addEventListener('change', e => loadSong(e.target.value));
 loadSong('wishYouWereHere');
 resizeCanvas();
+
+// Auto-load songs from GitHub if hosted on GitHub Pages
+if(isGitHubPages()) {
+  loadSongsFromGitHub();
+}
 
 
 </script>
@@ -1766,7 +1903,7 @@ function updateMobilePlayBtn(isPlaying) {
 }
 
 // ── Song list modal ───────────────────────────────────────
-function buildMobileSongList() {
+window._buildMobileSongList = function buildMobileSongList() {
   const list = document.getElementById('mobSongList');
   if(!list || !window.SONGS) return;
   list.innerHTML = '';
