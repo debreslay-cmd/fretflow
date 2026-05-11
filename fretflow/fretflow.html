@@ -1766,238 +1766,6 @@ sel.addEventListener('change', e => loadSong(e.target.value));
 loadSong('wishYouWereHere');
 resizeCanvas();
 
-// ─── MOBILE LAYER ────────────────────────────────────────────────────────────
-// True mobile: touch device OR narrow viewport (not a laptop with touch)
-const isMobile = () => {
-  const hasTouch = navigator.maxTouchPoints > 1 || 'ontouchstart' in window;
-  const isNarrow = window.innerWidth <= 768;
-  // Only switch to mobile if narrow viewport OR (touch + not a big screen)
-  return isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900);
-};
-
-function updateMobileUI() {
-  if(!document.body.classList.contains('is-mobile') || !song) return;
-
-  // Song name
-  const nameEl = document.getElementById('mobSongName');
-  if(nameEl) nameEl.textContent = song.title;
-
-  // BPM
-  const bpmEl = document.getElementById('mobBpm');
-  if(bpmEl) bpmEl.textContent = '♩ ' + Math.round((song.bpm||120)*speedPct) + ' BPM';
-
-  // Current + next chord
-  let ci = -1;
-  if(song.chords) {
-    for(let i = 0; i < song.chords.length; i++) {
-      if(song.chords[i].beat <= beatPos + 0.5) ci = i;
-    }
-  }
-  const curChord  = ci >= 0 ? song.chords[ci].name : '—';
-  const nextChord = (ci+1 < (song.chords||[]).length) ? song.chords[ci+1].name : '';
-  const chordEl   = document.getElementById('mobChord');
-  const nextEl    = document.getElementById('mobNextChord');
-  if(chordEl) chordEl.textContent = curChord;
-  if(nextEl)  nextEl.textContent  = nextChord ? ('→ ' + nextChord) : '';
-}
-
-function updateMobileMetronome(beat) {
-  if(!document.body.classList.contains('is-mobile')) return;
-  const beatInBar = Math.floor(beat) % 4;
-  for(let i = 0; i < 4; i++) {
-    const el = document.getElementById('mbd' + (i+1));
-    if(!el) continue;
-    el.textContent = i + 1;
-    el.className = 'mob-beat-dot';
-    if(i === beatInBar) el.classList.add(i === 0 ? 'beat1' : 'beat-on');
-  }
-}
-
-function updateMobilePlayBtn(isPlaying) {
-  const icon  = document.getElementById('mobPlayIcon');
-  const label = document.getElementById('mobPlayLabel');
-  if(icon)  icon.textContent  = isPlaying ? '⏸' : '▶';
-  if(label) label.textContent = isPlaying ? 'PAUSE' : 'PLAY';
-}
-
-function buildMobileSongList() {
-  const list = document.getElementById('mobSongList');
-  if(!list) return;
-  list.innerHTML = '';
-  Object.entries(SONGS).forEach(([key, s]) => {
-    const item = document.createElement('div');
-    item.className = 'mob-song-item';
-    item.innerHTML = `<div class="mob-song-item-title">${s.title}</div>
-      <div class="mob-song-item-artist">${s.artist || ''}</div>`;
-    item.addEventListener('click', () => {
-      loadSong(key);
-      document.getElementById('mobSongModal').classList.remove('open');
-    });
-    list.appendChild(item);
-  });
-}
-
-// Wire up mobile buttons — all wrapped in null-safe init
-function initMobileButtons() {
-  const mobPlay = document.getElementById('mobPlay');
-  const mobReset = document.getElementById('mobReset');
-  const mobBack = document.getElementById('mobBack');
-  const mobSongs = document.getElementById('mobSongs');
-  const mobModalClose = document.getElementById('mobModalClose');
-  const mobSpeed = document.getElementById('mobSpeed');
-  const mobSpeedSlider = document.getElementById('speedSlider');
-
-  if(!mobPlay) { console.warn('Mobile elements not found'); return; }
-
-  mobPlay.addEventListener('click', () => {
-  // Init audio on first interaction (required by browsers)
-  initAudio();
-  if(audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume().then(() => { toggleMobilePlay(); });
-  } else {
-    toggleMobilePlay();
-  }
-});
-
-function toggleMobilePlay() {
-  playing = !playing;
-  if(playing) {
-    resetScheduledNotes();
-    if(rafId) cancelAnimationFrame(rafId);
-    lastTime = null;
-    if(beatPos < 0.5) startCountIn();
-    rafId = requestAnimationFrame(tick);
-  } else {
-    if(rafId) cancelAnimationFrame(rafId);
-    if(countIn) stopCountIn();
-  }
-  updateMobilePlayBtn(playing);
-}
-
-  mobReset.addEventListener('click', () => {
-  playing = false;
-  if(rafId) cancelAnimationFrame(rafId);
-  beatPos = 0; lastTime = null; notesPlayed = 0;
-  resetScheduledNotes();
-  clearLyricsDisplay();
-  countIn = false; countInPos = 0; countInTime = 0;
-  stopCountIn();
-  const dBtn = document.getElementById('btnPlay');
-  if(dBtn) { dBtn.textContent = '▶ PLAY'; dBtn.classList.remove('active'); }
-  updateMobilePlayBtn(false);
-  updateMetronome(0);
-  draw();
-});
-
-  mobBack.addEventListener('click', () => {
-  const prevChord = song.chords ? [...song.chords].reverse().find(c => c.beat < beatPos - 1) : null;
-  skipTo(prevChord ? prevChord.beat : 0);
-});
-
-  mobSongs.addEventListener('click', () => {
-  buildMobileSongList();
-  document.getElementById('mobSongModal').classList.add('open');
-});
-
-  mobModalClose.addEventListener('click', () => {
-  document.getElementById('mobSongModal').classList.remove('open');
-});
-
-// Mobile speed slider
-  if(mobSpeed) mobSpeed.addEventListener('input', e => {
-  document.getElementById('speedSlider').value = e.target.value;
-  document.getElementById('speedSlider').dispatchEvent(new Event('input'));
-  document.getElementById('mobSpeedVal').textContent = e.target.value + '%';
-  updateMobileUI();
-});
-
-  // Keep mobile speed slider in sync with desktop
-  if(mobSpeedSlider) {
-    mobSpeedSlider.addEventListener('input', () => {
-      const v = mobSpeedSlider.value;
-      if(mobSpeed) mobSpeed.value = v;
-      const val = document.getElementById('mobSpeedVal');
-      if(val) val.textContent = v + '%';
-    });
-  }
-
-  // Mirror touchend for all buttons
-  [mobPlay, mobReset, mobBack, mobSongs, mobModalClose].forEach(el => {
-    if(!el) return;
-    el.addEventListener('touchend', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      el.click();
-    }, { passive: false });
-  });
-} // end initMobileButtons
-
-// Hook into draw() to update mobile UI
-const _origDraw = draw;
-draw = function() {
-  _origDraw.call(this);
-  try {
-    if(document.body.classList.contains('is-mobile')) {
-      updateMobileUI();
-      updateMobilePlayBtn(playing);
-    }
-  } catch(e) {}
-};
-
-// Hook into updateMetronome to also update mobile dots
-const _origMetro = updateMetronome;
-updateMetronome = function(beat) {
-  _origMetro(beat);
-  updateMobileMetronome(beat);
-};
-
-// Hook into loadSong to update mobile song name
-const _origLoadSong = loadSong;
-loadSong = function(key) {
-  _origLoadSong(key);
-  try {
-    if(document.body.classList.contains('is-mobile')) {
-      const nameEl = document.getElementById('mobSongName');
-      if(nameEl && SONGS[key]) nameEl.textContent = SONGS[key].title;
-      const bpmEl = document.getElementById('mobBpm');
-      if(bpmEl && SONGS[key]) bpmEl.textContent = '♩ ' + Math.round((SONGS[key].bpm||120)*speedPct) + ' BPM';
-      updateMobilePlayBtn(false);
-    }
-  } catch(e) {}
-};
-
-// Prevent pinch zoom on iOS
-document.addEventListener('touchmove', e => {
-  if(e.touches.length > 1) e.preventDefault();
-}, { passive: false });
-
-// touchend handled inside initMobileButtons()
-
-// Handle orientation change
-window.addEventListener('orientationchange', () => {
-  setTimeout(() => { resizeCanvas(); }, 200);
-});
-
-// Apply mobile class based on device detection
-function applyMobileClass() {
-  if(isMobile()) {
-    document.body.classList.add('is-mobile');
-    updateMobileUI();
-  } else {
-    document.body.classList.remove('is-mobile');
-  }
-}
-// Init mobile buttons safely after DOM is fully ready
-if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    initMobileButtons();
-    applyMobileClass();
-  });
-} else {
-  initMobileButtons();
-  applyMobileClass();
-}
-window.addEventListener('resize', applyMobileClass);
 
 </script>
 
@@ -2075,6 +1843,256 @@ window.addEventListener('resize', applyMobileClass);
   <div class="mob-song-list" id="mobSongList"></div>
   <div class="mob-modal-close" id="mobModalClose">CANCEL</div>
 </div>
+
+
+<!-- ─── MOBILE JS — runs after all HTML elements exist ─── -->
+<script>
+(function() {
+'use strict';
+
+// ── Mobile detection ──────────────────────────────────────
+function isMobile() {
+  const hasTouch = navigator.maxTouchPoints > 1;
+  const isNarrow = window.innerWidth <= 768;
+  return isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900);
+}
+
+// ── Apply/remove mobile class on body ─────────────────────
+function applyMobileClass() {
+  if(isMobile()) {
+    document.body.classList.add('is-mobile');
+    updateMobileUI();
+  } else {
+    document.body.classList.remove('is-mobile');
+  }
+}
+
+// ── Update chord + song info in mobile top bar ────────────
+function updateMobileUI() {
+  if(!window.song) return;
+  const nameEl = document.getElementById('mobSongName');
+  if(nameEl) nameEl.textContent = song.title || '';
+
+  const bpmEl = document.getElementById('mobBpm');
+  if(bpmEl) bpmEl.textContent = '♩ ' + Math.round((song.bpm||120)*(window.speedPct||0.6)) + ' BPM';
+
+  // Current + next chord
+  let ci = -1;
+  if(song.chords) {
+    for(let i = 0; i < song.chords.length; i++) {
+      if(song.chords[i].beat <= (window.beatPos||0) + 0.5) ci = i;
+    }
+  }
+  const chordEl = document.getElementById('mobChord');
+  const nextEl  = document.getElementById('mobNextChord');
+  if(chordEl) chordEl.textContent = ci >= 0 ? song.chords[ci].name : '—';
+  if(nextEl)  nextEl.textContent  = (ci+1 < (song.chords||[]).length)
+    ? ('→ ' + song.chords[ci+1].name) : '';
+}
+
+// ── Metronome dots ────────────────────────────────────────
+function updateMobileMetronome(beat) {
+  if(!document.body.classList.contains('is-mobile')) return;
+  const b = Math.floor(beat||0) % 4;
+  for(let i = 0; i < 4; i++) {
+    const el = document.getElementById('mbd' + (i+1));
+    if(!el) continue;
+    el.textContent = i + 1;
+    el.className = 'mob-beat-dot';
+    if(i === b) el.classList.add(i === 0 ? 'beat1' : 'beat-on');
+  }
+}
+
+// ── Play button state ─────────────────────────────────────
+function updateMobilePlayBtn(isPlaying) {
+  const icon  = document.getElementById('mobPlayIcon');
+  const label = document.getElementById('mobPlayLabel');
+  if(icon)  icon.textContent  = isPlaying ? '⏸' : '▶';
+  if(label) label.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+}
+
+// ── Song list modal ───────────────────────────────────────
+function buildMobileSongList() {
+  const list = document.getElementById('mobSongList');
+  if(!list || !window.SONGS) return;
+  list.innerHTML = '';
+  Object.entries(SONGS).forEach(([key, s]) => {
+    const item = document.createElement('div');
+    item.className = 'mob-song-item';
+    item.innerHTML = '<div class="mob-song-item-title">' + s.title + '</div>'
+      + '<div class="mob-song-item-artist">' + (s.artist||'') + '</div>';
+    item.addEventListener('click', () => {
+      if(window.loadSong) loadSong(key);
+      const modal = document.getElementById('mobSongModal');
+      if(modal) modal.classList.remove('open');
+      updateMobilePlayBtn(false);
+    });
+    list.appendChild(item);
+  });
+}
+
+// ── Toggle play/pause ─────────────────────────────────────
+function toggleMobilePlay() {
+  if(!window.playing === undefined) return;
+  window.playing = !window.playing;
+  if(window.playing) {
+    if(window.resetScheduledNotes) resetScheduledNotes();
+    if(window.rafId) cancelAnimationFrame(window.rafId);
+    window.lastTime = null;
+    if((window.beatPos||0) < 0.5 && window.startCountIn) startCountIn();
+    window.rafId = requestAnimationFrame(window.tick);
+  } else {
+    if(window.rafId) cancelAnimationFrame(window.rafId);
+    if(window.countIn && window.stopCountIn) stopCountIn();
+  }
+  updateMobilePlayBtn(window.playing);
+}
+
+// ── Wire up buttons ───────────────────────────────────────
+function initMobileButtons() {
+  // Play
+  const mobPlay = document.getElementById('mobPlay');
+  if(mobPlay) {
+    mobPlay.addEventListener('click', () => {
+      if(window.initAudio) initAudio();
+      const ctx = window.audioCtx;
+      if(ctx && ctx.state === 'suspended') {
+        ctx.resume().then(toggleMobilePlay);
+      } else {
+        toggleMobilePlay();
+      }
+    });
+  }
+
+  // Reset
+  const mobReset = document.getElementById('mobReset');
+  if(mobReset) {
+    mobReset.addEventListener('click', () => {
+      window.playing = false;
+      if(window.rafId) cancelAnimationFrame(window.rafId);
+      window.beatPos = 0; window.lastTime = null;
+      if(window.resetScheduledNotes) resetScheduledNotes();
+      if(window.clearLyricsDisplay) clearLyricsDisplay();
+      window.countIn = false; window.countInPos = 0; window.countInTime = 0;
+      if(window.stopCountIn) stopCountIn();
+      if(window.updateMetronome) updateMetronome(0);
+      if(window.draw) draw();
+      updateMobilePlayBtn(false);
+    });
+  }
+
+  // Back
+  const mobBack = document.getElementById('mobBack');
+  if(mobBack) {
+    mobBack.addEventListener('click', () => {
+      if(!window.song || !window.song.chords) return;
+      const prev = [...song.chords].reverse().find(c => c.beat < (window.beatPos||0) - 1);
+      if(window.skipTo) skipTo(prev ? prev.beat : 0);
+    });
+  }
+
+  // Songs modal
+  const mobSongs = document.getElementById('mobSongs');
+  if(mobSongs) {
+    mobSongs.addEventListener('click', () => {
+      buildMobileSongList();
+      const m = document.getElementById('mobSongModal');
+      if(m) m.classList.add('open');
+    });
+  }
+
+  // Close modal
+  const mobClose = document.getElementById('mobModalClose');
+  if(mobClose) {
+    mobClose.addEventListener('click', () => {
+      const m = document.getElementById('mobSongModal');
+      if(m) m.classList.remove('open');
+    });
+  }
+
+  // Speed slider
+  const mobSpeed = document.getElementById('mobSpeed');
+  if(mobSpeed) {
+    mobSpeed.addEventListener('input', e => {
+      const deskSlider = document.getElementById('speedSlider');
+      if(deskSlider) {
+        deskSlider.value = e.target.value;
+        deskSlider.dispatchEvent(new Event('input'));
+      }
+      const val = document.getElementById('mobSpeedVal');
+      if(val) val.textContent = e.target.value + '%';
+    });
+    // Keep in sync with desktop
+    const deskSlider = document.getElementById('speedSlider');
+    if(deskSlider) {
+      deskSlider.addEventListener('input', () => {
+        mobSpeed.value = deskSlider.value;
+        const val = document.getElementById('mobSpeedVal');
+        if(val) val.textContent = deskSlider.value + '%';
+      });
+    }
+  }
+
+  // iOS touchend → click (removes 300ms delay)
+  ['mobPlay','mobReset','mobBack','mobSongs','mobModalClose'].forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('touchend', e => {
+      e.preventDefault();
+      el.click();
+    }, { passive: false });
+  });
+}
+
+// ── Patch global draw() to update mobile UI ───────────────
+const _origDraw2 = window.draw;
+window.draw = function() {
+  if(_origDraw2) _origDraw2.call(this);
+  if(document.body.classList.contains('is-mobile')) {
+    try { updateMobileUI(); updateMobilePlayBtn(window.playing); } catch(e) {}
+  }
+};
+
+// ── Patch global updateMetronome() ───────────────────────
+const _origMetro2 = window.updateMetronome;
+window.updateMetronome = function(beat) {
+  if(_origMetro2) _origMetro2(beat);
+  updateMobileMetronome(beat);
+};
+
+// ── Patch loadSong() to update mobile name ────────────────
+const _origLoad2 = window.loadSong;
+window.loadSong = function(key) {
+  if(_origLoad2) _origLoad2(key);
+  try {
+    if(document.body.classList.contains('is-mobile')) {
+      updateMobileUI();
+      updateMobilePlayBtn(false);
+    }
+  } catch(e) {}
+};
+
+// ── Prevent pinch zoom ────────────────────────────────────
+document.addEventListener('touchmove', e => {
+  if(e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+
+// ── Orientation change ────────────────────────────────────
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => { if(window.resizeCanvas) resizeCanvas(); }, 300);
+});
+
+// ── Boot ──────────────────────────────────────────────────
+window.addEventListener('resize', applyMobileClass);
+// Run after a short delay to ensure main script has fully initialised
+setTimeout(() => {
+  initMobileButtons();
+  applyMobileClass();
+  if(window.song) updateMobileUI();
+}, 100);
+
+})(); // end IIFE
+</script>
 
 </body>
 </html>
