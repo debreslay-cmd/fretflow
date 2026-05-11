@@ -169,7 +169,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
    Shown when screen width < 900px (phone landscape/portrait)
    Full-screen fretboard, minimal chrome, touch-friendly
 ──────────────────────────────────────────────────────── */
-.mobile-ui { display: none; }
+.mobile-ui { display: none !important; }
 
 /* Mobile layout — activated by JS adding .is-mobile to body */
 body.is-mobile .header,
@@ -180,22 +180,23 @@ body.is-mobile .controls,
 body.is-mobile .status-bar,
 body.is-mobile .play-line { display: none !important; }
 
-body.is-mobile { overflow: hidden; background: var(--bg); }
+body.is-mobile { overflow: hidden !important; background: var(--bg); }
+
 body.is-mobile .fretboard-wrap {
   position: fixed !important;
   inset: 0 !important;
   flex: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
 }
 body.is-mobile .mobile-ui { display: flex !important; }
 
-/* Also keep media query as fallback for very narrow screens */
-@media (max-width: 480px) {
-  .header, .chord-bar, .lyrics-panel, .tab-strip,
-  .controls, .status-bar, .play-line { display: none !important; }
-  body { overflow: hidden; }
-  .fretboard-wrap { position: fixed !important; inset: 0 !important; flex: none !important; }
-  .mobile-ui { display: flex !important; }
-}
+/* Desktop mode — hide mobile UI */
+body:not(.is-mobile) .mob-top,
+body:not(.is-mobile) .mob-metro,
+body:not(.is-mobile) .mob-bpm,
+body:not(.is-mobile) .mob-controls,
+body:not(.is-mobile) .mob-song-modal { display: none !important; }
 
 /* ── Mobile top bar: song name + chord ── */
 .mob-top {
@@ -337,29 +338,6 @@ body.is-mobile .mobile-ui { display: flex !important; }
   letter-spacing: .08em;
 }
 
-
-<script>
-// Detect mobile before first paint to prevent layout flash
-(function(){
-  var hasTouch = navigator.maxTouchPoints > 1;
-  var isNarrow = window.innerWidth <= 768;
-  if(isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900)){
-    document.documentElement.classList.add('is-mobile-early');
-  }
-})();
-</script>
-<style>
-/* Hide desktop elements immediately on mobile before JS runs */
-html.is-mobile-early .header,
-html.is-mobile-early .chord-bar,
-html.is-mobile-early .lyrics-panel,
-html.is-mobile-early .tab-strip,
-html.is-mobile-early .controls,
-html.is-mobile-early .status-bar { display: none !important; }
-html.is-mobile-early .fretboard-wrap {
-  position: fixed !important; inset: 0 !important; flex: none !important;
-}
-</style>
 </style>
 </head>
 <body>
@@ -402,6 +380,17 @@ html.is-mobile-early .fretboard-wrap {
 <div class="tab-strip">
   <canvas id="tabStrip"></canvas>
 </div>
+
+<!-- FLOATING MOBILE TOGGLE — always visible on both layouts -->
+<button id="btnMobileToggle" onclick="toggleMobileLayout()" style="
+  position:fixed;top:8px;right:8px;z-index:9999;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;
+  padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);
+  background:rgba(20,20,20,0.85);color:rgba(255,255,255,0.4);
+  cursor:pointer;text-transform:uppercase;backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px)">
+  📱
+</button>
 
 <!-- FRETBOARD -->
 <div class="fretboard-wrap">
@@ -516,6 +505,39 @@ const BUILTIN_SONGS = {
 // ─── SONG REGISTRY — active songs (built-ins + user loaded) ─────────────────
 let SONGS = Object.assign({}, BUILTIN_SONGS);
 
+
+// ─── MOBILE TOGGLE ───────────────────────────────────────────────────────────
+let _mobileActive = false;
+try { _mobileActive = localStorage.getItem('ff_mobile') === '1'; } catch(e) {}
+
+function toggleMobileLayout() {
+  _mobileActive = !_mobileActive;
+  try { localStorage.setItem('ff_mobile', _mobileActive ? '1' : '0'); } catch(e) {}
+  if(_mobileActive) {
+    document.body.classList.add('is-mobile');
+  } else {
+    document.body.classList.remove('is-mobile');
+  }
+  updateToggleBtn();
+  setTimeout(resizeCanvas, 50);
+}
+
+function updateToggleBtn() {
+  const btn = document.getElementById('btnMobileToggle');
+  if(!btn) return;
+  btn.textContent = _mobileActive ? '🖥️' : '📱';
+  btn.style.color       = _mobileActive ? '#e8a020' : 'rgba(255,255,255,0.4)';
+  btn.style.borderColor = _mobileActive ? '#e8a020' : 'rgba(255,255,255,0.15)';
+  btn.title = _mobileActive ? 'Switch to Desktop' : 'Switch to Mobile';
+}
+
+// Apply saved preference on load
+(function() {
+  if(_mobileActive) document.body.classList.add('is-mobile');
+  // Defer button update until DOM ready
+  document.addEventListener('DOMContentLoaded', updateToggleBtn);
+  setTimeout(updateToggleBtn, 50);
+})();
 
 // ─── CHORD SCROLL BAR ────────────────────────────────────────────────────────
 const chordCanvas = document.getElementById('chordScroll');
@@ -908,8 +930,8 @@ let notesPlayed = 0;
 let rafId       = null;
 let lastBeatInt = -1;      // last integer beat (for metronome pulse)
 let countIn     = false;   // true while count-in is running
-let countInPos  = 0;       // 0..7 (2 bars of 4 beats)
-let countInTime = 0;       // elapsed seconds within current count-in beat
+let countInPos  = -1;      // -1 = not started, 0..7 = beats
+let countInTime = 0;       // accumulated beat time
 
 const STRING_NAMES = ['e','B','G','D','A','E'];
 const STRING_COLORS = ['#f0e0a0','#d8c890','#c8b878','#b8a868','#a89858','#988848'];
@@ -1267,27 +1289,30 @@ function updateMetronome(beat) {
 
 // ─── COUNT-IN ────────────────────────────────────────────────────────────────
 function startCountIn() {
-  countIn    = true;
-  countInPos = 0;
+  countIn     = true;
+  countInPos  = -1;
   countInTime = 0;
   const overlay = document.getElementById('countInOverlay');
   if(overlay) overlay.style.display = 'flex';
-  showCountInBeat(0);
+  showCountInBeat(0);  // show "1" immediately
 }
 
 function showCountInBeat(pos) {
-  const beat  = (pos % 4) + 1;          // 1-4
-  const bar   = Math.floor(pos / 4) + 1; // 1 or 2
+  const beat  = (pos % 4) + 1;
+  const bar   = Math.floor(pos / 4) + 1;
   const numEl = document.getElementById('countInNumber');
   const barEl = document.getElementById('countInBar');
+  if(!numEl || !barEl) return;
   numEl.textContent = beat;
-  barEl.textContent = `BAR ${bar} OF 2`;
-  // Flash: briefly show then fade
+  barEl.textContent = 'BAR ' + bar + ' OF 2';
   numEl.style.opacity = '1';
-  // Beat 1 of each bar pulses bigger
-  numEl.style.color = beat === 1 ? '#f5c040' : '#e8a020';
-  numEl.style.transform = beat === 1 ? 'scale(1.1)' : 'scale(1)';
-  setTimeout(() => { numEl.style.opacity = '0.3'; numEl.style.transform = 'scale(1)'; }, 150);
+  numEl.style.color     = beat === 1 ? '#f5c040' : '#e8a020';
+  numEl.style.transform = beat === 1 ? 'scale(1.15)' : 'scale(1)';
+  clearTimeout(numEl._fadeTimer);
+  numEl._fadeTimer = setTimeout(() => {
+    numEl.style.opacity   = '0.25';
+    numEl.style.transform = 'scale(1)';
+  }, 180);
 }
 
 function stopCountIn() {
@@ -1307,17 +1332,18 @@ function tick(ts) {
 
   // ── Count-in phase ──
   if(countIn) {
-    countInTime += dt * beatsPerSec;
-    const newPos = Math.floor(countInTime);
-    if(newPos !== countInPos) {
+    countInTime += dt;
+    const secPerBeat = 1 / beatsPerSec;
+    const newPos     = Math.floor(countInTime / secPerBeat);
+    if(newPos !== countInPos && newPos >= 0) {
       countInPos = newPos;
       if(countInPos >= 8) {
-        // Count-in complete — start song
         stopCountIn();
+        countInPos  = -1;
         countInTime = 0;
       } else {
         showCountInBeat(countInPos);
-        updateMetronome(countInPos); // pulse metronome dots during count-in
+        updateMetronome(countInPos);
       }
     }
     rafId = requestAnimationFrame(tick);
@@ -1370,7 +1396,7 @@ function loadSong(key) {
   document.getElementById('bpmDisp').textContent = '♩ ' + bpm + ' BPM';
   document.getElementById('strumStrip')._built = false;
   lastBeatInt = -1;
-  countIn = false; countInPos = 0; countInTime = 0;
+  countIn = false; countInPos = -1; countInTime = 0;
   stopCountIn();
   lyricsBuilt = false;
   buildLyricsDOM();
@@ -1412,7 +1438,7 @@ document.getElementById('btnSkipBack').addEventListener('click', () => {
   if(rafId) cancelAnimationFrame(rafId);
   beatPos = 0; lastTime = null; notesPlayed = 0;
   clearLyricsDisplay();
-  countIn = false; countInPos = 0; countInTime = 0;
+  countIn = false; countInPos = -1; countInTime = 0;
   stopCountIn();
   document.getElementById('btnPlay').textContent = '▶ PLAY';
   document.getElementById('btnPlay').classList.remove('active');
@@ -1684,19 +1710,15 @@ resizeCanvas();
 
 // ── Mobile detection ──────────────────────────────────────
 function isMobile() {
-  const hasTouch = navigator.maxTouchPoints > 1;
-  const isNarrow = window.innerWidth <= 768;
-  return isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900);
+  return window._mobileActive === true;
 }
 
 // ── Apply/remove mobile class on body ─────────────────────
 function applyMobileClass() {
-  if(isMobile()) {
-    document.body.classList.add('is-mobile');
-    updateMobileUI();
-  } else {
-    document.body.classList.remove('is-mobile');
-  }
+  // State is managed by main script's toggleMobileLayout()
+  // Just update UI based on current body class
+  const active = document.body.classList.contains('is-mobile');
+  if(active && window.song) updateMobileUI();
 }
 
 // ── Update chord + song info in mobile top bar ────────────
@@ -1765,17 +1787,12 @@ function buildMobileSongList() {
 
 // ── Toggle play/pause ─────────────────────────────────────
 function toggleMobilePlay() {
-  if(!window.playing === undefined) return;
-  window.playing = !window.playing;
-  if(window.playing) {
-        if(window.rafId) cancelAnimationFrame(window.rafId);
-    window.lastTime = null;
-    if((window.beatPos||0) < 0.5 && window.startCountIn) startCountIn();
-    window.rafId = requestAnimationFrame(window.tick);
-  } else {
-    if(window.rafId) cancelAnimationFrame(window.rafId);
-    if(window.countIn && window.stopCountIn) stopCountIn();
+  // Directly mirror the desktop play button logic
+  const btn = document.getElementById('btnPlay');
+  if(btn) {
+    btn.click();  // This correctly handles count-in, rafId, playing state
   }
+  // Update mobile button to match state (playing was toggled by btn.click())
   updateMobilePlayBtn(window.playing);
 }
 
@@ -1798,7 +1815,7 @@ function initMobileButtons() {
       if(window.rafId) cancelAnimationFrame(window.rafId);
       window.beatPos = 0; window.lastTime = null;
             if(window.clearLyricsDisplay) clearLyricsDisplay();
-      window.countIn = false; window.countInPos = 0; window.countInTime = 0;
+      window.countIn = false; window.countInPos = -1; window.countInTime = 0;
       if(window.stopCountIn) stopCountIn();
       if(window.updateMetronome) updateMetronome(0);
       if(window.draw) draw();
@@ -1908,7 +1925,6 @@ window.addEventListener('orientationchange', () => {
 });
 
 // ── Boot ──────────────────────────────────────────────────
-window.addEventListener('resize', applyMobileClass);
 // Run after a short delay to ensure main script has fully initialised
 setTimeout(() => {
   initMobileButtons();
