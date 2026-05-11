@@ -392,10 +392,15 @@ body:not(.is-mobile) .mob-song-modal { display: none !important; }
   📱
 </button>
 
-<!-- FRETBOARD -->
-<div class="fretboard-wrap">
+<!-- FRETBOARD — scroll view -->
+<div class="fretboard-wrap" id="scrollView">
   <canvas id="fretboard"></canvas>
   <div class="play-line" id="playLine"></div>
+</div>
+
+<!-- FRETBOARD — static guitar neck view -->
+<div class="fretboard-wrap" id="staticView" style="display:none;flex:1">
+  <canvas id="staticFretboard" style="display:block;width:100%;height:100%"></canvas>
 </div>
 
 <!-- CONTROLS -->
@@ -403,6 +408,7 @@ body:not(.is-mobile) .mob-song-modal { display: none !important; }
   <select class="song-select" id="songSelect"></select>
   <button class="ctrl-btn" id="btnLoadSong" title="Load a .json song file">+ LOAD SONG</button>
   <input type="file" id="fileInput" accept=".json" style="display:none" multiple/>
+  <button class="ctrl-btn" id="btnViewToggle" title="Toggle fretboard view">≡ SCROLL</button>
   <div class="sep"></div>
   <button class="ctrl-btn" id="btnSkipBack">↺ RESET</button>
   <button class="ctrl-btn" id="btnBack">◀◀ BACK</button>
@@ -662,7 +668,7 @@ function drawTabStrip() {
   const midY = tH / 2;
 
   // String names for display (1=high e .. 6=low E)
-  const STRING_DISPLAY = ['1','2','3','4','5','6'];
+  const STRING_DISPLAY = ['e','B','G','D','A','E']; // 0=high e, 5=low E
 
   // Collect notes visible in window, deduplicate chords to one pill per beat
   // For chord type: show one pill per beat grouping (root string only — lowest s value)
@@ -698,9 +704,10 @@ function drawTabStrip() {
   tabCtx.stroke();
 
   // Draw pills
-  const PILL_W = 44;
+  const PILL_W = 46;  // slightly wider
   const PILL_H = 22;
   const PILL_R = 4;
+  const PILL_GAP = 4; // gap between pills
 
   for(const p of pills) {
     const isPast     = p.b + 0.5 < beatPos;
@@ -716,9 +723,12 @@ function drawTabStrip() {
     const bgColor = isPast ? '#1a1a1a'
                   : isAt   ? '#1e1600'
                   : '#111111';
+    // Draw pill with gap on each side
+    const pw = PILL_W - PILL_GAP;
+    const halfPill = pw / 2;
     tabCtx.fillStyle = bgColor;
     tabCtx.beginPath();
-    tabCtx.roundRect(p.x - PILL_W/2, midY - PILL_H/2, PILL_W, PILL_H, PILL_R);
+    tabCtx.roundRect(p.x - pw/2, midY - PILL_H/2, pw, PILL_H, PILL_R);
     tabCtx.fill();
 
     // Pill border
@@ -727,18 +737,18 @@ function drawTabStrip() {
                        : 'rgba(255,255,255,0.12)';
     tabCtx.lineWidth = isAt ? 1.5 : 0.75;
     tabCtx.beginPath();
-    tabCtx.roundRect(p.x - PILL_W/2, midY - PILL_H/2, PILL_W, PILL_H, PILL_R);
+    tabCtx.roundRect(p.x - pw/2, midY - PILL_H/2, pw, PILL_H, PILL_R);
     tabCtx.stroke();
 
-    // String label — left half of pill — teal
-    const strNum = STRING_DISPLAY[p.s]; // 0=e→'1', 5=E→'6'
+    // String label — left half — actual string name (e, B, G, D, A, E)
+    const strName = STRING_DISPLAY[p.s];
     tabCtx.fillStyle = isAt ? '#40e0b8' : '#20c8a0';
-    tabCtx.font = `600 10px 'JetBrains Mono', monospace`;
+    tabCtx.font = `600 11px 'JetBrains Mono', monospace`;
     tabCtx.textAlign = 'center';
     tabCtx.textBaseline = 'middle';
-    tabCtx.fillText('S' + strNum, p.x - 11, midY - 1);
+    tabCtx.fillText(strName, p.x - halfPill * 0.5, midY - 1);
 
-    // Divider
+    // Divider (centred in pill)
     tabCtx.strokeStyle = isAt ? 'rgba(232,160,32,0.3)' : 'rgba(255,255,255,0.08)';
     tabCtx.lineWidth = 0.75;
     tabCtx.beginPath();
@@ -746,11 +756,11 @@ function drawTabStrip() {
     tabCtx.lineTo(p.x, midY + PILL_H/2 - 4);
     tabCtx.stroke();
 
-    // Fret label — right half — amber
-    const fretStr = p.f === 0 ? 'O' : 'F' + p.f;
+    // Fret label — right half — amber (just the number, O for open)
+    const fretStr = p.f === 0 ? 'O' : String(p.f);
     tabCtx.fillStyle = isAt ? '#f5c040' : '#e8a020';
-    tabCtx.font = `700 10px 'JetBrains Mono', monospace`;
-    tabCtx.fillText(fretStr, p.x + 11, midY - 1);
+    tabCtx.font = `700 11px 'JetBrains Mono', monospace`;
+    tabCtx.fillText(fretStr, p.x + halfPill * 0.5, midY - 1);
 
     tabCtx.globalAlpha = 1;
   }
@@ -916,6 +926,539 @@ function drawLyrics() {
 // ── Lyrics panel: fixed compact height, no resize needed ──────────────────────
 
 
+// ─── STATIC FRETBOARD ENGINE ─────────────────────────────────────────────────
+let staticView   = false; // false = scroll, true = static neck
+const sfCanvas   = document.getElementById('staticFretboard');
+const sfCtx      = sfCanvas ? sfCanvas.getContext('2d') : null;
+
+// Guitar neck layout constants
+const SF = {
+  FRETS:        13,    // frets 0 (nut) to 12
+  STRINGS:      6,
+  NUT_W:        18,    // nut width px
+  FRET_MARKERS: [3,5,7,9,12], // standard dot positions
+  DOUBLE_DOT:   12,
+};
+
+// Fret widths follow real guitar proportions (each fret ~94.4% of previous)
+// We calculate from canvas width
+function sfGetLayout(W, H) {
+  const padL   = 44;   // string label area
+  const padR   = 16;
+  const padT   = 28;
+  const padB   = 28;
+  const neckW  = W - padL - padR;
+  const neckH  = H - padT - padB;
+
+  // ── Fret positions: real guitar proportions (1/17.817 rule) ──
+  // Each fret = previous remaining scale / 17.817
+  // Raw positions 0..1 then scaled to canvas width
+  const rawFretX = [0];
+  let remaining = 1.0;
+  for(let i = 1; i <= SF.FRETS; i++) {
+    const fretWidth = remaining / 17.817;
+    rawFretX.push(rawFretX[i-1] + fretWidth);
+    remaining -= fretWidth;
+  }
+  // Stretch to fill full canvas width
+  const maxRaw = rawFretX[SF.FRETS];
+  const fretX  = rawFretX.map(x => Math.round(padL + (x / maxRaw) * neckW));
+
+  // ── String Y positions: tapered neck ──
+  // At the nut (left): strings spread wider
+  // At fret 12 (right): strings are ~15% closer together
+  // This matches real guitar neck taper
+  const NUT_SPREAD  = 1.0;   // full spread at nut
+  const BODY_SPREAD = 0.80;  // 80% spread at fret 12 end
+
+  const stringY      = []; // Y at nut (left edge)
+  const stringYRight = []; // Y at body (right edge) — for tapered strings
+
+  for(let i = 0; i < SF.STRINGS; i++) {
+    const t = i / (SF.STRINGS - 1); // 0=top, 1=bottom
+    // At nut: full neckH spread, centred
+    const nutCenter  = H / 2;
+    const bodyCenter = H / 2;
+    const yNut  = nutCenter  + (t - 0.5) * neckH * NUT_SPREAD;
+    const yBody = bodyCenter + (t - 0.5) * neckH * BODY_SPREAD;
+    stringY.push(yNut);
+    stringYRight.push(yBody);
+  }
+
+  return { padL, padR, padT, padB, neckW, neckH, fretX, stringY, stringYRight, W, H };
+}
+
+function drawStaticFretboard() {
+  if(!sfCtx || !staticView) return;
+  drawTabStrip();
+  const W = sfCanvas.width, H = sfCanvas.height;
+  if(!W || !H) return;
+  const L = sfGetLayout(W, H);
+  const ctx = sfCtx;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // ── String spacing is tight — recalculate layout to match real guitar ──
+  // Real guitar: strings occupy ~60% of neck height, centred
+  const stringAreaH = H * 0.62;
+  const stringTop   = (H - stringAreaH) / 2;
+
+  // Recompute string Y positions with tighter spacing
+  const STRING_NAMES  = ['e','B','G','D','A','E'];
+  const STRING_WIDTHS = [0.8, 1.1, 1.5, 2.0, 2.6, 3.2];
+  const STRING_COLORS = ['#d4c88a','#c8bc80','#b4aa70','#9c9060','#8a7e54','#786c48'];
+
+  const strY  = []; // Y at nut (left)
+  const strYR = []; // Y at body (right) — taper
+  for(let s = 0; s < 6; s++) {
+    const t  = s / 5;
+    strY.push( stringTop + t * stringAreaH);
+    // Taper: body end is 85% of nut spread, centred
+    strYR.push((H/2) + (strY[s] - H/2) * 0.85);
+  }
+
+  // Helper: interpolate Y for a given fret
+  const strYAt = (s, fret) => {
+    if(fret === 0) return strY[s];
+    const t = (L.fretX[fret] - L.padL) / L.neckW;
+    return strY[s] + t * (strYR[s] - strY[s]);
+  };
+
+  // ── Board background — rich rosewood/ebony ──
+  // Base dark background
+  ctx.fillStyle = '#0d0604';
+  ctx.fillRect(0, 0, W, H);
+
+  // Board colour — rich dark reddish-brown with horizontal grain
+  const boardX0 = L.padL + SF.NUT_W;
+  const boardW  = W - boardX0;
+
+  // Rich horizontal wood grain bands
+  const grainColors = [
+    '#1a0c05','#220e06','#2a1208','#1e0d05','#280f07',
+    '#1c0b04','#240e06','#2c1309','#1a0c05','#200d06',
+  ];
+  const bandH = H / grainColors.length;
+  grainColors.forEach((col, i) => {
+    const gy = i * bandH;
+    ctx.fillStyle = col;
+    ctx.fillRect(boardX0, gy, boardW, bandH + 1);
+  });
+
+  // Fine grain overlay — dark streaks
+  ctx.save();
+  for(let g = 0; g < 50; g++) {
+    const gy = (g / 50) * H;
+    const darkness = Math.sin(g * 1.3) * 0.5 + 0.5;
+    ctx.strokeStyle = `rgba(0,0,0,${0.08 + darkness * 0.12})`;
+    ctx.lineWidth   = 0.5 + Math.random() * 2;
+    ctx.beginPath();
+    ctx.moveTo(boardX0, gy);
+    ctx.lineTo(W, gy + (Math.random()-0.5)*2);
+    ctx.stroke();
+  }
+  // Light grain streaks (wood figuring)
+  for(let g = 0; g < 20; g++) {
+    const gy = (g / 20) * H + Math.random() * bandH;
+    ctx.strokeStyle = `rgba(80,35,8,${0.04 + Math.random()*0.06})`;
+    ctx.lineWidth   = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(boardX0, gy);
+    ctx.lineTo(W, gy + (Math.random()-0.5)*4);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Subtle vignette — darker at edges top/bottom
+  const vig = ctx.createLinearGradient(0, 0, 0, H);
+  vig.addColorStop(0,   'rgba(0,0,0,0.45)');
+  vig.addColorStop(0.15,'rgba(0,0,0,0)');
+  vig.addColorStop(0.85,'rgba(0,0,0,0)');
+  vig.addColorStop(1,   'rgba(0,0,0,0.45)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(boardX0, 0, boardW, H);
+
+  // ── Nut — bone/ivory, rounded right edge ──
+  const nutX = L.padL;
+  const nutW = SF.NUT_W + 2;
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.fillRect(nutX + nutW + 1, 0, 5, H);
+  const nutG = ctx.createLinearGradient(nutX, 0, nutX+nutW, 0);
+  nutG.addColorStop(0,   '#8a8270');
+  nutG.addColorStop(0.25,'#d8d0b8');
+  nutG.addColorStop(0.55,'#f5ede0');
+  nutG.addColorStop(0.8, '#e0d8c8');
+  nutG.addColorStop(1,   '#c8c0b0');
+  ctx.fillStyle = nutG;
+  ctx.fillRect(nutX, 0, nutW, H);
+
+  // ── Fret wires — bright nickel silver ──
+  for(let f = 1; f <= SF.FRETS; f++) {
+    const x  = L.fretX[f];
+    const fw = 3;
+    // Drop shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(x + fw, 0, 3, H);
+    // Fret body
+    const fg = ctx.createLinearGradient(x, 0, x+fw, 0);
+    fg.addColorStop(0,   'rgba(160,162,175,0.8)');
+    fg.addColorStop(0.25,'rgba(235,238,248,1.0)');
+    fg.addColorStop(0.5, 'rgba(255,255,255,1.0)');
+    fg.addColorStop(0.75,'rgba(215,218,230,0.95)');
+    fg.addColorStop(1,   'rgba(130,132,145,0.7)');
+    ctx.fillStyle = fg;
+    ctx.fillRect(x, 0, fw, H);
+  }
+
+  // ── Binding — curved maple binding strips ──
+  // Top binding (slight curve using bezier)
+  const bindH = 5;
+  const bindCol = ctx.createLinearGradient(0,0,0,bindH);
+  bindCol.addColorStop(0, '#e8e0c8');
+  bindCol.addColorStop(1, '#b0a888');
+  ctx.fillStyle = bindCol;
+  ctx.fillRect(boardX0, 0, boardW, bindH);
+  // Bottom binding
+  const bindCol2 = ctx.createLinearGradient(0,H-bindH,0,H);
+  bindCol2.addColorStop(0, '#b0a888');
+  bindCol2.addColorStop(1, '#e8e0c8');
+  ctx.fillStyle = bindCol2;
+  ctx.fillRect(boardX0, H-bindH, boardW, bindH);
+
+  // ── Position markers — cream pearloid ──
+  SF.FRET_MARKERS.forEach(fret => {
+    if(fret > SF.FRETS) return;
+    const midX  = (L.fretX[fret-1] + L.fretX[fret]) / 2;
+    const fretW = L.fretX[fret] - L.fretX[fret-1];
+    const dotR  = Math.min(8, fretW * 0.16);
+
+    const drawDot = (cx, cy) => {
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.beginPath(); ctx.arc(cx+1, cy+1, dotR, 0, Math.PI*2); ctx.fill();
+      const mg = ctx.createRadialGradient(cx-dotR*0.35, cy-dotR*0.35, 0, cx, cy, dotR);
+      mg.addColorStop(0,   'rgba(248,245,235,0.98)');
+      mg.addColorStop(0.5, 'rgba(215,225,215,0.88)');
+      mg.addColorStop(0.8, 'rgba(185,200,190,0.75)');
+      mg.addColorStop(1,   'rgba(155,175,165,0.55)');
+      ctx.fillStyle = mg;
+      ctx.beginPath(); ctx.arc(cx, cy, dotR, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.beginPath(); ctx.arc(cx-dotR*0.32, cy-dotR*0.32, dotR*0.28, 0, Math.PI*2); ctx.fill();
+    };
+
+    if(fret === SF.DOUBLE_DOT) {
+      const gap = stringAreaH * 0.28;
+      drawDot(midX, H/2 - gap);
+      drawDot(midX, H/2 + gap);
+    } else {
+      drawDot(midX, H/2);
+    }
+  });
+
+  // ── Fret numbers — highlight marker positions ──
+  const MARKER_FRETS = new Set([3,5,7,9,12]);
+  for(let f = 1; f <= SF.FRETS; f++) {
+    const x         = (L.fretX[f-1] + L.fretX[f]) / 2;
+    const isMarker  = MARKER_FRETS.has(f);
+    const fretW     = L.fretX[f] - L.fretX[f-1];
+    const numY      = 18; // shifted down from top edge
+
+    if(isMarker) {
+      // Pill background for marker frets
+      const pillW = Math.min(fretW * 0.65, 28);
+      const pillH = 14;
+      const pillR = 4;
+      ctx.fillStyle = 'rgba(232,160,32,0.18)';
+      ctx.beginPath();
+      ctx.roundRect(x - pillW/2, numY - pillH/2, pillW, pillH, pillR);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(232,160,32,0.45)';
+      ctx.lineWidth   = 0.75;
+      ctx.beginPath();
+      ctx.roundRect(x - pillW/2, numY - pillH/2, pillW, pillH, pillR);
+      ctx.stroke();
+      // Amber number
+      ctx.fillStyle    = 'rgba(232,160,32,0.9)';
+      ctx.font         = `700 10px 'JetBrains Mono'`;
+    } else {
+      ctx.fillStyle = 'rgba(180,160,110,0.4)';
+      ctx.font      = `400 9px 'JetBrains Mono'`;
+    }
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(f, x, numY);
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  // ── Strings — wound steel/nickel look ──
+  for(let s = 0; s < 6; s++) {
+    const yL  = strY[s];
+    const yR  = strYR[s];
+    const col = STRING_COLORS[s];
+    const w   = STRING_WIDTHS[s];
+
+    // Deep shadow beneath string
+    ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+    ctx.lineWidth   = w + 2.5;
+    ctx.beginPath(); ctx.moveTo(boardX0, yL+1); ctx.lineTo(W, yR+1); ctx.stroke();
+
+    // Wound texture bands (for thicker strings)
+    if(s >= 2) {
+      const woundCol = s >= 4 ? 'rgba(90,72,30,0.3)' : 'rgba(80,65,28,0.2)';
+      ctx.strokeStyle = woundCol;
+      ctx.lineWidth   = w + 0.5;
+      ctx.setLineDash([2, 2]);
+      ctx.beginPath(); ctx.moveTo(boardX0, yL); ctx.lineTo(W, yR); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Main string body
+    ctx.strokeStyle = col;
+    ctx.lineWidth   = w;
+    ctx.beginPath(); ctx.moveTo(boardX0, yL); ctx.lineTo(W, yR); ctx.stroke();
+
+    // Specular highlight
+    const hiAlpha = 0.45 - s * 0.05;
+    ctx.strokeStyle = `rgba(255,252,225,${hiAlpha})`;
+    ctx.lineWidth   = Math.max(0.4, w * 0.28);
+    ctx.beginPath(); ctx.moveTo(boardX0, yL - w*0.3); ctx.lineTo(W, yR - w*0.3); ctx.stroke();
+
+    // String label
+    ctx.fillStyle    = col;
+    ctx.font         = `700 11px 'JetBrains Mono'`;
+    ctx.textAlign    = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(STRING_NAMES[s], L.padL - 8, yL);
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  // Store for use by drawStaticNotes
+  L._strY  = strY;
+  L._strYR = strYR;
+  L._strYAt = strYAt;
+
+  // ── Now draw notes ──
+  drawStaticNotes(L, ctx, W, H);
+}
+
+function drawStaticNotes(L, ctx, W, H) {
+  if(!song || !song.notes) return;
+  const STRING_WIDTHS = [1, 1.2, 1.5, 2, 2.5, 3]; // high e to low E
+
+  const beatsPerSec = ((song.bpm || 120) / 60) * speedPct;
+  const isArpeggio  = song.notes.every(n => n.type === 'note');
+  const fadeOut     = 0.4;  // seconds to keep note visible after playing
+  const lookAhead   = isArpeggio ? 2.5 : 4.0; // seconds ahead
+
+  // For fingerpick: collect the next 4 distinct beat positions as groups
+  let showBeats = null;
+  if(isArpeggio) {
+    const allBeats = [...new Set(song.notes.map(n => +n.b.toFixed(3)))]
+      .filter(b => {
+        const t = (b - beatPos) / beatsPerSec;
+        return t >= -fadeOut && t <= lookAhead;
+      })
+      .sort((a,b) => a-b)
+      .slice(0, 4);
+    showBeats = allBeats;
+  }
+
+  // Collect visible notes
+  const visible = [];
+  for(const n of song.notes) {
+    const t = (n.b - beatPos) / beatsPerSec;
+    if(t > lookAhead || t < -fadeOut) continue;
+    if(isArpeggio && showBeats) {
+      const inGroup = showBeats.some(b => Math.abs(b - n.b) < 0.01);
+      if(!inGroup) continue;
+    }
+    visible.push({ ...n, t });
+  }
+
+  for(const n of visible) {
+    // Use string Y positions from fretboard layout
+    const sy = L._strYAt ? L._strYAt(n.s, n.f === 0 ? 0 : Math.min(n.f, SF.FRETS))
+               : L.stringY[n.s];
+    const t  = n.t;
+    let nx, isOpenString;
+    isOpenString = (n.f === 0);
+
+    if(n.f === 0) {
+      nx = L.padL - 14;
+    } else if(n.f <= SF.FRETS) {
+      nx = L.fretX[n.f-1] + (L.fretX[n.f] - L.fretX[n.f-1]) * 0.75;
+    } else {
+      continue;
+    }
+
+    // Determine rank in beat group for fingerpick
+    let beatRank = -1;
+    if(isArpeggio && showBeats) {
+      beatRank = showBeats.findIndex(b => Math.abs(b - n.b) < 0.01);
+    }
+
+    let alpha, radius, glowSize;
+
+    if(t < 0) {
+      // Fading out after playing
+      alpha = Math.max(0, 1 + t / fadeOut);
+      radius = 11; glowSize = 0;
+    } else if(isArpeggio) {
+      // Fingerpick: beat-rank based
+      if(beatRank === 0)      { alpha = 1.0;  radius = 14; glowSize = 20; }
+      else if(beatRank === 1) { alpha = 0.55; radius = 11; glowSize = 0;  }
+      else if(beatRank === 2) { alpha = 0.28; radius = 9;  glowSize = 0;  }
+      else                    { alpha = 0.14; radius = 7;  glowSize = 0;  }
+    } else {
+      // Chord: time-based
+      if(t < 0.4) {
+        alpha = 1.0; radius = 14; glowSize = 22;
+      } else if(t < 2.0) {
+        const p = 1 - (t - 0.4) / 1.6;
+        alpha = 0.5 + p * 0.45; radius = 10 + p * 4; glowSize = p * 14;
+      } else {
+        const p = Math.max(0, 1 - (t - 2.0) / 2.0);
+        alpha = 0.12 + p * 0.25; radius = 7 + p * 3; glowSize = 0;
+      }
+    }
+
+    if(alpha <= 0.05) continue;
+
+    // Colour: chord=amber, melody=blue
+    const isChord   = n.type === 'chord';
+    const baseColor = isChord ? [232, 160, 32] : [64, 144, 224];
+    const [r,g,b]   = baseColor;
+
+    ctx.globalAlpha = alpha;
+
+    // Glow halo (fretted notes only)
+    if(glowSize > 0 && !isOpenString) {
+      const glow = ctx.createRadialGradient(nx, sy, 0, nx, sy, glowSize);
+      glow.addColorStop(0, `rgba(${r},${g},${b},0.5)`);
+      glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(nx, sy, glowSize, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Solid fretted dot
+    if(!isOpenString) {
+      // Shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.beginPath(); ctx.arc(nx+1, sy+2, radius, 0, Math.PI*2); ctx.fill();
+
+      // Body
+      const dotGrad = ctx.createRadialGradient(nx-radius*0.3, sy-radius*0.3, 0, nx, sy, radius);
+      dotGrad.addColorStop(0,   `rgba(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,b+80)},1)`);
+      dotGrad.addColorStop(0.6, `rgba(${r},${g},${b},1)`);
+      dotGrad.addColorStop(1,   `rgba(${Math.max(0,r-60)},${Math.max(0,g-60)},${Math.max(0,b-60)},1)`);
+      ctx.fillStyle = dotGrad;
+      ctx.beginPath(); ctx.arc(nx, sy, radius, 0, Math.PI*2); ctx.fill();
+
+      // No fret number — position on neck is enough
+    }
+
+    // Open string — glow follows the tapered string path exactly
+    if(isOpenString) {
+      const tr = 32, tg = 200, tb = 160;
+      const sw    = STRING_WIDTHS[n.s];
+      const glowW = Math.max(5, sw + 3 + (t < 0.3 ? 7 : t < 1.5 ? 3 : 1));
+      const syL   = L._strY  ? L._strY[n.s]  : sy;
+      const syR   = L._strYR ? L._strYR[n.s] : sy;
+      const x0    = L.padL + SF.NUT_W;
+      const x1    = W;
+      const midY  = (syL + syR) / 2;
+
+      ctx.save();
+      // Clip to tapered band around the string
+      ctx.beginPath();
+      ctx.moveTo(x0, syL - glowW);
+      ctx.lineTo(x1, syR - glowW);
+      ctx.lineTo(x1, syR + glowW);
+      ctx.lineTo(x0, syL + glowW);
+      ctx.closePath();
+      ctx.clip();
+
+      // Glow band
+      const strGlow = ctx.createLinearGradient(0, midY - glowW, 0, midY + glowW);
+      strGlow.addColorStop(0,    `rgba(${tr},${tg},${tb},0)`);
+      strGlow.addColorStop(0.25, `rgba(${tr},${tg},${tb},${alpha*0.5})`);
+      strGlow.addColorStop(0.5,  `rgba(${tr},${tg},${tb},${alpha*0.9})`);
+      strGlow.addColorStop(0.75, `rgba(${tr},${tg},${tb},${alpha*0.5})`);
+      strGlow.addColorStop(1,    `rgba(${tr},${tg},${tb},0)`);
+      ctx.fillStyle = strGlow;
+      ctx.fillRect(x0, midY - glowW, x1 - x0, glowW * 2);
+
+      // Bright line following exact string taper
+      const strLine = ctx.createLinearGradient(0, midY - sw, 0, midY + sw);
+      strLine.addColorStop(0,   `rgba(255,255,255,${alpha*0.6})`);
+      strLine.addColorStop(0.4, `rgba(${tr},${tg},${tb},${alpha})`);
+      strLine.addColorStop(1,   `rgba(${tr},${tg},${tb},${alpha*0.3})`);
+      ctx.strokeStyle = strLine;
+      ctx.lineWidth   = sw + (t < 0.3 ? 2 : 1);
+      ctx.beginPath();
+      ctx.moveTo(x0, syL);
+      ctx.lineTo(x1, syR);
+      ctx.stroke();
+      ctx.restore();
+
+      // O marker left of nut
+      ctx.fillStyle    = `rgba(${tr},${tg},${tb},${alpha})`;
+      ctx.font         = `700 11px 'JetBrains Mono'`;
+      ctx.textAlign    = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('O', L.padL - 4, syL);
+      ctx.textBaseline = 'alphabetic';
+    }
+
+    ctx.globalAlpha = 1;
+  }
+}
+
+function resizeStaticCanvas() {
+  if(!sfCanvas) return;
+  const parent = sfCanvas.parentElement;
+  if(parent) {
+    sfCanvas.width  = parent.offsetWidth  || sfCanvas.offsetWidth;
+    sfCanvas.height = parent.offsetHeight || sfCanvas.offsetHeight;
+  } else {
+    sfCanvas.width  = sfCanvas.offsetWidth;
+    sfCanvas.height = sfCanvas.offsetHeight;
+  }
+}
+
+// View toggle
+document.getElementById('btnViewToggle').addEventListener('click', () => {
+  staticView = !staticView;
+  const btn       = document.getElementById('btnViewToggle');
+  const scrollDiv = document.getElementById('scrollView');
+  const staticDiv = document.getElementById('staticView');
+  const tabDiv    = document.querySelector('.tab-strip');
+  const playLine  = document.getElementById('playLine');
+
+  if(staticView) {
+    scrollDiv.style.display = 'none';
+    staticDiv.style.display = '';
+    if(playLine)  playLine.style.display  = 'none';
+    // Tab strip stays visible in fret mode — shows upcoming notes
+    btn.textContent = '⬡ FRET';
+    btn.classList.add('active');
+    // Allow layout to settle before measuring
+    requestAnimationFrame(() => {
+      resizeStaticCanvas();
+      drawStaticFretboard();
+    });
+  } else {
+    scrollDiv.style.display = '';
+    staticDiv.style.display = 'none';
+    if(tabDiv)    tabDiv.style.display    = '';
+    if(playLine)  playLine.style.display  = '';
+    btn.textContent = '≡ SCROLL';
+    btn.classList.remove('active');
+    resizeCanvas();
+    draw();
+  }
+});
+
 // ─── ENGINE ──────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('fretboard');
 const ctx    = canvas.getContext('2d');
@@ -965,6 +1508,9 @@ function resizeCanvas() {
   canvas.height = canvas.offsetHeight;
   resizeChordCanvas();
   resizeTabCanvas();
+  if(staticView) {
+    resizeStaticCanvas();
+  }
   draw();
 }
 
@@ -1059,8 +1605,9 @@ function draw() {
     modeTag.style.background = 'rgba(232,160,32,0.08)';
   }
   drawChordScroll();
-  drawTabStrip();
+  if(!staticView) drawTabStrip();
   drawLyrics();
+  if(staticView) drawStaticFretboard();
 
   // Group notes by beat to find chord beats (all notes at same beat with type='chord')
   const chordBeats = new Map();
