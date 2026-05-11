@@ -172,21 +172,30 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
 ──────────────────────────────────────────────────────── */
 .mobile-ui { display: none; }
 
-@media (max-width: 768px) {
-  /* Hide all desktop UI */
+/* Mobile layout — activated by JS adding .is-mobile to body */
+body.is-mobile .header,
+body.is-mobile .chord-bar,
+body.is-mobile .lyrics-panel,
+body.is-mobile .tab-strip,
+body.is-mobile .controls,
+body.is-mobile .status-bar,
+body.is-mobile .play-line { display: none !important; }
+
+body.is-mobile { overflow: hidden; background: var(--bg); }
+body.is-mobile .fretboard-wrap {
+  position: fixed !important;
+  inset: 0 !important;
+  flex: none !important;
+}
+body.is-mobile .mobile-ui { display: flex !important; }
+
+/* Also keep media query as fallback for very narrow screens */
+@media (max-width: 480px) {
   .header, .chord-bar, .lyrics-panel, .tab-strip,
   .controls, .status-bar, .play-line { display: none !important; }
-
-  /* Fretboard fills everything */
-  body { overflow: hidden; background: var(--bg); }
-  .fretboard-wrap {
-    position: fixed !important;
-    inset: 0 !important;
-    flex: none !important;
-  }
-
-  /* Mobile UI overlay */
-  .mobile-ui { display: flex; }
+  body { overflow: hidden; }
+  .fretboard-wrap { position: fixed !important; inset: 0 !important; flex: none !important; }
+  .mobile-ui { display: flex !important; }
 }
 
 /* ── Mobile top bar: song name + chord ── */
@@ -1758,10 +1767,16 @@ loadSong('wishYouWereHere');
 resizeCanvas();
 
 // ─── MOBILE LAYER ────────────────────────────────────────────────────────────
-const isMobile = () => window.innerWidth <= 768 || (window.innerWidth <= 1024 && 'ontouchstart' in window);
+// True mobile: touch device OR narrow viewport (not a laptop with touch)
+const isMobile = () => {
+  const hasTouch = navigator.maxTouchPoints > 1 || 'ontouchstart' in window;
+  const isNarrow = window.innerWidth <= 768;
+  // Only switch to mobile if narrow viewport OR (touch + not a big screen)
+  return isNarrow || (hasTouch && window.innerWidth <= 1024 && window.innerHeight <= 900);
+};
 
 function updateMobileUI() {
-  if(!isMobile() || !song) return;
+  if(!document.body.classList.contains('is-mobile') || !song) return;
 
   // Song name
   const nameEl = document.getElementById('mobSongName');
@@ -1787,7 +1802,7 @@ function updateMobileUI() {
 }
 
 function updateMobileMetronome(beat) {
-  if(!isMobile()) return;
+  if(!document.body.classList.contains('is-mobile')) return;
   const beatInBar = Math.floor(beat) % 4;
   for(let i = 0; i < 4; i++) {
     const el = document.getElementById('mbd' + (i+1));
@@ -1824,10 +1839,18 @@ function buildMobileSongList() {
 
 // Wire up mobile buttons — call engine functions directly (not hidden desktop buttons)
 document.getElementById('mobPlay').addEventListener('click', () => {
-  // Direct play/pause — mirrors desktop logic but called from mobile touch
+  // Init audio on first interaction (required by browsers)
+  initAudio();
+  if(audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().then(() => { toggleMobilePlay(); });
+  } else {
+    toggleMobilePlay();
+  }
+});
+
+function toggleMobilePlay() {
   playing = !playing;
   if(playing) {
-    initAudio();
     resetScheduledNotes();
     if(rafId) cancelAnimationFrame(rafId);
     lastTime = null;
@@ -1837,14 +1860,8 @@ document.getElementById('mobPlay').addEventListener('click', () => {
     if(rafId) cancelAnimationFrame(rafId);
     if(countIn) stopCountIn();
   }
-  // Keep desktop button in sync
-  const dBtn = document.getElementById('btnPlay');
-  if(dBtn) {
-    dBtn.textContent = playing ? '⏸ PAUSE' : '▶ PLAY';
-    playing ? dBtn.classList.add('active') : dBtn.classList.remove('active');
-  }
   updateMobilePlayBtn(playing);
-});
+}
 
 document.getElementById('mobReset').addEventListener('click', () => {
   playing = false;
@@ -1895,7 +1912,7 @@ const _origDraw = draw;
 draw = function() {
   _origDraw.call(this);
   try {
-    if(isMobile()) {
+    if(document.body.classList.contains('is-mobile')) {
       updateMobileUI();
       updateMobilePlayBtn(playing);
     }
@@ -1914,7 +1931,7 @@ const _origLoadSong = loadSong;
 loadSong = function(key) {
   _origLoadSong(key);
   try {
-    if(isMobile()) {
+    if(document.body.classList.contains('is-mobile')) {
       const nameEl = document.getElementById('mobSongName');
       if(nameEl && SONGS[key]) nameEl.textContent = SONGS[key].title;
       const bpmEl = document.getElementById('mobBpm');
@@ -1929,12 +1946,13 @@ document.addEventListener('touchmove', e => {
   if(e.touches.length > 1) e.preventDefault();
 }, { passive: false });
 
-// Mirror touchend → click for mobile buttons (Safari iOS fix)
+// Mirror touchend → click for all mobile buttons (Safari iOS fix)
 ['mobPlay','mobReset','mobBack','mobSongs','mobModalClose'].forEach(id => {
   const el = document.getElementById(id);
   if(!el) return;
   el.addEventListener('touchend', e => {
-    e.preventDefault(); // prevent ghost click delay
+    e.preventDefault();
+    e.stopPropagation();
     el.click();
   }, { passive: false });
 });
@@ -1944,8 +1962,17 @@ window.addEventListener('orientationchange', () => {
   setTimeout(() => { resizeCanvas(); }, 200);
 });
 
-// Initial mobile UI update
-if(isMobile()) updateMobileUI();
+// Apply mobile class based on device detection
+function applyMobileClass() {
+  if(isMobile()) {
+    document.body.classList.add('is-mobile');
+    updateMobileUI();
+  } else {
+    document.body.classList.remove('is-mobile');
+  }
+}
+applyMobileClass();
+window.addEventListener('resize', applyMobileClass);
 
 </script>
 
