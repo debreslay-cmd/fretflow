@@ -196,7 +196,11 @@ body:not(.is-mobile) .mob-top,
 body:not(.is-mobile) .mob-metro,
 body:not(.is-mobile) .mob-bpm,
 body:not(.is-mobile) .mob-controls,
-body:not(.is-mobile) .mob-song-modal { display: none !important; }
+body:not(.is-mobile) .mob-top,
+body:not(.is-mobile) .mob-metro,
+body:not(.is-mobile) .mob-bpm,
+body:not(.is-mobile) .mob-controls,
+/* modal visibility managed by .open class only */
 
 /* ── Mobile top bar: song name + chord ── */
 .mob-top {
@@ -303,9 +307,10 @@ body:not(.is-mobile) .mob-song-modal { display: none !important; }
 
 /* ── Song picker modal (mobile) ── */
 .mob-song-modal {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,.92);
-  display: none; flex-direction: column;
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,.95);
+  display: none;
+  flex-direction: column;
   padding: 20px;
 }
 .mob-song-modal.open { display: flex; }
@@ -516,14 +521,17 @@ const BUILTIN_SONGS = {
 
 // ─── SONG REGISTRY — active songs (built-ins + user loaded) ─────────────────
 let SONGS = Object.assign({}, BUILTIN_SONGS);
+window.SONGS = SONGS; // expose for mobile script
 
 
 // ─── MOBILE TOGGLE ───────────────────────────────────────────────────────────
 let _mobileActive = false;
 try { _mobileActive = localStorage.getItem('ff_mobile') === '1'; } catch(e) {}
+window._mobileActive = _mobileActive; // expose for mobile script
 
 function toggleMobileLayout() {
   _mobileActive = !_mobileActive;
+  window._mobileActive = _mobileActive; // keep window in sync
   try { localStorage.setItem('ff_mobile', _mobileActive ? '1' : '0'); } catch(e) {}
   if(_mobileActive) {
     document.body.classList.add('is-mobile');
@@ -934,6 +942,7 @@ function drawLyrics() {
 
 // ─── STATIC FRETBOARD ENGINE ─────────────────────────────────────────────────
 let staticView   = false; // false = scroll, true = static neck
+window.staticView = staticView; // expose for mobile script
 const sfCanvas   = document.getElementById('staticFretboard');
 const sfCtx      = sfCanvas ? sfCanvas.getContext('2d') : null;
 
@@ -1249,177 +1258,180 @@ function drawStaticFretboard() {
 
 function drawStaticNotes(L, ctx, W, H) {
   if(!song || !song.notes) return;
-  const STRING_WIDTHS = [1, 1.2, 1.5, 2, 2.5, 3]; // high e to low E
 
-  const beatsPerSec = ((song.bpm || 120) / 60) * speedPct;
-  const isArpeggio  = song.notes.every(n => n.type === 'note');
-  const fadeOut     = 0.4;  // seconds to keep note visible after playing
-  const lookAhead   = isArpeggio ? 2.5 : 4.0; // seconds ahead
+  const bps      = ((song.bpm||120)/60) * speedPct;
+  const FADE_OUT = 0.5;
 
-  // For fingerpick: collect the next 4 distinct beat positions as groups
-  let showBeats = null;
-  if(isArpeggio) {
-    const allBeats = [...new Set(song.notes.map(n => +n.b.toFixed(3)))]
-      .filter(b => {
-        const t = (b - beatPos) / beatsPerSec;
-        return t >= -fadeOut && t <= lookAhead;
-      })
-      .sort((a,b) => a-b)
-      .slice(0, 4);
-    showBeats = allBeats;
+  // Detect song type
+  const noteCount  = song.notes.filter(n => n.type === 'note').length;
+  const chordCount = song.notes.filter(n => n.type === 'chord').length;
+  const isArpeggio = noteCount > chordCount; // mostly individual notes
+
+  // ── Beat group detection (works for both types) ───────────────────────────
+  // Find the current and next distinct beat positions
+  const allBeats = [...new Set(song.notes.map(n => Math.round(n.b*1000)/1000))]
+    .sort((a,b) => a-b);
+
+  // Find current beat group (most recent that has started)
+  let bg0idx = -1;
+  for(let i = 0; i < allBeats.length; i++) {
+    if((allBeats[i] - beatPos) / bps <= 0.1) bg0idx = i;
+    else break;
+  }
+  const beatGroup0 = bg0idx >= 0 ? allBeats[bg0idx] : allBeats[0];
+  const beatGroup1 = bg0idx+1 < allBeats.length ? allBeats[bg0idx+1] : -1;
+
+  // Ring progress: how far between beat0 and beat1
+  let ringProgress = 0;
+  if(beatGroup1 >= 0) {
+    const gap     = (beatGroup1 - beatGroup0) / bps;
+    const elapsed = (beatPos - beatGroup0) / bps;
+    ringProgress  = gap > 0.01 ? Math.max(0, Math.min(0.98, elapsed / gap)) : 0;
   }
 
-  // Collect visible notes
-  const visible = [];
+  // Helpers
+  const fretNx = (fret) => {
+    if(fret <= 0 || fret > SF.FRETS) return null;
+    return L.fretX[fret-1] + (L.fretX[fret] - L.fretX[fret-1]) * 0.75;
+  };
+  const strYAt = (s, fret) => {
+    if(!L._strY) return H/2;
+    if(fret <= 0) return L._strY[s];
+    const t = (L.fretX[Math.min(fret,SF.FRETS)] - L.padL) / L.neckW;
+    return L._strY[s] + t * ((L._strYR||L._strY)[s] - L._strY[s]);
+  };
+
+  // For chords: deduplicate — one dot per string per beat group
+  // Build set of current beat notes and next beat notes
+  const currentNotes = []; // notes to show as active dots
+  const nextNotes    = []; // notes to show ring at
+  const seenStrCur   = new Set();
+  const seenStrNext  = new Set();
+
   for(const n of song.notes) {
-    const t = (n.b - beatPos) / beatsPerSec;
-    if(t > lookAhead || t < -fadeOut) continue;
-    if(isArpeggio && showBeats) {
-      const inGroup = showBeats.some(b => Math.abs(b - n.b) < 0.01);
-      if(!inGroup) continue;
+    const nb = Math.round(n.b*1000)/1000;
+    const isCur  = Math.abs(nb - beatGroup0) < 0.05;
+    const isNext = beatGroup1 >= 0 && Math.abs(nb - beatGroup1) < 0.05;
+    const tSec   = (n.b - beatPos) / bps;
+
+    if(isCur || (tSec >= -FADE_OUT && tSec < 0.15)) {
+      if(!seenStrCur.has(n.s)) { seenStrCur.add(n.s); currentNotes.push(n); }
+    } else if(isNext) {
+      if(!seenStrNext.has(n.s)) { seenStrNext.add(n.s); nextNotes.push(n); }
     }
-    visible.push({ ...n, t });
   }
 
-  for(const n of visible) {
-    // Use string Y positions from fretboard layout
-    const sy = L._strYAt ? L._strYAt(n.s, n.f === 0 ? 0 : Math.min(n.f, SF.FRETS))
-               : L.stringY[n.s];
-    const t  = n.t;
-    let nx, isOpenString;
-    isOpenString = (n.f === 0);
+  // ── Draw current (active) notes ───────────────────────────────────────────
+  for(const n of currentNotes) {
+    const tSec   = (n.b - beatPos) / bps;
+    const fadeA  = tSec < 0 ? Math.max(0, 1 + tSec/FADE_OUT) : 1.0;
+    const isOpen = n.f === 0;
+    const nx     = isOpen ? null : fretNx(n.f);
+    if(!isOpen && !nx) continue;
+    const sy = strYAt(n.s, n.f);
+    const isChord = n.type === 'chord';
+    const CR = isChord ? 232 : 64, CG = isChord ? 160 : 144, CB = isChord ? 32 : 224;
+    const radius = 13, glow = 18;
 
-    if(n.f === 0) {
-      nx = L.padL - 14;
-    } else if(n.f <= SF.FRETS) {
-      nx = L.fretX[n.f-1] + (L.fretX[n.f] - L.fretX[n.f-1]) * 0.75;
+    ctx.globalAlpha = fadeA;
+
+    if(!isOpen) {
+      // Glow
+      const g = ctx.createRadialGradient(nx, sy, 0, nx, sy, glow);
+      g.addColorStop(0, `rgba(${CR},${CG},${CB},0.5)`);
+      g.addColorStop(1, `rgba(${CR},${CG},${CB},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(nx, sy, glow, 0, Math.PI*2); ctx.fill();
+      // Shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.beginPath(); ctx.arc(nx+1, sy+2, radius, 0, Math.PI*2); ctx.fill();
+      // Body
+      const dg = ctx.createRadialGradient(nx-radius*0.3, sy-radius*0.3, 0, nx, sy, radius);
+      dg.addColorStop(0,   `rgba(${Math.min(255,CR+90)},${Math.min(255,CG+90)},${Math.min(255,CB+90)},1)`);
+      dg.addColorStop(0.6, `rgba(${CR},${CG},${CB},1)`);
+      dg.addColorStop(1,   `rgba(${Math.max(0,CR-50)},${Math.max(0,CG-50)},${Math.max(0,CB-50)},1)`);
+      ctx.fillStyle = dg; ctx.beginPath(); ctx.arc(nx, sy, radius, 0, Math.PI*2); ctx.fill();
     } else {
-      continue;
+      // Open string glow
+      if(L._strY && L._strYR) {
+        const syL = L._strY[n.s], syR = L._strYR[n.s];
+        const x0 = L.padL + SF.NUT_W, x1 = W, gW = 8;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x0,syL-gW); ctx.lineTo(x1,syR-gW);
+        ctx.lineTo(x1,syR+gW); ctx.lineTo(x0,syL+gW);
+        ctx.closePath(); ctx.clip();
+        const sg = ctx.createLinearGradient(0,(syL+syR)/2-gW,0,(syL+syR)/2+gW);
+        sg.addColorStop(0,'rgba(32,200,160,0)');
+        sg.addColorStop(0.5,`rgba(32,200,160,${0.9*fadeA})`);
+        sg.addColorStop(1,'rgba(32,200,160,0)');
+        ctx.fillStyle=sg; ctx.fillRect(x0,(syL+syR)/2-gW,x1-x0,gW*2);
+        ctx.strokeStyle=`rgba(32,200,160,${fadeA})`; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(x0,syL); ctx.lineTo(x1,syR); ctx.stroke();
+        ctx.restore();
+      }
+      ctx.fillStyle=`rgba(32,200,160,${fadeA})`;
+      ctx.font='700 11px JetBrains Mono'; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText('O', L.padL-4, strYAt(n.s,0)); ctx.textBaseline='alphabetic';
     }
+    ctx.globalAlpha = 1;
+  }
 
-    // Determine rank in beat group for fingerpick
-    let beatRank = -1;
-    if(isArpeggio && showBeats) {
-      beatRank = showBeats.findIndex(b => Math.abs(b - n.b) < 0.01);
-    }
+  // ── Draw next beat: ring for fingerpick, dim dots for chords ────────────
+  if(nextNotes.length > 0) {
+    const start = -Math.PI / 2;
+    const sweep = ringProgress * Math.PI * 2;
 
-    let alpha, radius, glowSize;
+    for(const n of nextNotes) {
+      const isOpen = n.f === 0;
+      const nx     = isOpen ? null : fretNx(n.f);
+      if(!isOpen && !nx) continue;
+      const sy = strYAt(n.s, n.f);
+      const isChordNote = n.type === 'chord';
+      const CR = isChordNote ? 232 : 64, CG = isChordNote ? 160 : 144, CB = isChordNote ? 32 : 224;
 
-    if(t < 0) {
-      // Fading out after playing
-      alpha = Math.max(0, 1 + t / fadeOut);
-      radius = 11; glowSize = 0;
-    } else if(isArpeggio) {
-      // Fingerpick: beat-rank based
-      if(beatRank === 0)      { alpha = 1.0;  radius = 14; glowSize = 20; }
-      else if(beatRank === 1) { alpha = 0.55; radius = 11; glowSize = 0;  }
-      else if(beatRank === 2) { alpha = 0.28; radius = 9;  glowSize = 0;  }
-      else                    { alpha = 0.14; radius = 7;  glowSize = 0;  }
-    } else {
-      // Chord: time-based
-      if(t < 0.4) {
-        alpha = 1.0; radius = 14; glowSize = 22;
-      } else if(t < 2.0) {
-        const p = 1 - (t - 0.4) / 1.6;
-        alpha = 0.5 + p * 0.45; radius = 10 + p * 4; glowSize = p * 14;
+      ctx.globalAlpha = 1;
+
+      if(isArpeggio) {
+        // ── Fingerpick: timer ring ──
+        if(!isOpen) {
+          const ringR = 18;
+          ctx.strokeStyle = `rgba(${CR},${CG},${CB},0.15)`;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(nx, sy, ringR, 0, Math.PI*2); ctx.stroke();
+          if(sweep > 0.01) {
+            ctx.strokeStyle = `rgba(${CR},${CG},${CB},0.88)`;
+            ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.arc(nx, sy, ringR, start, start+sweep); ctx.stroke();
+            ctx.lineCap = 'butt';
+          }
+        } else if(L._strY) {
+          const ox = L.padL - 10, oy = L._strY[n.s], rr = 7;
+          ctx.strokeStyle = 'rgba(32,200,160,0.18)';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(ox, oy, rr, 0, Math.PI*2); ctx.stroke();
+          if(sweep > 0.01) {
+            ctx.strokeStyle = 'rgba(32,200,160,0.9)'; ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.arc(ox, oy, rr, start, start+sweep); ctx.stroke();
+            ctx.lineCap = 'butt';
+          }
+        }
       } else {
-        const p = Math.max(0, 1 - (t - 2.0) / 2.0);
-        alpha = 0.12 + p * 0.25; radius = 7 + p * 3; glowSize = 0;
+        // ── Chord: dim preview dot (like before) ──
+        if(!isOpen && nx) {
+          ctx.globalAlpha = 0.25;
+          ctx.fillStyle = 'rgba(0,0,0,0.4)';
+          ctx.beginPath(); ctx.arc(nx+1, sy+2, 9, 0, Math.PI*2); ctx.fill();
+          ctx.fillStyle = `rgba(${CR},${CG},${CB},0.85)`;
+          ctx.beginPath(); ctx.arc(nx, sy, 9, 0, Math.PI*2); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
       }
     }
-
-    if(alpha <= 0.05) continue;
-
-    // Colour: chord=amber, melody=blue
-    const isChord   = n.type === 'chord';
-    const baseColor = isChord ? [232, 160, 32] : [64, 144, 224];
-    const [r,g,b]   = baseColor;
-
-    ctx.globalAlpha = alpha;
-
-    // Glow halo (fretted notes only)
-    if(glowSize > 0 && !isOpenString) {
-      const glow = ctx.createRadialGradient(nx, sy, 0, nx, sy, glowSize);
-      glow.addColorStop(0, `rgba(${r},${g},${b},0.5)`);
-      glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      ctx.fillStyle = glow;
-      ctx.beginPath(); ctx.arc(nx, sy, glowSize, 0, Math.PI*2); ctx.fill();
-    }
-
-    // Solid fretted dot
-    if(!isOpenString) {
-      // Shadow
-      ctx.fillStyle = 'rgba(0,0,0,0.5)';
-      ctx.beginPath(); ctx.arc(nx+1, sy+2, radius, 0, Math.PI*2); ctx.fill();
-
-      // Body
-      const dotGrad = ctx.createRadialGradient(nx-radius*0.3, sy-radius*0.3, 0, nx, sy, radius);
-      dotGrad.addColorStop(0,   `rgba(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,b+80)},1)`);
-      dotGrad.addColorStop(0.6, `rgba(${r},${g},${b},1)`);
-      dotGrad.addColorStop(1,   `rgba(${Math.max(0,r-60)},${Math.max(0,g-60)},${Math.max(0,b-60)},1)`);
-      ctx.fillStyle = dotGrad;
-      ctx.beginPath(); ctx.arc(nx, sy, radius, 0, Math.PI*2); ctx.fill();
-
-      // No fret number — position on neck is enough
-    }
-
-    // Open string — glow follows the tapered string path exactly
-    if(isOpenString) {
-      const tr = 32, tg = 200, tb = 160;
-      const sw    = STRING_WIDTHS[n.s];
-      const glowW = Math.max(5, sw + 3 + (t < 0.3 ? 7 : t < 1.5 ? 3 : 1));
-      const syL   = L._strY  ? L._strY[n.s]  : sy;
-      const syR   = L._strYR ? L._strYR[n.s] : sy;
-      const x0    = L.padL + SF.NUT_W;
-      const x1    = W;
-      const midY  = (syL + syR) / 2;
-
-      ctx.save();
-      // Clip to tapered band around the string
-      ctx.beginPath();
-      ctx.moveTo(x0, syL - glowW);
-      ctx.lineTo(x1, syR - glowW);
-      ctx.lineTo(x1, syR + glowW);
-      ctx.lineTo(x0, syL + glowW);
-      ctx.closePath();
-      ctx.clip();
-
-      // Glow band
-      const strGlow = ctx.createLinearGradient(0, midY - glowW, 0, midY + glowW);
-      strGlow.addColorStop(0,    `rgba(${tr},${tg},${tb},0)`);
-      strGlow.addColorStop(0.25, `rgba(${tr},${tg},${tb},${alpha*0.5})`);
-      strGlow.addColorStop(0.5,  `rgba(${tr},${tg},${tb},${alpha*0.9})`);
-      strGlow.addColorStop(0.75, `rgba(${tr},${tg},${tb},${alpha*0.5})`);
-      strGlow.addColorStop(1,    `rgba(${tr},${tg},${tb},0)`);
-      ctx.fillStyle = strGlow;
-      ctx.fillRect(x0, midY - glowW, x1 - x0, glowW * 2);
-
-      // Bright line following exact string taper
-      const strLine = ctx.createLinearGradient(0, midY - sw, 0, midY + sw);
-      strLine.addColorStop(0,   `rgba(255,255,255,${alpha*0.6})`);
-      strLine.addColorStop(0.4, `rgba(${tr},${tg},${tb},${alpha})`);
-      strLine.addColorStop(1,   `rgba(${tr},${tg},${tb},${alpha*0.3})`);
-      ctx.strokeStyle = strLine;
-      ctx.lineWidth   = sw + (t < 0.3 ? 2 : 1);
-      ctx.beginPath();
-      ctx.moveTo(x0, syL);
-      ctx.lineTo(x1, syR);
-      ctx.stroke();
-      ctx.restore();
-
-      // O marker left of nut
-      ctx.fillStyle    = `rgba(${tr},${tg},${tb},${alpha})`;
-      ctx.font         = `700 11px 'JetBrains Mono'`;
-      ctx.textAlign    = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('O', L.padL - 4, syL);
-      ctx.textBaseline = 'alphabetic';
-    }
-
-    ctx.globalAlpha = 1;
   }
 }
 
+
+// ─── STATIC VIEW HELPERS ─────────────────────────────────────────────────────
 function resizeStaticCanvas() {
   if(!sfCanvas) return;
   const parent = sfCanvas.parentElement;
@@ -1432,7 +1444,6 @@ function resizeStaticCanvas() {
   }
 }
 
-// View toggle
 document.getElementById('btnViewToggle').addEventListener('click', () => {
   staticView = !staticView;
   const btn       = document.getElementById('btnViewToggle');
@@ -1441,23 +1452,19 @@ document.getElementById('btnViewToggle').addEventListener('click', () => {
   const tabDiv    = document.querySelector('.tab-strip');
   const playLine  = document.getElementById('playLine');
 
+  window.staticView = staticView; // keep in sync
   if(staticView) {
     scrollDiv.style.display = 'none';
     staticDiv.style.display = '';
-    if(playLine)  playLine.style.display  = 'none';
-    // Tab strip stays visible in fret mode — shows upcoming notes
+    if(playLine) playLine.style.display = 'none';
     btn.textContent = '⬡ FRET';
     btn.classList.add('active');
-    // Allow layout to settle before measuring
-    requestAnimationFrame(() => {
-      resizeStaticCanvas();
-      drawStaticFretboard();
-    });
+    requestAnimationFrame(() => { resizeStaticCanvas(); drawStaticFretboard(); });
   } else {
     scrollDiv.style.display = '';
     staticDiv.style.display = 'none';
-    if(tabDiv)    tabDiv.style.display    = '';
-    if(playLine)  playLine.style.display  = '';
+    if(tabDiv)   tabDiv.style.display   = '';
+    if(playLine) playLine.style.display = '';
     btn.textContent = '≡ SCROLL';
     btn.classList.remove('active');
     resizeCanvas();
@@ -1531,6 +1538,9 @@ function beatToX(b) {
 
 function draw() {
   if(!song) return;
+  window.song     = song;     // keep in sync for mobile script
+  window.beatPos  = beatPos;  // keep in sync for mobile script
+  window.speedPct = speedPct; // keep in sync for mobile script
   const W = canvas.width, H = canvas.height;
   const L = getL();
   ctx.clearRect(0, 0, W, H);
@@ -1970,6 +1980,7 @@ function tick(ts) {
 // ─── CONTROLS ────────────────────────────────────────────────────────────────
 function loadSong(key) {
   song        = SONGS[key];
+  window.song = song; // expose for mobile script
   beatPos     = 0;
   lastTime    = null;
   notesPlayed = 0;
@@ -2078,6 +2089,7 @@ function addSongToRegistry(songData) {
   const key = songData.id || ('song_' + Date.now());
   songData.id = key;
   SONGS[key] = songData;
+  window.SONGS = SONGS; // keep in sync
   saveUserSongs();
   rebuildSelect(key);
   loadSong(key);
@@ -2296,6 +2308,7 @@ async function loadSongsFromGitHub() {
       const key = data.id || filename.replace('.json', '');
       data.id   = key;
       SONGS[key] = data;
+      window.SONGS = SONGS; // keep in sync
       loaded++;
     }
   });
@@ -2376,21 +2389,31 @@ if(isGitHubPages()) {
 
 
 <!-- ─── MOBILE UI ─────────────────────────────────── -->
-<!-- Top bar -->
+<!-- Top bar — song name only, chord is in metro row -->
 <div class="mob-top mobile-ui">
   <div class="mob-song-name" id="mobSongName">Wish You Were Here</div>
-  <div style="display:flex;align-items:baseline;gap:4px">
-    <div class="mob-chord" id="mobChord">—</div>
-    <div class="mob-next-chord" id="mobNextChord"></div>
-  </div>
 </div>
 
-<!-- Metronome dots -->
+<!-- Metronome dots + chord name + current note -->
 <div class="mob-metro mobile-ui">
   <div class="mob-beat-dot" id="mbd1">1</div>
   <div class="mob-beat-dot" id="mbd2">2</div>
   <div class="mob-beat-dot" id="mbd3">3</div>
   <div class="mob-beat-dot" id="mbd4">4</div>
+  <!-- Current chord — large amber -->
+  <div id="mobChordPill" style="
+    font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;
+    color:var(--amber);background:rgba(232,160,32,0.12);
+    border:1px solid rgba(232,160,32,0.4);
+    padding:3px 14px;border-radius:6px;margin-left:10px;
+    min-width:52px;text-align:center"></div>
+  <!-- Next chord — smaller, faint -->
+  <div id="mobNextPill" style="
+    font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;
+    color:rgba(232,160,32,0.45);background:rgba(232,160,32,0.05);
+    border:1px solid rgba(232,160,32,0.2);
+    padding:3px 10px;border-radius:6px;margin-left:4px;
+    min-width:40px;text-align:center"></div>
 </div>
 
 <!-- BPM display -->
@@ -2414,6 +2437,10 @@ if(isGitHubPages()) {
     <span class="mob-icon">↺</span>
     <span>RESET</span>
   </button>
+  <button class="mob-btn" id="mobViewToggle">
+    <span class="mob-icon" id="mobViewIcon">⬡</span>
+    <span id="mobViewLabel">FRET</span>
+  </button>
   <div class="mob-speed mobile-ui">
     <div class="mob-speed-label">Speed</div>
     <input type="range" id="mobSpeed" min="20" max="100" value="60"/>
@@ -2429,236 +2456,288 @@ if(isGitHubPages()) {
 </div>
 
 
-<!-- ─── MOBILE JS — runs after all HTML elements exist ─── -->
+<!-- ─── MOBILE JS ─── -->
 <script>
 (function() {
 'use strict';
 
-// ── Mobile detection ──────────────────────────────────────
-function isMobile() {
-  return window._mobileActive === true;
-}
+// ── State tracking to avoid unnecessary DOM updates ────────
+var _lastSongId   = null;
+var _lastChord    = null;
+var _lastPlaying  = null;
+var _lastBeat     = -1;
 
-// ── Apply/remove mobile class on body ─────────────────────
-function applyMobileClass() {
-  // State is managed by main script's toggleMobileLayout()
-  // Just update UI based on current body class
-  const active = document.body.classList.contains('is-mobile');
-  if(active && window.song) updateMobileUI();
-}
+// ── Core UI sync — called every draw frame ─────────────────
+function syncUI() {
+  var s = window.song;
+  if(!s) return;
+  var bp  = window.beatPos || 0;
+  var spc = window.speedPct || 0.6;
 
-// ── Update chord + song info in mobile top bar ────────────
-function updateMobileUI() {
-  if(!window.song) return;
-  const nameEl = document.getElementById('mobSongName');
-  if(nameEl) nameEl.textContent = song.title || '';
+  // Song title + BPM (only update when song changes)
+  var songKey = s.title || s.id || '';
+  if(songKey !== _lastSongId) {
+    _lastSongId = songKey;
+    setText('mobSongName', s.title || '');
+    setText('mobBpm', '♩ ' + Math.round((s.bpm||120)*spc) + ' BPM');
+  }
 
-  const bpmEl = document.getElementById('mobBpm');
-  if(bpmEl) bpmEl.textContent = '♩ ' + Math.round((song.bpm||120)*(window.speedPct||0.6)) + ' BPM';
-
-  // Current + next chord
-  let ci = -1;
-  if(song.chords) {
-    for(let i = 0; i < song.chords.length; i++) {
-      if(song.chords[i].beat <= (window.beatPos||0) + 0.5) ci = i;
+  // Current chord — scan all chords, no early break
+  var bp2 = window.beatPos || 0;
+  var ci = -1;
+  if(s.chords) {
+    for(var i=0; i<s.chords.length; i++) {
+      if(s.chords[i].beat <= bp2 + 0.1) ci = i;
     }
   }
-  const chordEl = document.getElementById('mobChord');
-  const nextEl  = document.getElementById('mobNextChord');
-  if(chordEl) chordEl.textContent = ci >= 0 ? song.chords[ci].name : '—';
-  if(nextEl)  nextEl.textContent  = (ci+1 < (song.chords||[]).length)
-    ? ('→ ' + song.chords[ci+1].name) : '';
+  var chord    = ci >= 0 ? s.chords[ci].name : '';
+  var nextIdx  = ci + 1;
+
+  // Next chord: find next one that is upcoming (already visible as faint dot)
+  // Show when within ~4 beats (matches fret view lookahead)
+  var bps2 = ((s.bpm||120)/60) * (window.speedPct||1.0);
+  var nextChord = '';
+  if(s.chords && nextIdx < s.chords.length) {
+    var beatsAway = s.chords[nextIdx].beat - bp2;
+    var secsAway  = beatsAway / bps2;
+    if(secsAway <= 4.0) nextChord = s.chords[nextIdx].name;
+  }
+
+  // Both pills always visible — no show/hide judder
+  var pillEl = document.getElementById('mobChordPill');
+  var nextEl = document.getElementById('mobNextPill');
+  if(pillEl) { pillEl.textContent = chord || '—'; pillEl.style.display = ''; }
+  if(nextEl) { nextEl.textContent = nextChord || ''; nextEl.style.display = ''; }
+
+  // Play button
+  if(window.playing !== _lastPlaying) {
+    _lastPlaying = window.playing;
+    setText('mobPlayIcon',  window.playing ? '⏸' : '▶');
+    setText('mobPlayLabel', window.playing ? 'PAUSE' : 'PLAY');
+  }
+
 }
 
-// ── Metronome dots ────────────────────────────────────────
-function updateMobileMetronome(beat) {
-  if(!document.body.classList.contains('is-mobile')) return;
-  const b = Math.floor(beat||0) % 4;
-  for(let i = 0; i < 4; i++) {
-    const el = document.getElementById('mbd' + (i+1));
+function setText(id, text) {
+  var el = document.getElementById(id);
+  if(el) el.textContent = text;
+}
+function setTextShow(id, text, show) {
+  var el = document.getElementById(id);
+  if(el) { el.textContent = text; el.style.display = show ? '' : 'none'; }
+}
+
+// ── Metronome ──────────────────────────────────────────────
+function syncMetronome(beat) {
+  var b = Math.floor(beat||0) % 4;
+  for(var i=0; i<4; i++) {
+    var el = document.getElementById('mbd'+(i+1));
     if(!el) continue;
-    el.textContent = i + 1;
+    el.textContent = i+1;
     el.className = 'mob-beat-dot';
-    if(i === b) el.classList.add(i === 0 ? 'beat1' : 'beat-on');
+    if(i===b) el.classList.add(i===0?'beat1':'beat-on');
   }
 }
 
-// ── Play button state ─────────────────────────────────────
-function updateMobilePlayBtn(isPlaying) {
-  const icon  = document.getElementById('mobPlayIcon');
-  const label = document.getElementById('mobPlayLabel');
-  if(icon)  icon.textContent  = isPlaying ? '⏸' : '▶';
-  if(label) label.textContent = isPlaying ? 'PAUSE' : 'PLAY';
-}
-
-// ── Song list modal ───────────────────────────────────────
-window._buildMobileSongList = function buildMobileSongList() {
-  const list = document.getElementById('mobSongList');
-  if(!list || !window.SONGS) return;
+// ── Song list ──────────────────────────────────────────────
+window._buildMobileSongList = function() {
+  var list = document.getElementById('mobSongList');
+  if(!list) return;
   list.innerHTML = '';
-  Object.entries(SONGS).forEach(([key, s]) => {
-    const item = document.createElement('div');
+  var songs = window.SONGS || {};
+  var entries = Object.keys(songs).map(function(k){ return [k, songs[k]]; });
+  entries.sort(function(a,b){ return (a[1].title||'').localeCompare(b[1].title||''); });
+  entries.forEach(function(pair) {
+    var key = pair[0], entry = pair[1];
+    var item = document.createElement('div');
     item.className = 'mob-song-item';
-    item.innerHTML = '<div class="mob-song-item-title">' + s.title + '</div>'
-      + '<div class="mob-song-item-artist">' + (s.artist||'') + '</div>';
-    item.addEventListener('click', () => {
-      if(window.loadSong) loadSong(key);
-      const modal = document.getElementById('mobSongModal');
-      if(modal) modal.classList.remove('open');
-      updateMobilePlayBtn(false);
-    });
+    item.innerHTML = '<div class="mob-song-item-title">'+(entry.title||key)+'</div>'
+      +'<div class="mob-song-item-artist">'+(entry.artist||'')+'</div>';
+    function doLoad() {
+      // Update UI immediately from local data — no async needed
+      setText('mobSongName', entry.title||key);
+      setText('mobBpm', '♩ '+Math.round((entry.bpm||120)*(window.speedPct||0.6))+' BPM');
+      _lastSongId = entry.id || entry.title; // reset so syncUI picks up new song
+      _lastChord  = null;
+      var modal = document.getElementById('mobSongModal');
+      if(modal) { modal.style.display = 'none'; }
+      setText('mobPlayIcon','▶'); setText('mobPlayLabel','PLAY');
+      if(window.loadSong) window.loadSong(key);
+    }
+    item.addEventListener('click', doLoad);
+    item.addEventListener('touchend', function(e){ e.preventDefault(); doLoad(); },{passive:false});
     list.appendChild(item);
   });
-}
+};
 
-// ── Toggle play/pause ─────────────────────────────────────
-function toggleMobilePlay() {
-  // Directly mirror the desktop play button logic
-  const btn = document.getElementById('btnPlay');
-  if(btn) {
-    btn.click();  // This correctly handles count-in, rafId, playing state
+// ── Apply mobile class ─────────────────────────────────────
+window._applyMobileClass = function() {
+  if(window._mobileActive) {
+    document.body.classList.add('is-mobile');
+  } else {
+    document.body.classList.remove('is-mobile');
   }
-  // Update mobile button to match state (playing was toggled by btn.click())
-  updateMobilePlayBtn(window.playing);
-}
+  var btn = document.getElementById('btnMobileToggle');
+  if(btn) {
+    btn.textContent = window._mobileActive ? '🖥️' : '📱';
+    btn.style.color = window._mobileActive ? '#e8a020' : '';
+  }
+  _lastSongId = null; // force full refresh
+  syncUI();
+};
 
-// ── Wire up buttons ───────────────────────────────────────
-function initMobileButtons() {
+// ── Buttons ────────────────────────────────────────────────
+function initButtons() {
   // Play
-  const mobPlay = document.getElementById('mobPlay');
-  if(mobPlay) {
-    mobPlay.addEventListener('click', () => {
-        const ctx = window.audioCtx;
-      toggleMobilePlay();
-    });
+  var el = document.getElementById('mobPlay');
+  if(el) {
+    function doPlay() {
+      var btn = document.getElementById('btnPlay');
+      if(btn) btn.click();
+    }
+    el.addEventListener('click', doPlay);
+    el.addEventListener('touchend',function(e){e.preventDefault();doPlay();},{passive:false});
   }
 
   // Reset
-  const mobReset = document.getElementById('mobReset');
-  if(mobReset) {
-    mobReset.addEventListener('click', () => {
+  el = document.getElementById('mobReset');
+  if(el) {
+    function doReset() {
       window.playing = false;
       if(window.rafId) cancelAnimationFrame(window.rafId);
       window.beatPos = 0; window.lastTime = null;
-            if(window.clearLyricsDisplay) clearLyricsDisplay();
+      if(window.resetScheduledNotes) window.resetScheduledNotes();
+      if(window.clearLyricsDisplay)  window.clearLyricsDisplay();
       window.countIn = false; window.countInPos = -1; window.countInTime = 0;
-      if(window.stopCountIn) stopCountIn();
-      if(window.updateMetronome) updateMetronome(0);
-      if(window.draw) draw();
-      updateMobilePlayBtn(false);
-    });
+      if(window.stopCountIn)    window.stopCountIn();
+      if(window.updateMetronome) window.updateMetronome(0);
+      if(window.draw) window.draw();
+      _lastPlaying = null; // force btn sync
+    }
+    el.addEventListener('click', doReset);
+    el.addEventListener('touchend',function(e){e.preventDefault();doReset();},{passive:false});
   }
 
   // Back
-  const mobBack = document.getElementById('mobBack');
-  if(mobBack) {
-    mobBack.addEventListener('click', () => {
-      if(!window.song || !window.song.chords) return;
-      const prev = [...song.chords].reverse().find(c => c.beat < (window.beatPos||0) - 1);
-      if(window.skipTo) skipTo(prev ? prev.beat : 0);
+  el = document.getElementById('mobBack');
+  if(el) {
+    el.addEventListener('click', function() {
+      var s = window.song;
+      if(!s||!s.chords) return;
+      var bp = window.beatPos||0;
+      var prev = null;
+      for(var i=s.chords.length-1;i>=0;i--){ if(s.chords[i].beat<bp-1){prev=s.chords[i];break;} }
+      if(window.skipTo) window.skipTo(prev?prev.beat:0);
     });
   }
 
-  // Songs modal
-  const mobSongs = document.getElementById('mobSongs');
-  if(mobSongs) {
-    mobSongs.addEventListener('click', () => {
-      buildMobileSongList();
-      const m = document.getElementById('mobSongModal');
-      if(m) m.classList.add('open');
-    });
-  }
-
-  // Close modal
-  const mobClose = document.getElementById('mobModalClose');
-  if(mobClose) {
-    mobClose.addEventListener('click', () => {
-      const m = document.getElementById('mobSongModal');
-      if(m) m.classList.remove('open');
-    });
-  }
-
-  // Speed slider
-  const mobSpeed = document.getElementById('mobSpeed');
-  if(mobSpeed) {
-    mobSpeed.addEventListener('input', e => {
-      const deskSlider = document.getElementById('speedSlider');
-      if(deskSlider) {
-        deskSlider.value = e.target.value;
-        deskSlider.dispatchEvent(new Event('input'));
+  // Songs
+  el = document.getElementById('mobSongs');
+  if(el) {
+    function openSongs() {
+      window._buildMobileSongList();
+      var m = document.getElementById('mobSongModal');
+      if(m) {
+        m.style.display = 'flex';
+        m.style.position = 'fixed';
+        m.style.inset = '0';
+        m.style.zIndex = '9999';
+        m.style.flexDirection = 'column';
+        m.style.padding = '20px';
+        m.style.background = 'rgba(0,0,0,0.95)';
       }
-      const val = document.getElementById('mobSpeedVal');
-      if(val) val.textContent = e.target.value + '%';
-    });
-    // Keep in sync with desktop
-    const deskSlider = document.getElementById('speedSlider');
-    if(deskSlider) {
-      deskSlider.addEventListener('input', () => {
-        mobSpeed.value = deskSlider.value;
-        const val = document.getElementById('mobSpeedVal');
-        if(val) val.textContent = deskSlider.value + '%';
-      });
     }
+    el.addEventListener('click', openSongs);
+    el.addEventListener('touchend',function(e){e.preventDefault();openSongs();},{passive:false});
   }
 
-  // iOS touchend → click (removes 300ms delay)
-  ['mobPlay','mobReset','mobBack','mobSongs','mobModalClose'].forEach(id => {
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.addEventListener('touchend', e => {
-      e.preventDefault();
-      el.click();
-    }, { passive: false });
-  });
+  // Cancel
+  el = document.getElementById('mobModalClose');
+  if(el) {
+    function closeModal() {
+      var m = document.getElementById('mobSongModal');
+      if(m) { m.style.display = 'none'; }
+    }
+    el.addEventListener('click', closeModal);
+    el.addEventListener('touchend',function(e){e.preventDefault();closeModal();},{passive:false});
+  }
+
+  // View toggle (scroll/fret)
+  el = document.getElementById('mobViewToggle');
+  if(el) {
+    function doViewToggle() {
+      // Call the main script's toggle function
+      if(window.toggleMobileLayout === undefined && window.btnViewToggle) {
+        document.getElementById('btnViewToggle').click();
+      } else {
+        var btn = document.getElementById('btnViewToggle');
+        if(btn) btn.click();
+      }
+      // Update mobile button label
+      setTimeout(function() {
+        var icon  = document.getElementById('mobViewIcon');
+        var label = document.getElementById('mobViewLabel');
+        var isStatic = window.staticView;
+        if(icon)  icon.textContent  = isStatic ? '≡' : '⬡';
+        if(label) label.textContent = isStatic ? 'SCROLL' : 'FRET';
+      }, 50);
+    }
+    el.addEventListener('click', doViewToggle);
+    el.addEventListener('touchend',function(e){e.preventDefault();doViewToggle();},{passive:false});
+  }
+
+  // Speed
+  el = document.getElementById('mobSpeed');
+  if(el) {
+    el.addEventListener('input', function(e) {
+      var desk = document.getElementById('speedSlider');
+      if(desk){desk.value=e.target.value;desk.dispatchEvent(new Event('input'));}
+      setText('mobSpeedVal', e.target.value+'%');
+      // Reset BPM display
+      _lastSongId = null;
+    });
+  }
 }
 
-// ── Patch global draw() to update mobile UI ───────────────
-const _origDraw2 = window.draw;
+// ── Patch draw() — the only hook we need ──────────────────
+var _origDraw = window.draw;
 window.draw = function() {
-  if(_origDraw2) _origDraw2.call(this);
-  if(document.body.classList.contains('is-mobile')) {
-    try { updateMobileUI(); updateMobilePlayBtn(window.playing); } catch(e) {}
-  }
+  if(_origDraw) _origDraw.call(this);
+  try { if(document.body.classList.contains('is-mobile')) syncUI(); } catch(e){}
 };
 
-// ── Patch global updateMetronome() ───────────────────────
-const _origMetro2 = window.updateMetronome;
+// ── Patch updateMetronome ─────────────────────────────────
+var _origMetro = window.updateMetronome;
 window.updateMetronome = function(beat) {
-  if(_origMetro2) _origMetro2(beat);
-  updateMobileMetronome(beat);
+  if(_origMetro) _origMetro(beat);
+  try { syncMetronome(beat); } catch(e){}
 };
 
-// ── Patch loadSong() to update mobile name ────────────────
-const _origLoad2 = window.loadSong;
-window.loadSong = function(key) {
-  if(_origLoad2) _origLoad2(key);
-  try {
-    if(document.body.classList.contains('is-mobile')) {
-      updateMobileUI();
-      updateMobilePlayBtn(false);
-    }
-  } catch(e) {}
+// ── Patch toggleMobileLayout ──────────────────────────────
+var _origToggle = window.toggleMobileLayout;
+window.toggleMobileLayout = function() {
+  if(_origToggle) _origToggle();
+  window._applyMobileClass();
 };
 
-// ── Prevent pinch zoom ────────────────────────────────────
-document.addEventListener('touchmove', e => {
-  if(e.touches.length > 1) e.preventDefault();
-}, { passive: false });
+// ── Touch prevention ──────────────────────────────────────
+document.addEventListener('touchmove',function(e){
+  if(e.touches.length>1) e.preventDefault();
+},{passive:false});
 
-// ── Orientation change ────────────────────────────────────
-window.addEventListener('orientationchange', () => {
-  setTimeout(() => { if(window.resizeCanvas) resizeCanvas(); }, 300);
+window.addEventListener('orientationchange',function(){
+  setTimeout(function(){if(window.resizeCanvas)window.resizeCanvas();},300);
 });
 
 // ── Boot ──────────────────────────────────────────────────
-// Run after a short delay to ensure main script has fully initialised
-setTimeout(() => {
-  initMobileButtons();
-  applyMobileClass();
-  if(window.song) updateMobileUI();
-}, 100);
+setTimeout(function(){
+  initButtons();
+  _lastSongId = null;
+  if(window._mobileActive) window._applyMobileClass();
+  syncUI();
+}, 150);
 
-})(); // end IIFE
+})();
 </script>
 
 </body>
